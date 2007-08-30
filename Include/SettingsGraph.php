@@ -38,13 +38,13 @@
 	/** The default font size for link text in the graph */
 	$graphviz_string_links_fontsize		= "8";
 	/** The graphviz node attributes string, expects a font size when printing */
-	$graphviz_string_nodes_attribute	= "\tnode [shape=box,color=lightblue2,style=filled,fontsize=%s,fontname=\"verdana\"];\n";
+	$graphviz_string_nodes_attribute	= "\tnode [shape=ellipse,color=lightblue2,style=filled,fontsize=%s,fontname=\"verdana\"];\n";
 	/** The graphviz string footer to end the graph */
 	$graphviz_string_footing_line		= "}\n";
 	/** The graphviz string left to right link arrow */
 	$graphviz_string_link_lr_arrow		= " -> ";
 	/** The graphviz string for link attributes, expects a text label and a font size */
-	$graphviz_string_link_attributes	= '[arrowhead=normal,label = "%s",fontname="Verdana",fontsize=%s];';
+	$graphviz_string_link_attributes	= '[arrowhead=vee,label = "%s",fontname="Verdana",fontsize=%s];';
 	/** The graphviz string link node text, expects an identifier when printing */
 	$graphviz_string_link_node			= 'node%s'; 
 	$graphviz_string_node_attributes	= '[label = "%s",URL="%s",color="%s"];'
