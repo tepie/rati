@@ -59,6 +59,7 @@
 	/** Create a QueryRunner to run queries on the database */
 	$query_runner 	= new QueryRunner();
 	/** Start a transaction */
+	$query_runner->runQuery("$database_disable_autocommit");
 	$query_runner->runQuery("$database_start_transaction");
 	/** Replace the search index */
 	replace_search_index();

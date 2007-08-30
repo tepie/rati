@@ -67,7 +67,8 @@
 	
 	//** Database wide queries
 	/** Start a datbase transaction */
-	$database_start_transaction 	= "SET AUTOCOMMIT=0;START TRANSACTION;";
+	$database_disable_autocommit 	= "SET AUTOCOMMIT=0;";
+	$database_start_transaction 	= "START TRANSACTION;";
 	$database_commit_transaction 	= "COMMIT;";
 	$database_analyze_attribute		= "ANALYZE TABLE `$attribute_structure_table_name`;";
 	$database_analyze_object		= "ANALYZE TABLE `$object_structure_table_name`;";
