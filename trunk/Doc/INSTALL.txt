@@ -1,0 +1,50 @@
+Install Rati - Relational Analysis Through Images
+===============================================================================
+The following will step you through the process of setting up the
+Rati software. You will require root access to your database system
+and the shell environment. 
+
+The following are needed to setup Rati:
+	* PHP 5
+	* Apache HTTP 2
+	* MySQL 5
+	* Graphviz version 2.12
+	
+This document assumes all executables to the needed software above are
+in your path. If not, you will need to run the commands below using 
+the absolute path to the executeables. 
+
+Filesystem Setup
+===========================================
+Extract the contents of the packaged application to the desired directory. The 
+root of the extract contains the root of the application, and so that will be
+the main directory to view this application.
+
+Lets assume you want to have Rati navigatable in the following fashion:
+
+	http://localhost/rati
+
+Where localhost is the machine name, and rati is the root directory of the package. 
+Select the location of your installation, for example: /home/rati/rati-0.0-0/
+
+Extract the package to this location:
+	$ unzip rati-0.0-0.zip -d /home/rati/rati-0.0-0/
+	
+Apache HTTP Alias (If Needed)
+===========================================
+If you require an Apache HTTP alias to reach your installation directory, add the following 
+to your Apache HTTP configuration file. This is likely httpd.conf.
+
+	Alias /rati/ "/home/rati/rati-0.0-0/" 
+
+	<Directory "/home/rati/rati-0.0-0/">
+	    Options Indexes FollowSymLinks MultiViews
+	    AllowOverride all
+	        Order allow,deny
+	    Allow from all
+	</Directory>
+
+Restart your Apache HTTP service for this to take affect.
+
+Database Setup
+===========================================

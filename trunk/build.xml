@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="rati" default="dist" basedir=".">
+	<description>Packages the rati application</description>
+	<property name="dir.root" 		value="."/>
+	<property name="dir.dist" 		value ="${dir.root}/dist"/>
+	<property name="dir.doc" 		value="${dir.root}/Doc"/>
+	<property name="dir.include" 	value="${dir.root}/Include"/>
+	<property name="dir.sql" 		value="${dir.root}/sql"/>
+	<property name="dir.doxygen" 	value="${dir.root}/Doxygen"/>
+	<property name="exec.doxygen" 	value="doxygen" />
+	<property name="dist.exclude"	value=".svn/**,dist/**,dot/**,img/**,map/**,Thumbs.db,build.xml,Doxyfile,build.number" />
+	
+	<property name="version" value="1.0"/>
+   	<property name="project" value="rati"/>
+	
+	<target name="doxygen" description="Generate the project documentation.">
+		<echo>Generating project doxygen documentation...</echo>
+		<delete dir	=	"${dir.doxygen}"	/>
+		<mkdir 	dir	=	"${dir.doxygen}" 	/>
+		<exec 	executable	=	"${exec.doxygen}" />
+	</target>
+	
+	<target name="dist" depends="doxygen" description="Generate project distribution package.">
+		<buildnumber/>
+		<echo>Generating project distribution archive...</echo>
+		<delete dir		=	"${dir.dist}"/>
+		<mkdir 	dir		=	"${dir.dist}"/>
+		<zip destfile	=	"${dir.dist}/${project}-${version}-${build.number}.zip" 
+			basedir		=	"${dir.root}" 
+			update		=	"true"
+			excludes	=	"${dist.exclude}"/>
+		<!--<tar destfile	=	"${dir.dist}/${project}-${version}-${build.number}.tar.gz" 
+			basedir		=	"${dir.root}" 
+			excludes	=	"${dist.exclude}"
+			compression	=	"gzip" /> -->
+	</target>
+	
+	<!--
+	<target name="install" description="An installation process to setup this application.">
+		<echo>Welcome to the Rati build installation.</echo>
+		<echo>If you wish to exit, hit ctrl-c.</echo>
+		<input>Press Return key to continue</input>
+		<echo>DATABASE SETTINGS</echo>
+		<echo>==============================</echo>
+		<input message="Please the host string of your database:" 
+			addproperty="db.host" 
+			defaultvalue="localhost" />
+		<input message="Please the root account name of your database:" 
+			addproperty="db.user_root" 
+			defaultvalue="root" />
+		<input message="Please the root account password of your database:" 
+			addproperty="db.user_passwd" 
+			defaultvalue="root" />
+		<input message="Please enter the desired database name for rati:"
+			addproperty="db.db_name" 
+			defaultvalue="rati" />
+		<input message="Please enter the desired table prefix:"
+			addproperty="db.db_table_prefix" 
+			defaultvalue="rati_" />
+		<echo>DATABASE SETTINGS</echo>
+		<echo>==============================</echo>
+		<echo>Database Host ${db.host}</echo>
+		<echo>Root Account ${db.user_root}</echo>
+		<echo>Database Name ${db.db_name}</echo>
+		<echo>Table Prefix ${db.db_table_prefix}</echo>
+	</target>
+	-->
+</project>

@@ -1,0 +1,15 @@
+TODO Rati - Relational Analysis Through Images
+===============================================================================
+
+Outstanding Issues In Version 1.0
+=================================================
+* Check for data issues in the database
+	
+Closed Issues in Version 1.0
+=================================================
+* Rewrite Python XML expat parser in PHP to support database string escapes
+	and to make source code langauge common
+* Enable search (basic full text matching)
+* Fix directed arrows, all are going one way (fix is in, but looks bad, so leaving)
+* Trim displayed text in attribute values for focus if needed (moved to a different view)
+* Added search result bolding
