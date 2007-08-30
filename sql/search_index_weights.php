@@ -59,7 +59,7 @@ where obj_rel.reference = object.id and i.object_name = obj_rel.name';*/
 					if($line["category"] == $obj_name){
 						$weight = $obj_index + $adjust;
 						//$update_sql = "update search_index set weight=$weight where object_name = '". $line["name"]."';";	
-						$update_sql = sprintf($search_index_update_weight_value,mysql_escape_string("$weight"),mysql_escape_string($line["$object_structure_name"]));
+						$update_sql = sprintf($search_index_update_weight_value,mysql_escape_string("$weight"),mysql_escape_string($name),mysql_escape_string($line["$object_structure_name"]));
 						$update_res = $query_runner->runQuery($update_sql);
 						//echo $update_sql."\n";
 						break;
@@ -121,7 +121,7 @@ where obj_rel.reference = object.id and i.object_name = obj_rel.name';*/
 	
 	/** Create a QueryRunner to run queries on the database */
 	$query_runner 	= new QueryRunner();
-	
+	$query_runner->runQuery("$database_disable_autocommit");
 	$query_runner->runQuery("$database_start_transaction");
 	
 	$top_index = determine_max_category_index();

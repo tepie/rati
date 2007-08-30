@@ -7,6 +7,7 @@
 	$search_index_structure_combined_attributes = "combined_attributes";
 	$search_index_structure_rank			= "rank";
 	$search_index_structure_weight			= "weight";
+	$search_index_structure_perspective		= "perspective";
 	
 	
 	$search_index_left_union = "select o.$object_structure_name as object,
@@ -62,8 +63,8 @@ $relationship_structure_table_name.$relationship_structure_reference_fk != 0) as
 where obj_rel.$relationship_structure_reference_fk = $object_structure_table_name.$object_structure_primary_id and 
 i.$search_index_structure_object  = obj_rel.$object_structure_name";
 
-	$search_index_update_weight_value = "update $search_index_structrue_name set $search_index_structure_weight=%s 
-where $search_index_structure_object = '%s'";
+	$search_index_update_weight_value = "update $search_index_structrue_name set $search_index_structure_weight=%s, 
+$search_index_structure_perspective='%s' where $search_index_structure_object = '%s'";
 
 
 ?>

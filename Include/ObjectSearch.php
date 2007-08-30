@@ -62,11 +62,17 @@
 					//$html = $html . $results[$key]["name"];
 					//$display_name = preg_replace('/\//',' ',$key);
 					//$html = $html . $display_name;
-					$html = $html . $key;
+					//$html = $html . $key;
+					if(isset($value["perspective"])){
+						$html = $html . strtoupper($value["perspective"]) . " - " . $key;
+					} else {
+						$html = $html . $key;
+					}
 					$html = $html . "</a></td></tr>\n";
 					$html = $html . "<tr><td class=\"search_result_content\">";
 					//$html = $html . $results[$key]["matched"];
-					$highlight = $this->highlightHtml($search_string,$value);
+					//$highlight = $this->highlightHtml($search_string,$value);
+					$highlight = $this->highlightHtml($search_string,$value["rule"]);
 					//$html = $html . "$value";
 					$html = $html . "$highlight";
 					$html = $html . "</td></tr>\n";
@@ -105,23 +111,32 @@
 			$string = mysql_real_escape_string($trimmed);
 			$escaped = ereg_replace("[ \t\n\r\f\v]+","%",$string);
 			
-			$exact_sql = "SELECT object_name as object,combined_attributes as rule FROM `search_index` ";
+			$exact_sql = "SELECT object_name as object,combined_attributes as rule, perspective FROM `search_index` ";
 			$exact_sql = $exact_sql . "WHERE object_name = \"$string\" limit 1";
 			$exact_res = $this->query_runner->runQuery($exact_sql);
 			$line = mysql_fetch_array($exact_res ,MYSQL_ASSOC);
 			if(isset($line["object"])){
-				$return[$line["object"]] = $line["rule"];
+				//$return[$line["object"]] = $line["rule"];
+				
+				$return[$line["object"]] = array();
+				$return[$line["object"]]["rule"] 		= $line["rule"];
+				$return[$line["object"]]["perspective"] = $line["perspective"];
+				
 			}	
 			
 			mysql_free_result($exact_res);
 			
-			$sql = "SELECT object_name as object,combined_attributes as rule FROM `search_index` ";
+			$sql = "SELECT object_name as object,combined_attributes as rule, perspective FROM `search_index` ";
 			$sql = $sql . "WHERE combined_attributes like ('%$escaped%') collate latin1_general_ci ";
 			$sql = $sql . "order by weight desc,rank desc limit $li_lower,$li_upper";
 			
 			$res 		= $this->query_runner->runQuery($sql);
 			while($line = mysql_fetch_array($res ,MYSQL_ASSOC)){
-				$return[$line["object"]] = $line["rule"];
+				//$return[$line["object"]] = $line["rule"];
+				
+				$return[$line["object"]] = array();
+				$return[$line["object"]]["rule"] 		= $line["rule"];
+				$return[$line["object"]]["perspective"] = $line["perspective"];
 				
 			}
 		
