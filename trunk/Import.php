@@ -120,13 +120,6 @@
 		$res 					= $query_runner->runQuery($insert_sql);
 		$relationship_id 		= mysql_insert_id();
 		
-		echo $value."\n";
-		//echo quotemeta($value)."\n";
-		//echo htmlspecialchars($value)."\n";
-		//echo addslashes($value)."\n";
-		//echo htmlentities($value,ENT_QUOTES);
-		//echo "$escaped_value\n";
-		echo "\n";
 		return $relationship_id + 0;
 	}
 	
@@ -324,7 +317,9 @@
 			/** Ignore bad values, not sure why this is happening */
 			if(preg_match("/(^\\n)/",$data) == 0){
 				$relationship_id = relationship_value_add($object_id,$attribute_id,$data);
-			}	
+			} else{
+				echo "Bad char_data: $value\n";
+			}
 		}
 	}
 	
@@ -396,22 +391,39 @@
 				/** Open XML file stream*/
 				$fp = fopen($input_xml,"r") or die("IOError: Failed opening \"$input_xml\"");
 				
-				//Read data
+				/** Read data */
 				while ($data = fread($fp,1048576)){
-					//$cleanData		= ereg_replace("\\\'","'",$data);
-					//$moreCleanData		= ereg_replace('\\\"','"',$cleanData);
-					//echo $data."\n";
+					/** strip the backslaches from the string */
 					$stripped 		= stripslashes($data);
-					$html_removed 	= htmlspecialchars_decode($stripped);
-					$str = preg_replace('/\s+/', ' ', $html_removed);
-					//echo $html_removed."\n";
+					unset($data);
+					/** remove the special html character encoding */
+					//$html_removed 	= html_entity_decode($stripped,ENT_QUOTES);
+					//unset($stripped);
+					/** remove the whitespace between xml entities >\s+< */
+					$between_xml_str = preg_replace('/>\s+</', '><', $stripped);
+					/** Remove other white space in the xml */
+					//unset($html_removed);
+					$str 	= preg_replace('/\s+/', ' ', $between_xml_str);
+					unset($between_xml_str);
+					// Escape ampersands that aren't part of entities.
+				    $Contents = preg_replace('/&(?!\w{2,6};)/', '&amp;', $str);
+
+				    // Remove all non-visible characters except SP, TAB, LF and CR.
+				    $str = preg_replace('/[^\x20-\x7E\x09\x0A\x0D]/', "\n", $Contents);
+					//$quot 		= preg_replace('/\&quot\;/','"',$all_white);
+					//unset($all_white);
+					//$str 		= preg_replace('/\&quote\;/','"',$quot);
+					//echo $str;
 					//exit();
-					//$special		= htmlspecialchars_decode($stripped);
-					//$entities		= htmlentities($stripped,ENT_QUOTES);
-					xml_parse($parser,$str,feof($fp)) or 
+					if(!xml_parse($parser,$str,feof($fp))){
+						$handle = fopen("error", "wb");
+						fwrite($handle,$str);
+						fclose($handle);
 						die (sprintf("XML Error: %s at line %d at column %d\nXML Error: %s", 
 							xml_error_string(xml_get_error_code($parser)),
-							xml_get_current_line_number($parser),xml_get_current_column_number($parser),$data));
+							xml_get_current_line_number($parser),xml_get_current_column_number($parser),$str));
+					}
+					//unset($str);
 					
 				}
 				/** Close the file stream */
@@ -445,14 +457,15 @@
 	$object_id				= null;
 	
 	if($argc > 1){
-		echo "<!-- command line load -->\n";
+		/** this is a command line based load, handle it */
 		handle_command_line_load();
+		/** finalize the load process */
 		finalize_load();
 		if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 		exit();
 	} elseif(isset($_GET["$url_rest_import_xml_string_param"])) {
+		/** this is a http load */
 		header('Content-type: text/xml');
-		//echo "<!-- http load -->\n";
 		$res = handle_http_string_load($_GET["$url_rest_import_xml_string_param"]);
 		if($res) {
 			echo "<Result>Success</Result>";
@@ -461,6 +474,7 @@
 		if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 		exit();
 	} else {
+		/** there seems to be no importing going on, explain the process to import */
 		echo commonHtmlPageHead("Web XML Import API");
 		echo commonHtmlPlainHeader();	
 ?>
