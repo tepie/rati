@@ -172,7 +172,10 @@ as well as some other recent user actions.
 			foreach($recent_searches as $index=>$text){
 				//$pos = $index + 1;
 				echo "<tr><td class=\"usage_value_name\">";
-				echo "<a href=\"Search.php?q=". urlencode($text)."\">$text</a>";
+				echo "<a href=\"Search.php?q=". urlencode($text)."\">";
+				echo substr($text,0,30);
+				if(strlen($text) > 30) echo "...";
+				//$text</a>";
 				echo "</td></tr>\n";
 			}
 		?>
@@ -186,8 +189,8 @@ as well as some other recent user actions.
 			foreach($recent_objects	as $index=>$text){
 				//$pos = $index + 1;
 				echo "<tr><td class=\"usage_value_name\"><a href=\"Navigate.php?q=". urlencode($text)."\">";
-				echo substr($text,0,40);
-				if(strlen($text) > 40) echo "...";
+				echo substr($text,0,30);
+				if(strlen($text) > 30) echo "...";
 				echo "</a>";
 				echo "</td></tr>\n";
 			}

@@ -57,8 +57,9 @@
 		global $web_app_page_index_name;
 		global $perspective_names;
 		//global $web_app_page_post_back_name;
-		
-		$html = "<div class=\"top-bar-full\">\n";
+		$html = "";
+		//$html = "<div style=\"text-align:right; padding-right:0.2cm;\"><a href=\"#\" onClick=\"popup('Customize.php');\"><small>Customize</small></a></div>";
+		$html = $html . "<div class=\"top-bar-full\">\n";
 		$html = $html .  "<a class=\"top-bar-full\" href=\"$web_app_page_index_name\">";
 		$html = $html .  "$web_app_name_full</a><br />";
 		$html = $html .  "<form action=\"Search.php\" method=\"get\" style=\"margin: 0px; padding: 0px;\">\n";

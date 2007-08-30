@@ -60,6 +60,8 @@
 					$html = $html . "<tr><td class=\"search_result_item\">\n";
 					$html = $html . "<a href=\"$web_app_page_post_back_name?$url_rest_node_param=". urlencode($key) . "\">\n";
 					//$html = $html . $results[$key]["name"];
+					//$display_name = preg_replace('/\//',' ',$key);
+					//$html = $html . $display_name;
 					$html = $html . $key;
 					$html = $html . "</a></td></tr>\n";
 					$html = $html . "<tr><td class=\"search_result_content\">";

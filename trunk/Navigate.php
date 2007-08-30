@@ -124,17 +124,13 @@
 				
 			}
 		} 
-		
-		
-		
+
 		/** Read the contents of the map file */
 		$map_contents 	= file_get_contents("$map_file");
 		/** Clean the map file slashes */
 		$cleanMap 		= ereg_replace('\\\"','"',$map_contents);
 		
 	}
-	
-	
 	/** Add the document header */
 	echo commonHtmlPageHead($node_name);
 	/** Add the page header */
@@ -151,14 +147,14 @@
 	/** The image heading */
 	echo "<th class=\"image_side_head\">";
 	if($focus == "image" or $focus == "none"){
-		echo "<div class=\"section_heading\">Relationships of ". $utility->parsePathBaseName($node_name). "</div>\n";
+		echo "<div class=\"section_heading\">Relationships of ". $utility->parsePathBaseName($node_name) . "</div>\n";
 	} else {
 		echo "<div class=\"section_heading\">Attributes of ". $utility->parsePathBaseName($node_name). "</div>\n";
 	}
 	echo "</th>";
 	/** The attribute head */
-	echo "<th class=\"attribute_side_head\">";
-	echo "<div class=\"section_heading\">Options</div>\n</th>";
+	//echo "<th class=\"attribute_side_head\">";
+	//echo "<div class=\"section_heading\">Options</div>\n</th>";
 	echo "</tr>";
 	/** Done with the main headings */
 	echo "<tr>";
@@ -167,27 +163,33 @@
 	echo "<td class=\"image_side_content\">";
 	if($focus == "image" or $focus == "none"){	
 		echo "<table width=\"99%\">";
-		echo "<tr><td>";
-		echo "<img src=\"$img_url\" alt=\"Model\" ";
-		echo "class=\"model\" usemap=\"#$img_url\" border=\"0\">\n";
+		echo "<tr>";
+		// legend
+		echo "<td width=\"30%\" style=\"vertical-align:top;\">" . createNodeColorLegendTable($rootCategory) . "";
+		// attributes
+		echo "<br /><br />". createAttributeTableHtml($rootAttributes) . "</td>";
+		//echo "<div id=\"scroll-legend\" style=\"position:absolute;\" >";
+		
+		// image
+		echo "<td><center><img src=\"$img_url\" alt=\"Model\" ";
+		echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
 		echo "<map name=\"$img_url\">\n";
 		echo $cleanMap;
-		echo "</map>\n";
-		echo "</td><td width=\"20%\" style=\"vertical-align:top;\">";
-		//echo "<div id=\"scroll-legend\" style=\"position:absolute;\" >";
-		echo createNodeColorLegendTable($rootCategory);
+		echo "</map></td>\n";
+		
+		
 		//echo "</div>";
-		echo "</td></tr></table>";
+		echo "</tr></table>";
 	} else {
 		echo createAttributeTableHtml($rootAttributes);
 	}
 	echo "</td>";
 	/** Done with left side */
 	
-	echo "<td class=\"attribute_side_content\">";
+	//echo "<td class=\"attribute_side_content\">";
 	
-	echo createExtraOptions($node_name,$focus);
-	echo "</td></tr>";
+	//echo createExtraOptions($node_name,$focus);
+	echo "</td>";//"</tr>";
 	/** Done with the right side */
 	/** Close the table element */
 	echo "</table>\n";
