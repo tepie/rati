@@ -311,6 +311,7 @@
 			if(isset($line["$all_structure_as_count"]) and $line["$all_structure_as_count"] > 0){
 				/** Create SQL to get the upward neighbors */
 				$sql = sprintf($relationship_reference_neighbors,$escaped,$this->dblimit);
+				//echo "$sql<br />";
 				/* Return the result */
 				return $this->query_runner->runQuery($sql);
 			} else { 
@@ -337,6 +338,7 @@
 			
 			if(isset($line["$all_structure_as_count"]) and $line["$all_structure_as_count"] > 0){
 				$sql = sprintf($relationship_referencing_neighbors,$escaped,$this->dblimit);
+				//echo $sql."<br />";
 				return $this->query_runner->runQuery($sql);
 			} else { return null; }
 		}
