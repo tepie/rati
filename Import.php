@@ -120,6 +120,13 @@
 		$res 					= $query_runner->runQuery($insert_sql);
 		$relationship_id 		= mysql_insert_id();
 		
+		echo $value."\n";
+		//echo quotemeta($value)."\n";
+		//echo htmlspecialchars($value)."\n";
+		//echo addslashes($value)."\n";
+		//echo htmlentities($value,ENT_QUOTES);
+		//echo "$escaped_value\n";
+		echo "\n";
 		return $relationship_id + 0;
 	}
 	
@@ -390,10 +397,18 @@
 				$fp = fopen($input_xml,"r") or die("IOError: Failed opening \"$input_xml\"");
 				
 				//Read data
-				while ($data = fread($fp,512)){
-					$cleanData		= ereg_replace("\\\'","'",$data);
-					$moreCleanData		= ereg_replace('\\\"','"',$cleanData);
-					xml_parse($parser,$moreCleanData,feof($fp)) or 
+				while ($data = fread($fp,1048576)){
+					//$cleanData		= ereg_replace("\\\'","'",$data);
+					//$moreCleanData		= ereg_replace('\\\"','"',$cleanData);
+					//echo $data."\n";
+					$stripped 		= stripslashes($data);
+					$html_removed 	= htmlspecialchars_decode($stripped);
+					$str = preg_replace('/\s+/', ' ', $html_removed);
+					//echo $html_removed."\n";
+					//exit();
+					//$special		= htmlspecialchars_decode($stripped);
+					//$entities		= htmlentities($stripped,ENT_QUOTES);
+					xml_parse($parser,$str,feof($fp)) or 
 						die (sprintf("XML Error: %s at line %d at column %d\nXML Error: %s", 
 							xml_error_string(xml_get_error_code($parser)),
 							xml_get_current_line_number($parser),xml_get_current_column_number($parser),$data));
