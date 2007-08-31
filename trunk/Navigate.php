@@ -167,7 +167,9 @@
 		// legend
 		echo "<td width=\"30%\" style=\"vertical-align:top;\">" . createNodeColorLegendTable($rootCategory) . "";
 		// attributes
-		echo "<br /><br />". createAttributeTableHtml($rootAttributes) . "</td>";
+		echo "<br /><br />". createAttributeTableHtml($rootAttributes);
+
+		echo "<br />". createExtraOptions($node_name,$focus). "</td>";
 		//echo "<div id=\"scroll-legend\" style=\"position:absolute;\" >";
 		
 		// image

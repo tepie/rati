@@ -61,7 +61,7 @@
 	/** The organizational unit main web site */
 	$web_app_organizational_url		= 	"http://csc06shpntpw01s/team/EDA/default.aspx";
 	/** The source code of this application */
-	$web_app_source_code_url	 	= 	"http://docsum.svn.sourceforge.net/viewvc/docsum/rati/";
+	$web_app_source_code_url	 	= 	"http://code.google.com/p/rati/";
 	/** The full name of this application */
 	$web_app_name_full				= 	"relational analysis through images";
 	/** The short name of this application */
