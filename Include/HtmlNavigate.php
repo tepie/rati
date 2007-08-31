@@ -21,13 +21,14 @@
 		$html = "<table class=\"extra_options\">\n";
 		//$html = $html . "<tr><th class=\"extra_options\">Extra Options</th></tr>";
 		
-		if($focus != "attributes"){		
+		/*if($focus != "attributes"){		
 			$html = $html . "<tr><td class=\"extra_option\">\n";
 			$html = $html . "<a href=\"$web_app_page_post_back_name?$url_rest_node_param=$url_node&amp;focus=attributes\">\n";
 			$html = $html . "View Value Attributes</a></td></tr>\n";
 		} else {
 			
 		}
+		*/
 		
 		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"#\">Cognos Report</a></td></tr>\n";
 		$html = $html . "<tr><td class=\"extra_option\">";
@@ -78,7 +79,7 @@
 				$html 			= $html . "<td class=\"attribute_value\">$special</td></tr>\n";
 			}
 		}
-		$html = $html . "</table><br /><br />\n";
+		$html = $html . "</table>\n";
 		
 		return $html;
 	}
