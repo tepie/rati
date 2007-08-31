@@ -12,10 +12,40 @@ The following software components must be installed and setup in your environmen
   * MySQL Database 5.0
   * PHP 5.0
 
+= Filesystem Setup =
+Extract the contents of the packaged application to the desired directory. The 
+root of the extract contains the root of the application, and so that will be
+the main directory to view this application.
 
-= Details =
+Lets assume you want to have Rati navigable in the following fashion:
 
-Details to come... stay tuned!
+  * http://localhost/rati
+
+Where localhost is the machine name, and rati is the root directory of the package. 
+Select the location of your installation, for example: /home/rati/rati-0.0-0/
+
+Extract the package to this location:
+
+  * `$ unzip rati-0.0-0.zip -d /home/rati/rati-0.0-0/`
+
+= Apache HTTP Alias (If Needed) =
+If you require an Apache HTTP alias to reach your installation directory, add the following 
+to your Apache HTTP configuration file. This is likely httpd.conf.
+
+{{{
+Alias /rati/ "/home/rati/rati-0.0-0/" 
+<Directory "/home/rati/rati-0.0-0/">
+Options Indexes FollowSymLinks MultiViews
+AllowOverride all
+Order allow,deny
+Allow from all
+</Directory>
+}}}
+
+Restart your Apache HTTP service for this to take affect.
+
+
+
 
 
 
