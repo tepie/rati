@@ -1,0 +1,26 @@
+#labels Phase-Deploy,Phase-Support
+How to install Rati
+
+= Introduction =
+
+The following details explain how to install the rati application.
+
+= Prerequisites =
+
+The following software components must be installed and setup in your environment. Basically, you need a LAMP or WAMP setup where the P is for PHP. 
+  * Apache HTTP Web Server 2
+  * MySQL Database 5.0
+  * PHP 5.0
+
+
+= Details =
+
+Details to come... stay tuned!
+
+
+
+
+
+
+
+
