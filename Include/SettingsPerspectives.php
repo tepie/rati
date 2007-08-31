@@ -45,23 +45,23 @@
 	$web_app_sa_node_color_map["/system architect/categories/category"] 		= $web_app_default_cat_color;
 	
 	//*************************************************************************
-	//*	MDR Application 
+	//*	MDR Application (galileo)
 	//*	Persepective
 	//*************************************************************************
 
-	$mdr_category_prefix			= 	"/mdr/Metadata/Categories";
-	$mdr_category_ereg				= 	"\/mdr\/Metadata\/Categories";
-	$mdr_default_root_node			= 	"$mdr_category_prefix/Subject Area";
+	$mdr_category_prefix			= 	"/galileo/Metadata/Categories";
+	$mdr_category_ereg				= 	"\/galileo\/Metadata\/Categories";
+	$mdr_default_root_node			= 	"$mdr_category_prefix/category";
 	$mdr_category_reference_rule 	= 	"category";
 	$mdr_category_unknown			= 	"Unknown";
-	$mdr_perspective_name			= 	"mdr";
+	$mdr_perspective_name			= 	"galileo";
 	
 	$web_app_mdr_node_color_map		=   array();
 	$web_app_mdr_node_color_map["$mdr_category_prefix/Subject Area"] 		= "LightCoral";
 	$web_app_mdr_node_color_map["$mdr_category_prefix/Entity"] 				= "orange";
 	$web_app_mdr_node_color_map["$mdr_category_prefix/Element"] 			= "yellowgreen";
 	$web_app_mdr_node_color_map["$mdr_category_prefix/Column"] 				= "violet";
-	$web_app_mdr_node_color_map["$mdr_category_prefix/category"] 		= $web_app_default_cat_color;
+	$web_app_mdr_node_color_map["$mdr_category_prefix/category"] 			= $web_app_default_cat_color;
 	
 	//*************************************************************************
 	//*	Combined Application 
