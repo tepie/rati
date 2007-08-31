@@ -1,6 +1,7 @@
 <?php
 
 	include_once("SettingsWebApp.php");
+	include_once("SettingsPerspectives.php");
 	include_once('SQLQueries.php');
 	
 	/**
@@ -28,8 +29,15 @@
 		* return formatted search results
 		*/
 		public function search($search_string,$lower_xx,$upper,$return_as="html"){
-			//echo "range: $lower_xx,$upper <br />";
-			$results = $this->executeSearch($search_string,$lower_xx,$upper);
+			$detected_perspective = $this->verifyIfPerspectiveBased($search_string);
+			if($detected_perspective != False){
+				//return "Ah Ha!@!!@@!~ You are trying a perspective search!<br />";
+				//echo "$detected_perspective<br />";
+				$search_string = $detected_perspective[1];
+				$results = $this->executePerspectiveSearch($search_string,$detected_perspective[0],$lower_xx,$upper);
+			} else {
+				$results = $this->executeSearch($search_string,$lower_xx,$upper);
+			}
 			
 			if($return_as == "html") {
 				$formatted = $this->formatResultsAsHtml($search_string,$results);
@@ -38,6 +46,17 @@
 			}
 			
 			return $formatted;
+		}
+		
+		private function verifyIfPerspectiveBased($search_string){
+			global $perspective_names;
+			
+			$parts = split(":",$search_string);
+			if(count($parts) == 2 and in_array($parts[0],$perspective_names)){
+				return array($parts[0],$parts[1]);
+			} else {
+				return False;
+			}
 		}
 		
 		/**
@@ -103,6 +122,46 @@
 			
 			return $value;
 			
+		}
+		
+		private function executePerspectiveSearch($search_string,$perspective,$li_lower,$li_upper){
+			$return = array();
+			$trimmed = trim($search_string);
+			$string = mysql_real_escape_string($trimmed);
+			$escaped = ereg_replace("[ \t\n\r\f\v]+","%",$string);
+			$escaped_p = mysql_real_escape_string($perspective);
+			
+			$exact_sql = "SELECT object_name as object,combined_attributes as rule, perspective FROM `search_index` ";
+			$exact_sql = $exact_sql . "WHERE object_name = \"$string\" and perspective = '$escaped_p' limit 1";
+			$exact_res = $this->query_runner->runQuery($exact_sql);
+			$line = mysql_fetch_array($exact_res ,MYSQL_ASSOC);
+			if(isset($line["object"])){
+				//$return[$line["object"]] = $line["rule"];
+				
+				$return[$line["object"]] = array();
+				$return[$line["object"]]["rule"] 		= $line["rule"];
+				$return[$line["object"]]["perspective"] = $line["perspective"];
+				
+			}	
+			
+			mysql_free_result($exact_res);
+			
+			$sql = "SELECT object_name as object,combined_attributes as rule, perspective FROM `search_index` ";
+			$sql = $sql . "WHERE combined_attributes like ('%$escaped%') collate latin1_general_ci and ";
+			$sql = $sql . "perspective = '$escaped_p' order by weight desc,rank desc limit $li_lower,$li_upper";
+			
+			$res 		= $this->query_runner->runQuery($sql);
+			while($line = mysql_fetch_array($res ,MYSQL_ASSOC)){
+				//$return[$line["object"]] = $line["rule"];
+				
+				$return[$line["object"]] = array();
+				$return[$line["object"]]["rule"] 		= $line["rule"];
+				$return[$line["object"]]["perspective"] = $line["perspective"];
+				
+			}
+		
+			mysql_free_result($res);
+			return $return;
 		}
 		
 		private function executeSearch($search_string,$li_lower=0,$li_upper=30){

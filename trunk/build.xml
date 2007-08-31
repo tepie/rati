@@ -12,6 +12,7 @@
 	
 	<property name="version" value="1.0"/>
    	<property name="project" value="rati"/>
+	<property name="stage" value="beta"/>
 	
 	<target name="doxygen" description="Generate the project documentation.">
 		<echo>Generating project doxygen documentation...</echo>
@@ -25,7 +26,7 @@
 		<echo>Generating project distribution archive...</echo>
 		<delete dir		=	"${dir.dist}"/>
 		<mkdir 	dir		=	"${dir.dist}"/>
-		<zip destfile	=	"${dir.dist}/${project}-${version}-${build.number}.zip" 
+		<zip destfile	=	"${dir.dist}/${project}-${version}-${build.number}-${stage}.zip" 
 			basedir		=	"${dir.root}" 
 			update		=	"true"
 			excludes	=	"${dist.exclude}"/>

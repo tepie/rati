@@ -19,8 +19,8 @@
 	$web_app_abi_node_color_map["$abinitio_category_prefix/Column"] 			= "violet";
 	$web_app_abi_node_color_map["$abinitio_category_prefix/File"] 				= "gray";
 	$web_app_abi_node_color_map["$abinitio_category_prefix/DML"] 				= "cadetblue";
-	$web_app_abi_node_color_map["$abinitio_category_prefix/File Group"] 		= "aquamarine";
-	$web_app_abi_node_color_map["$abinitio_category_prefix/Steward Group"] 		= "deeppink";
+	//$web_app_abi_node_color_map["$abinitio_category_prefix/File Group"] 		= "aquamarine";
+	//$web_app_abi_node_color_map["$abinitio_category_prefix/Steward Group"] 		= "deeppink";
 	$web_app_abi_node_color_map["$abinitio_category_prefix/category"] 			= $web_app_default_cat_color;
 	
 	
