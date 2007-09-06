@@ -8,7 +8,7 @@
 	<property name="dir.sql" 		value="${dir.root}/sql"/>
 	<property name="dir.doxygen" 	value="${dir.root}/Doxygen"/>
 	<property name="exec.doxygen" 	value="doxygen" />
-	<property name="dist.exclude"	value=".svn/**,dist/**,dot/**,img/**,map/**,Thumbs.db,build.xml,Doxyfile,build.number" />
+	<property name="dist.exclude"	value="**/.svn/**,dist/**,dot/**,img/**,map/**,Thumbs.db,build.xml,Doxyfile,build.number" />
 	
 	<property name="version" value="1.0"/>
    	<property name="project" value="rati"/>
@@ -21,8 +21,9 @@
 		<exec 	executable	=	"${exec.doxygen}" />
 	</target>
 	
-	<target name="dist" depends="doxygen" description="Generate project distribution package.">
+	<target name="dist" description="Generate project distribution package.">
 		<buildnumber/>
+		<delete dir	=	"${dir.doxygen}"	/>
 		<echo>Generating project distribution archive...</echo>
 		<delete dir		=	"${dir.dist}"/>
 		<mkdir 	dir		=	"${dir.dist}"/>
