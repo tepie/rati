@@ -36,15 +36,15 @@
 		header('Location: Index.php');
 	}
 	
-	if(isset($_GET["focus"])){
+	//if(isset($_GET["focus"])){
 		/** Set the focus */
-		$focus = urldecode($_GET["focus"]);
-	}
+		//$focus = urldecode($_GET["focus"]);
+	//}
 	
-	if(!isset($focus) or $focus != "image" and $focus != "attributes"){
+	//if(!isset($focus) or $focus != "image" and $focus != "attributes"){
 		/** Set the focus */
-		$focus = "none";
-	}
+		//$focus = "none";
+	//}
 	
 	
 	// Verify our database connection link
@@ -67,7 +67,10 @@
 	/** Create a new graph object using the query runner to execute database calls
 	* set the up and down flags for neighbors, and set the direction of the graph
 	*/
-	$g 	= new GraphObject($query_runner,true,true,1,"$graph_default_direction",$_SESSION["$url_rest_custom_image_arrow_direction"]);
+	$temp_graph_direction = $_SESSION["$url_rest_custom_image_graph_direction"];
+	$temp_arrow_direction = $_SESSION["$url_rest_custom_image_arrow_direction"];
+	
+	$g 	= new GraphObject($query_runner,true,true,1,$temp_graph_direction,$temp_arrow_direction);
 	
 	// Walk the graph given the node name as the root of the graph
 	$g->walk($node_name);
@@ -77,9 +80,9 @@
 	//echo "Root Name:	$node_name<br />";
 	//echo "Root Category: $rootCategory<br />";
 	
-	if($focus == "image" or $focus == "none"){
+	//if($focus == "image" or $focus == "none"){
 		// Fetch the graphviz directed graph string 
-		if($focus == "image"){
+		if($_SESSION[$url_rest_custom_image_font_size] == "L"){
 			/** The graphviz string LARGE */
 			$graph =  $g->getGraphvizSring($fontsize="14");
 		} else {
@@ -130,7 +133,7 @@
 		/** Clean the map file slashes */
 		$cleanMap 		= ereg_replace('\\\"','"',$map_contents);
 		
-	}
+	//}
 	/** Add the document header */
 	echo commonHtmlPageHead($node_name);
 	/** Add the page header */
@@ -146,11 +149,11 @@
 	
 	/** The image heading */
 	echo "<th class=\"image_side_head\">";
-	if($focus == "image" or $focus == "none"){
-		echo "<div class=\"section_heading\">Relationships of ". $utility->parsePathBaseName($node_name) . "</div>\n";
-	} else {
-		echo "<div class=\"section_heading\">Attributes of ". $utility->parsePathBaseName($node_name). "</div>\n";
-	}
+	//if($focus == "image" or $focus == "none"){
+	echo "<div class=\"section_heading\">Relationships of ". $utility->parsePathBaseName($node_name) . "</div>\n";
+	//} else {
+		//echo "<div class=\"section_heading\">Attributes of ". $utility->parsePathBaseName($node_name). "</div>\n";
+	//}
 	echo "</th>";
 	/** The attribute head */
 	//echo "<th class=\"attribute_side_head\">";
@@ -161,7 +164,7 @@
 	
 	/** The left side contains the image */
 	echo "<td class=\"image_side_content\">";
-	if($focus == "image" or $focus == "none"){	
+	//if($focus == "image" or $focus == "none"){	
 		echo "<table width=\"99%\">";
 		echo "<tr>";
 		// legend
@@ -182,9 +185,9 @@
 		
 		//echo "</div>";
 		echo "</tr></table>";
-	} else {
-		echo createAttributeTableHtml($rootAttributes);
-	}
+	//} else {
+		//echo createAttributeTableHtml($rootAttributes);
+	//}
 	echo "</td>";
 	/** Done with left side */
 	

@@ -46,6 +46,8 @@
 	
 	$url_rest_import_xml_string_param 		= "xml_string";
 	$url_rest_custom_image_arrow_direction 	= "image_arrow_direction";
+	$url_rest_custom_image_graph_direction 	= "image_graph_direction";
+	$url_rest_custom_image_font_size 		= "image_font_size";
 	
 	$web_app_default_style_sheet	= 	"./$web_app_dir_include_name/style.css";
 	/** The application logo (not used) */
