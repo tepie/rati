@@ -27,6 +27,7 @@
 		private $flag_down 		= null;
 		/** Level at which to display graph */
 		private $limit 			= null;
+		private $limit_track 	= null;
 		/** Directions ? */
 		private $directions		= null;
 		/** The root attribute array */
@@ -52,6 +53,7 @@
 			$this->flag_up 			= $up;
 			$this->flag_down 		= $down;
 			$this->limit			= $li;
+			$this->limit_track		= 0;
 			$this->direction		= $direction;
 			$this->arrows 			= $arrows;
 			//echo $this->arrows;
@@ -117,6 +119,7 @@
 		*/
 		public function walk($node_name){
 			global $mysql_database_neighbor_limit;
+			$this->limit_track = $this->limit;
 			// Create a new node object using this query runner and node name
 			$node 		= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
 			$this->node_name = $node_name;
@@ -128,11 +131,20 @@
 			$neighbors 	= $node->getNeighbors();
 			
 			// Add this node to the graph list object
-			$this->addNode($node);
+			$this->addGraphNode($node);
 			
 			// If this node has more then zero neighbors, foo it
 			if(count($neighbors) > 0){
-				$this->foo($node);
+				$this->track_limit = 0;
+				while($this->track_limit < $this->limit){
+					$this->visitUnvisited();
+					$this->track_limit++;
+				}
+				//$this->visitNode($node);
+				/*if($this->limit_track > 0){
+					$this->limit_track--;
+					$this->bar($neighbors);
+				}*/
 			}		
 		} 
 		
@@ -210,23 +222,25 @@
 			$copy 					= $this->getGraph();
 			// Clear the graphviz labels, create it as an empty array
 			$this->graphviz_labels 	= array();
-			
+			$this->track_limit = 0;
 			// For each copy of the graph as a key value pair of node id and its object
 			foreach($copy as $node_id => $nodeObject){
 				// For some reason we are getting an empty node in the datatbase
 				// This is a bug fix, temporary
 				if($node_id > 0){
 					// Add the current node object to the graphviz string
+					
 					$this->graphviz = $this->graphviz . $nodeObject;
 					// Push this node id on the label list to keep track that it has already been labeled
-					array_push($this->graphviz_labels,$node_id);
+					//$this->addGraphvizLinks($node_id);
 					// If this is the root loop, meaning we are showing the neighbors of the root only, enter
-					if($firstFlag){
+					//if($firstFlag){
 						// Add the links of the current node object (root) to the graph
-						$this->graphviz = $this->graphviz . $this->graphLinks($nodeObject,$fontsize);
+					$this->graphviz = $this->graphviz . $this->graphLinks($nodeObject,$fontsize);
 						// Swithc the first flag
-						$firstFlag = False;
-					}
+						//$firstFlag = false;
+						
+					//}
 				}
 			}
 			
@@ -261,29 +275,30 @@
 			foreach($nodeObj->getNeighbors() as $key => $value){
 				// Calculate the node name from its key (the node id)
 				//$node_name = $this->calculateNodeName($key);
-				
-				if($this->arrows){
-					$switch = $nodeObj->getNodeNeighborDirectionTo($key);
-				} else {
-					$switch = true;
+				if(array_key_exists($key,$this->getGraph())){
+					if($this->arrows){
+						$switch = $nodeObj->getNodeNeighborDirectionTo($key);
+					} else {
+						$switch = true;
+					}
+					//echo $this->arrows . " " . $switch . " ";
+					
+					if($switch){
+						$left 	= $node_id;
+						$right	= $key;
+					} else {
+						$left 	= $key;
+						$right	= $node_id;
+					}
+					
+					$html_value = htmlentities($value, ENT_QUOTES);
+					
+					// Formulate the link text
+					$text	= $text . "\t". sprintf($graphviz_string_link_node,$left);
+					$text 	= $text . $graphviz_string_link_lr_arrow;
+					$text	= $text . sprintf($graphviz_string_link_node,$right);
+					$text  	= $text . sprintf($graphviz_string_link_attributes,$html_value,$use_size) . "\n";
 				}
-				//echo $this->arrows . " " . $switch . " ";
-				
-				if($switch){
-					$left 	= $node_id;
-					$right	= $key;
-				} else {
-					$left 	= $key;
-					$right	= $node_id;
-				}
-				
-				$html_value = htmlentities($value, ENT_QUOTES);
-				
-				// Formulate the link text
-				$text	= $text . "\t". sprintf($graphviz_string_link_node,$left);
-				$text 	= $text . $graphviz_string_link_lr_arrow;
-				$text	= $text . sprintf($graphviz_string_link_node,$right);
-				$text  	= $text . sprintf($graphviz_string_link_attributes,$html_value,$use_size) . "\n";
 			}
 			
 			// Return the generated graphviz link text
@@ -316,18 +331,36 @@
 			$this->graphviz 		= "";
 			$this->flag_up 			= True;
 			$this->flag_down 		= True;
+			$this->limit_track 		= 0;
 			$this->limit 			= 1;
 		}
 		
 		/** Foo on a node object
 		* @param $nodeObj the node object to foo on
 		*/
-		private function foo($nodeObj){
+		private function visitNode($nodeObj){
 			global $mysql_database_neighbor_limit;
+			$this->addVisitedNode($nodeObj);
 			foreach($nodeObj->getNeighbors() as $node_id => $value){
 				$node_name 			= $this->calculateNodeName($node_id);
 				$neighborNodeObj 	= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
-				$this->addNode($neighborNodeObj);		
+				$this->addGraphNode($neighborNodeObj);	
+			}
+		}
+		
+		private function visitUnvisited(){
+			global $mysql_database_neighbor_limit;
+			$graph_keys = array_keys($this->graph);
+			$visited_keys = array_keys($this->nodesVisited);
+			$unvisited = array_diff_key($graph_keys,$visited_keys);
+			print_r($unvisited);
+			
+			foreach($unvisited as $index => $node_id){
+				$node_name 			= $this->calculateNodeName($node_id);
+				echo "<br />$node_name<br />";				
+				$unvisitedNodeObj 	= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
+				$this->visitNode($unvisitedNodeObj);
+				if($index > 0) break;
 			}
 		}
 		
@@ -335,15 +368,20 @@
 		* Go to the bar
 		* @param $neighbors a list of neighbors to walk
 		*/
-		private function bar($neighbors){
-			foreach($neighbors as $node_id => $value){
-				if(!array_key_exists($node_id,$this->getnodesVisited())){
-					$this->limit--;
-					$this->walk($this->calculateNodeName($node_id));
-					
+		/*private function bar($neighbors){
+			if($this->limit_track > 0){
+				foreach($neighbors as $node_id => $value){
+					if(!array_key_exists($node_id,$this->getnodesVisited())){
+						$node_name 			= $this->calculateNodeName($node_id);
+						//echo "<!-- bar: $node_name($node_id) => $value -->\n";
+						//$this->walk($this->calculateNodeName($node_id));
+					} else {
+						echo "<!-- skipped $node_id -->\n";
+					}
+					break;
 				}
 			}
-		}
+		}*/
 		
 		/** 
 		* Check if a node is in the visited list
@@ -352,7 +390,7 @@
 		* return false is the node is not in the visited list
 		* return true if the node is in the visited list
 		*/
-		private function inNodesVisited($node){
+		/*private function inNodesVisited($node){
 			if(count($this->getNodesVisited()) == 0){
 				return FALSE;
 			}
@@ -362,31 +400,68 @@
 			} else{
 				return TRUE;
 			}
-		}
+		}*/
 	
 		/** 
-		* Track that a node has been visited
-		* @param $nodeObj the node to check if it was visited already
-		* return false if the node does not exist in the visited list
-		* return the result of adding the node to the visited list 
+		* Check if a node has been visited
+		* @param $nodeObj the node to check if it is in the graph already
+		* return false if the node does not exist, true otherwise
 		*/
-		private function addVisited($nodeObj){
-			if(!array_key_exists($nodeObj->getNodeId(),$this->getGraph()))	 {
-				return array_push($this->nodesVisited,$nodeObj->getNodeId());
+		private function inVisited($nodeObj){
+			if(!array_key_exists($nodeObj->getNodeId(),$this->nodesVisited)){
+				return True; //array_push($this->nodesVisited,$nodeObj->getNodeId());
 			} else {
 				return False;
 			}
 
 		}	
+		
+		/** 
+		* Check if a node is in the graph
+		* @param $nodeObj the node to check if it is in the graph already
+		* return false if the node does not exist, true otherwise
+		*/
+		private function inGraph($nodeObj){
+			if(!array_key_exists($nodeObj->getNodeId(),$this->getGraph())){
+				return True; //array_push($this->nodesVisited,$nodeObj->getNodeId());
+			} else {
+				return False;
+			}
+		}	
+		
+		private function inGraphvizLabels($node_id){
+			if(!in_array($node_id,$this->graphviz_labels)){
+				return True;
+			} else {
+				return False;
+			}
+		}
 
 		/** 
 		* Adds a node to the graph object 
 		* @param $nodeObj a node object to be added to the graph object
 		*/
-		private function addNode($nodeObj){
-			$result = $this->addVisited($nodeObj);
-			$id 	= $nodeObj->getNodeId();
-			$this->graph[$id] = $nodeObj;
+		private function addGraphNode($nodeObj){
+			$result = $this->inGraph($nodeObj);
+			if($result){
+				$id 	= $nodeObj->getNodeId();
+				$this->graph[$id] = $nodeObj;
+			}
+		}
+		
+		private function addVisitedNode($nodeObj){
+			$result = $this->inVisited($nodeObj);
+			if($result){
+				$id = $nodeObj->getNodeId();
+				array_push($this->nodesVisited,$id);
+			}
+		}
+		
+		private function addGraphvizLabels($node_id){
+			$result = $this->inGraphvizLabels($node_id);
+			if($result){
+				array_push($this->graphviz_labels,$node_id);
+			}
 		}
 	}
 
