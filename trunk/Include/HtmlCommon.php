@@ -9,6 +9,14 @@
 		if(!isset($_SESSION["$url_rest_custom_image_arrow_direction"])){
 			$_SESSION["$url_rest_custom_image_arrow_direction"] = "0";
 		}
+		
+		if(!isset($_SESSION["$url_rest_custom_image_graph_direction"])){
+			$_SESSION["$url_rest_custom_image_graph_direction"] = "LR";
+		}
+		
+		if(!isset($_SESSION["$url_rest_custom_image_font_size"])){
+			$_SESSION["$url_rest_custom_image_font_size"] = "N";
+		}
 	}
 	
 	function commonCloseWindow(){

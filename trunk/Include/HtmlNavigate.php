@@ -31,20 +31,20 @@
 		*/
 		
 		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"#\">Cognos Report</a></td></tr>\n";
-		$html = $html . "<tr><td class=\"extra_option\">";
+		//$html = $html . "<tr><td class=\"extra_option\">";
 		
-		if($focus == "none"){
+		/*if($focus == "none"){
 			$html =  $html . "<a href=\"$web_app_page_post_back_name?$url_rest_node_param=$url_node&amp;focus=image\">View Larger Image</a>\n";
 		} else {
 			$html =  $html . "<a href=\"$web_app_page_post_back_name?$url_rest_node_param=$url_node&amp;focus=none\">View Normal Image</a>\n";
-		}
-		$html = $html . "</td></tr>\n";
+		}*/
+		//$html = $html . "</td></tr>\n";
 		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"#\">Cognos Report</a></td></tr>\n";
 		$html = $html . "<tr><td class=\"extra_option\">&nbsp;</td></tr>\n";
 		$html = $html . "<tr><td class=\"extra_option\">export as</td></tr>\n";
-		$html = $html . "<tr><td class=\"extra_option\"><a href=\"Export.php?$url_rest_node_param=$url_node&amp;type=xml\">XML</a></td></tr>\n";
+		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"Export.php?$url_rest_node_param=$url_node&amp;type=xml\">XML</a></td></tr>\n";
 		$html = $html . "<tr><td class=\"extra_option\"><a href=\"Export.php?$url_rest_node_param=$url_node&amp;type=dot\">DOT</a></td></tr>\n";
-		$html = $html . "<tr><td class=\"extra_option\"><a href=\"Export.php?$url_rest_node_param=$url_node&amp;type=img\">Image</a></td></tr>\n";
+		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"Export.php?$url_rest_node_param=$url_node&amp;type=img\">Image</a></td></tr>\n";
 		$html = $html . "</table>\n";
 		$html = $html . "<br />";
 		
