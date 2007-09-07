@@ -57,7 +57,7 @@
 		
 	$custom_image_arrow_direction_accepted 	= array("0" => "Same Line Directions", "1" => "Actual Line Directions");
 	$custom_image_graph_direction_accepted 	= array("LR" => "Left to Right", "TB" => "Top to Bottom");
-	$custom_image_font_size_accepted		= array("N" => "Normal", "L" => "Large" );
+	$custom_image_font_size_accepted		= array("N" => "Normal", "L" => "Large", "S" => "Small" );
 	$custom_image_graph_levels_accepted		= array("1" => "One", "2" => "Two");
 	
 	$custom_accepted_array = array($custom_image_arrow_direction_accepted,
