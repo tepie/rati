@@ -6,6 +6,7 @@
 	include_once('Include\\ObjectUsage.php');
 	include_once('Include\\ObjectUtility.php');
 	include_once('Include\\HtmlNavigate.php');
+	include_once('Include\\HtmlCommon.php');
 	
 	$type_param 			= "type";
 	$type_default_export 	= "xml";
@@ -59,6 +60,7 @@
 	}
 	
 	$header = select_header($export_type);
+	commonSessionSetup();
 	header("Content-type: $header");
 		
 	// Check the URL for a "node" parameter and set the $node_name
@@ -68,14 +70,25 @@
 		$node_name = $_GET["$url_rest_node_param"];
 		
 		$query_runner 	= new QueryRunner();
-		$g = new GraphObject($query_runner,true,true,1,"$graph_default_direction",false);
+		$temp_graph_direction = $_SESSION["$url_rest_custom_image_graph_direction"];
+		$temp_arrow_direction = $_SESSION["$url_rest_custom_image_arrow_direction"];
+		$g = new GraphObject($query_runner,true,true,1,$temp_graph_direction,$temp_arrow_direction);
 		$g->walk($node_name);
+		
+		if($_SESSION[$url_rest_custom_image_font_size] == "L"){
+		/** The graphviz string LARGE */
+			$temp_graph =  $g->getGraphvizSring($fontsize="14");
+		} else {
+		/** The graphviz string */
+			$temp_graph 	=  $g->getGraphvizSring();
+		}
+		
 		if($export_type == "xml"){
 			echo $g->getExportXml();
 		} elseif ($export_type == "dot"){
-			echo $g->getGraphvizSring();
+			echo $temp_graph;
 		} elseif ($export_type == "img"){
-			$graph_string 	= $g->getGraphvizSring();
+			$graph_string 	= $temp_graph;
 			$utility 		= new UtilityObject();
 			$result_setup 	= $utility->setupFileDirectories();
 		
