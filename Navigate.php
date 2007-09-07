@@ -69,7 +69,6 @@
 	*/
 	$temp_graph_direction = $_SESSION["$url_rest_custom_image_graph_direction"];
 	$temp_arrow_direction = $_SESSION["$url_rest_custom_image_arrow_direction"];
-	
 	$g 	= new GraphObject($query_runner,true,true,1,$temp_graph_direction,$temp_arrow_direction);
 	
 	// Walk the graph given the node name as the root of the graph
@@ -77,63 +76,60 @@
 	/** The attributes of the root node to show */
 	$rootAttributes = $g->getRootNodeAttributes();
 	$rootCategory 	= $g->getRootCategory();
-	//echo "Root Name:	$node_name<br />";
+	
 	//echo "Root Category: $rootCategory<br />";
 	
-	//if($focus == "image" or $focus == "none"){
-		// Fetch the graphviz directed graph string 
-		if($_SESSION[$url_rest_custom_image_font_size] == "L"){
-			/** The graphviz string LARGE */
-			$graph =  $g->getGraphvizSring($fontsize="14");
-		} else {
-			/** The graphviz string */
-			$graph 	=  $g->getGraphvizSring();
+	if($_SESSION[$url_rest_custom_image_font_size] == "L"){
+		/** The graphviz string LARGE */
+		$graph =  $g->getGraphvizSring($fontsize="14");
+	} else {
+		/** The graphviz string */
+		$graph 	=  $g->getGraphvizSring();
+	}
+	
+	/** Generate a MD5 checksum against the graph graphviz string */
+	$checksum 	= md5($graph);
+	//echo $checksum."<br />";
+	/** Escape the checksum value to be used in the shell */
+	$escaped 	= escapeshellarg($checksum);
+	/** Setup the file directories */
+	$result_setup = $utility->setupFileDirectories();
+	
+	if(!$result_setup){
+		echo "Problem creating needed directories to store files, check permissions.";
+		exit(-1);
+	}
+	
+	/** The output file for the dot graph */
+	$dot_file = "$directory_dot_graph" . "$filesystem_path_separator" . "$checksum";
+	/** The output file for the map file */
+	$map_file = "$directory_dot_map" . "$filesystem_path_separator" . "$checksum" . "." . "$graph_default_map_extension";
+	/** The image output file */
+	$img_file = "$directory_dot_img" . "$filesystem_path_separator" . "$checksum" . "." . "$graph_default_image_extension";
+	/** The URL to the image */
+	$img_url = "$directory_dot_img" . "$url_path_separator" . "$checksum" . "." . "$graph_default_image_extension";
+	
+	if(!$utility->checkFile($dot_file,$filesystem_age_time)){
+		/** File Handle */
+		$handle 	= fopen($dot_file,"w+");
+		fwrite($handle,$graph);
+		fclose($handle);
+	} 
+	
+	if(!$utility->checkFile("$map_file",$filesystem_age_time)){
+		if(!$utility->checkFile("$img_file",$filesystem_age_time)){
+			$mapCmd	= "$command_executable_dot -Tcmap -o$map_file -T$graph_default_image_format -o$img_file $dot_file";
+			exec($mapCmd,$output,$ret);
+			//echo $mapCmd;
+			
 		}
-		
-		/** Generate a MD5 checksum against the graph graphviz string */
-		$checksum 	= md5($graph);
-		//echo $checksum."<br />";
-		/** Escape the checksum value to be used in the shell */
-		$escaped 	= escapeshellarg($checksum);
-		/** Setup the file directories */
-		$result_setup = $utility->setupFileDirectories();
-		
-		if(!$result_setup){
-			echo "Problem creating needed directories to store files, check permissions.";
-			exit(-1);
-		}
-		
-		/** The output file for the dot graph */
-		$dot_file = "$directory_dot_graph" . "$filesystem_path_separator" . "$checksum";
-		/** The output file for the map file */
-		$map_file = "$directory_dot_map" . "$filesystem_path_separator" . "$checksum" . "." . "$graph_default_map_extension";
-		/** The image output file */
-		$img_file = "$directory_dot_img" . "$filesystem_path_separator" . "$checksum" . "." . "$graph_default_image_extension";
-		/** The URL to the image */
-		$img_url = "$directory_dot_img" . "$url_path_separator" . "$checksum" . "." . "$graph_default_image_extension";
-		
-		if(!$utility->checkFile($dot_file,$filesystem_age_time)){
-			/** File Handle */
-			$handle 	= fopen($dot_file,"w+");
-			fwrite($handle,$graph);
-			fclose($handle);
-		} 
-		
-		if(!$utility->checkFile("$map_file",$filesystem_age_time)){
-			if(!$utility->checkFile("$img_file",$filesystem_age_time)){
-				$mapCmd	= "$command_executable_dot -Tcmap -o$map_file -T$graph_default_image_format -o$img_file $dot_file";
-				exec($mapCmd,$output,$ret);
-				//echo $mapCmd;
-				
-			}
-		} 
+	} 
 
-		/** Read the contents of the map file */
-		$map_contents 	= file_get_contents("$map_file");
-		/** Clean the map file slashes */
-		$cleanMap 		= ereg_replace('\\\"','"',$map_contents);
-		
-	//}
+	/** Read the contents of the map file */
+	$map_contents 	= file_get_contents("$map_file");
+	/** Clean the map file slashes */
+	$cleanMap 		= ereg_replace('\\\"','"',$map_contents);
+	
 	/** Add the document header */
 	echo commonHtmlPageHead($node_name);
 	/** Add the page header */
