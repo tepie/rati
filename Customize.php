@@ -7,7 +7,21 @@
 	
 	echo commonSessionSetup();
 	
-	if(isset($_GET["$url_rest_custom_image_arrow_direction"])){
+	foreach($url_rest_custom_array as $index => $parameter){
+		if(isset($_GET["$parameter"])){
+			$accepted_array = $custom_accepted_array[$index];
+			foreach($accepted_array as $inner_index => $value){
+				if(isset($_GET["$parameter"]) == $value){
+					$_SESSION["$parameter"] = $_GET["$parameter"];
+					$should_close_flag = True;
+					break;
+				}
+			}
+		
+		}
+	}
+	
+	/*if(isset($_GET["$url_rest_custom_image_arrow_direction"])){
 		if($_GET["$url_rest_custom_image_arrow_direction"] == "0" or $_GET["$url_rest_custom_image_arrow_direction"] == "1"){
 			$_SESSION["$url_rest_custom_image_arrow_direction"] = $_GET["$url_rest_custom_image_arrow_direction"];
 			$should_close_flag = True;
@@ -26,7 +40,7 @@
 			$_SESSION["$url_rest_custom_image_font_size"] = $_GET["$url_rest_custom_image_font_size"];
 			$should_close_flag = True;
 		}
-	}
+	}*/
 	
 	if($should_close_flag){
 		echo commonCloseWindow();
@@ -44,13 +58,23 @@
 Setup how the relationship lines are drawn for the images you will see...<br /><br />
 <?php 
 	echo "<select name=\"$url_rest_custom_image_arrow_direction\">\n";
-	if($_SESSION["$url_rest_custom_image_arrow_direction"] == "1"){
+	
+	foreach($custom_image_arrow_direction_accepted as $value => $display){
+		if($_SESSION["$url_rest_custom_image_arrow_direction"] == "$value"){
+			echo '<option value="'.$value.'" selected="selected">'.$display.'</option>';
+		} else {
+			echo '<option value="'.$value.'">'.$display.'</option>';
+		}
+		
+	}
+	
+	/*if($_SESSION["$url_rest_custom_image_arrow_direction"] == "1"){
 		echo '<option value="1" selected="selected">Actual Line Directions</option>';
 		echo '<option value="0">Same Line Directions</option>';
 	} else {
 		echo '<option value="1">Actual Line Directions</option>';
 		echo '<option value="0" selected="selected">Same Line Directions</option>';
-	}
+	}*/
 	echo "</select>\n";
 ?>
 <br />
@@ -58,26 +82,44 @@ Setup how the relationship lines are drawn for the images you will see...<br /><
 Setup the default graph direction...<br /><br />
 <?php 
 	echo "<select name=\"$url_rest_custom_image_graph_direction\">\n";
-	if($_SESSION["$url_rest_custom_image_graph_direction"] == "LR"){
+	
+	foreach($custom_image_graph_direction_accepted as $value => $display){
+		if($_SESSION["$url_rest_custom_image_graph_direction"] == "$value"){
+			echo '<option value="'.$value.'" selected="selected">'.$display.'</option>';
+		} else {
+			echo '<option value="'.$value.'">'.$display.'</option>';
+		}	
+	}
+	
+	/*if($_SESSION["$url_rest_custom_image_graph_direction"] == "LR"){
 		echo '<option value="LR" selected="selected">Left to Right</option>';
 		echo '<option value="TB" >Top to Bottom</option>';
 	} else {
 		echo '<option value="LR">Left to Right</option>';
 		echo '<option value="TB" selected="selected">Top to Bottom</option>';
-	}
+	}*/
 	echo "</select>\n";
 ?>
 <br /><br />
 Setup the default graph size...<br /><br />
 <?php 
 	echo "<select name=\"$url_rest_custom_image_font_size\">\n";
-	if($_SESSION["$url_rest_custom_image_font_size"] == "L"){
+	
+	foreach($custom_image_font_size_accepted as $value => $display){
+		if($_SESSION["$url_rest_custom_image_font_size"] == "$value"){
+			echo '<option value="'.$value.'" selected="selected">'.$display.'</option>';
+		} else {
+			echo '<option value="'.$value.'">'.$display.'</option>';
+		}	
+	}
+	
+	/*if($_SESSION["$url_rest_custom_image_font_size"] == "L"){
 		echo '<option value="L" selected="selected">Large</option>';
 		echo '<option value="N" >Normal</option>';
 	} else {
 		echo '<option value="L">Large</option>';
 		echo '<option value="N" selected="selected">Normal</option>';
-	}
+	}*/
 	echo "</select>\n";
 ?>
 <br /><br />

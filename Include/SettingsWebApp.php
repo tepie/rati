@@ -49,6 +49,18 @@
 	$url_rest_custom_image_graph_direction 	= "image_graph_direction";
 	$url_rest_custom_image_font_size 		= "image_font_size";
 	
+	$url_rest_custom_array = array($url_rest_custom_image_arrow_direction,
+		$url_rest_custom_image_graph_direction,
+		$url_rest_custom_image_font_size);
+		
+	$custom_image_arrow_direction_accepted 	= array("0" => "Same Line Directions", "1" => "Actual Line Directions");
+	$custom_image_graph_direction_accepted 	= array("LR" => "Left to Right", "TB" => "Top to Bottom");
+	$custom_image_font_size_accepted		= array("N" => "Normal", "L" => "Large" );
+	
+	$custom_accepted_array = array($custom_image_arrow_direction_accepted,
+		$custom_image_graph_direction_accepted,
+		$custom_image_font_size_accepted);
+	
 	$web_app_default_style_sheet	= 	"./$web_app_dir_include_name/style.css";
 	/** The application logo (not used) */
 	$web_app_default_logo_image		= 	"./$web_app_dir_include_name/rati.gif";
