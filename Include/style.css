@@ -18,6 +18,10 @@ table.search_forward_back{
 	width: 99%;
 }
 
+table.custom_table{
+	width: 99%;
+}
+
 table.attributes{
 	width:			99%;
 	empty-cells:	show;
@@ -88,6 +92,14 @@ th.extra_options{
 th.usage_value_name{
 	width: 80%;
 	text-align:left;
+}
+
+td.custom_table_left{
+	width: 60%;
+}
+
+td.custom_table_right{
+	width: 40%;
 }
 
 td.usage_value_name{
@@ -331,4 +343,8 @@ a:visited{color:	#8B0000;}
 
 li{
 	font-weight:bold;
+}
+
+select.custom_option{
+	width: 100%;
 }
