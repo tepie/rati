@@ -225,23 +225,29 @@
 			global $perspective_category_reference_rules;
 			
 			$found = False;
-			
-			foreach($this->getNeighbors() as $nodeId => $ruleName){
-				foreach($perspective_category_reference_rules as $index => $rule){
-					if($ruleName == $rule){
-						//echo "$ruleName vs. $rule <br />";
-						$sql 	= sprintf($object_calculate_node_name,$nodeId);
-						$res 	= $this->query_runner->runQuery($sql);
-						$line 	= mysql_fetch_array($res,MYSQL_ASSOC);
-						mysql_free_result($res);
-						$this->category = $line["$object_structure_name"];
-						//echo $this->name . " - " .$line["$object_structure_name"] . "<br />";
-						$found = True;
-						break;
+			$temp_neighbors = $this->structureUpNeighbors();
+			//echo "<pre>";
+			//print_r($temp_neighbors);
+			//echo "</pre>";
+			if($temp_neighbors != null){
+				foreach($temp_neighbors as $nodeId => $ruleName){
+					//echo "$ruleName<br />";
+					foreach($perspective_category_reference_rules as $index => $rule){
+						if($ruleName == $rule){
+							//echo "$ruleName vs. $rule <br />";
+							$sql 	= sprintf($object_calculate_node_name,$nodeId);
+							$res 	= $this->query_runner->runQuery($sql);
+							$line 	= mysql_fetch_array($res,MYSQL_ASSOC);
+							mysql_free_result($res);
+							$this->category = $line["$object_structure_name"];
+							//echo $this->name . " - " .$line["$object_structure_name"] . "<br />";
+							$found = True;
+							break;
+						}
 					}
 				}
 			}
-			
+			//$this->flag_up = $temp_this_flag;
 			if(!$found) $this->category = "Unknown";
 		}
 		
@@ -253,37 +259,87 @@
 		* return combined indirect and direct neighbors as array of numeric id as key and attribute link name as value
 		*/
 		private function calculateNeighbors(){
-			global $relationship_structure_reference_fk;
 			global $object_structure_primary_id;
 			global $object_structure_name;
 			global $attribute_structure_name;
+			global $relationship_structure_reference_fk;
 			$node_id = $this->idDatabase;
-			
-			$return = array();
+			//echo $this->getNodeName()."<br />";
+			$return_up 		= null;
+			$return_down 	= null;
 			if($this->flag_up){
 				$results_up = $this->getUpNeighbors();
 				if($results_up != null){
-					while($line = mysql_fetch_array($results_up,MYSQL_ASSOC)){
-						$return[$line["$relationship_structure_reference_fk"] + 0] = $line["$attribute_structure_name"];
-					}
-					mysql_free_result($results_up);
+					$return_up = $this->structureUpNeighbors();
 				} 
-				
 			}
 			
 			if($this->flag_down){
 				$results_down = $this->getDownNeighbors();
 				if($results_down != null){
-					while($line = mysql_fetch_array($results_down,MYSQL_ASSOC)){
-						$return[$line["$object_structure_primary_id"] + 0] = $line["$object_structure_name"];
-					}
-					mysql_free_result($results_down);
-				}
+					$return_down = $this->structureDownNeighbors();
+				} 
 			}
 			
-			$this->neighbors = $return;
+			$this->constructNeighborArray($return_up,$return_down);	
 		}
-
+		
+		private function constructNeighborArray($return_up,$return_down){
+			if($return_down != null and $return_up != null){
+				//echo "merge<br />";
+				foreach($return_up as $key => $value){
+					$this->neighbors[$key] = $value;
+				}
+				
+				foreach($return_down as $key => $value){
+					$this->neighbors[$key] = $value;
+				}
+				
+			} else if($return_down != null){
+				//echo "down<br />";
+				$this->neighbors = $return_down;
+			} else if($return_up != null){
+				//echo "up<br />";
+				$this->neighbors = $return_up;
+			} else {
+				//echo "none<br />";
+				$this->neighbors = null;
+			}
+		}
+		
+		private function structureUpNeighbors(){
+			global $attribute_structure_name;
+			global $relationship_structure_reference_fk;
+			$results_up = $this->getUpNeighbors();
+			$return = null;
+			if($results_up != null){
+				$return = array();
+				while($line = mysql_fetch_array($results_up,MYSQL_ASSOC)){
+					$return[$line["$relationship_structure_reference_fk"] + 0] = $line["$attribute_structure_name"];
+				}
+				
+				mysql_free_result($results_up);
+			} 
+			return $return;
+		}
+		
+		private function structureDownNeighbors(){
+			global $object_structure_primary_id;
+			global $object_structure_name;
+			$return = null;
+			$results_down = $this->getDownNeighbors();
+			if($results_down != null){
+				$return = array();
+				while($line = mysql_fetch_array($results_down,MYSQL_ASSOC)){
+					$return[$line["$object_structure_primary_id"] + 0] = $line["$object_structure_name"];
+				}
+				mysql_free_result($results_down);
+			}
+			
+			return $return;
+			
+		}
+		
 		/**
 		* Get the indirect neighbors of this node. 
 		* Indirect neighbors are nodes referencing this one, not nodes this node is
