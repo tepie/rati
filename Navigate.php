@@ -62,17 +62,17 @@
 	echo "<table width=\"99%\">";
 	echo "<tr>";
 	// legend
-	$url_legend_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&type=legend".commonUrlCustomizationValues();
+	$url_legend_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=legend".commonUrlCustomizationValues();
 	$legend_export = file_get_contents($url_legend_export);
 	echo "<td width=\"30%\" style=\"vertical-align:top;\">" . $legend_export . "";
 	// attributes
-	$url_attributes_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&type=attributes".commonUrlCustomizationValues();
+	$url_attributes_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=attributes".commonUrlCustomizationValues();
 	$attributes_export = file_get_contents($url_attributes_export);
 	echo "<br /><br />$attributes_export";
 	// extra options
 	echo "<br />". createExtraOptions($node_name). "</td>";
 	// image
-	$url_html_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&type=html".commonUrlCustomizationValues();
+	$url_html_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=html".commonUrlCustomizationValues();
 	$html_export = file_get_contents($url_html_export);
 	echo "<td>$html_export</td>\n";
 	echo "</tr></table>";
@@ -85,6 +85,7 @@
 	echo "</table>\n";
 	echo "<br />";
 	/** Show the page footer */
+	//print_r($_SESSION);
 	echo commonHtmlPageFooter();
 	
 	/** Setup the database connection, provide the host, username and password */
