@@ -20,7 +20,7 @@
 	}
 	
 	function commonCloseWindow(){
-		return "<html><body onload=\"javascript:window.close();\"></body></html>";
+		return "<html><body onload=\"javascript:opener.window.location.reload();window.close();\"></body></html>";
 	}
 	
 	function commonHtmlPageHead($page_title_tail){
