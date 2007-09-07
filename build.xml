@@ -31,40 +31,5 @@
 			basedir		=	"${dir.root}" 
 			update		=	"true"
 			excludes	=	"${dist.exclude}"/>
-		<!--<tar destfile	=	"${dir.dist}/${project}-${version}-${build.number}.tar.gz" 
-			basedir		=	"${dir.root}" 
-			excludes	=	"${dist.exclude}"
-			compression	=	"gzip" /> -->
 	</target>
-	
-	<!--
-	<target name="install" description="An installation process to setup this application.">
-		<echo>Welcome to the Rati build installation.</echo>
-		<echo>If you wish to exit, hit ctrl-c.</echo>
-		<input>Press Return key to continue</input>
-		<echo>DATABASE SETTINGS</echo>
-		<echo>==============================</echo>
-		<input message="Please the host string of your database:" 
-			addproperty="db.host" 
-			defaultvalue="localhost" />
-		<input message="Please the root account name of your database:" 
-			addproperty="db.user_root" 
-			defaultvalue="root" />
-		<input message="Please the root account password of your database:" 
-			addproperty="db.user_passwd" 
-			defaultvalue="root" />
-		<input message="Please enter the desired database name for rati:"
-			addproperty="db.db_name" 
-			defaultvalue="rati" />
-		<input message="Please enter the desired table prefix:"
-			addproperty="db.db_table_prefix" 
-			defaultvalue="rati_" />
-		<echo>DATABASE SETTINGS</echo>
-		<echo>==============================</echo>
-		<echo>Database Host ${db.host}</echo>
-		<echo>Root Account ${db.user_root}</echo>
-		<echo>Database Name ${db.db_name}</echo>
-		<echo>Table Prefix ${db.db_table_prefix}</echo>
-	</target>
-	-->
 </project>
