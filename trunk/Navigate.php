@@ -13,12 +13,6 @@
 	include_once('Include\\HtmlCommon.php');
 	include_once('Include\\HtmlNavigate.php');
 	
-	/** Setup the database connection, provide the host, username and password */
-	$db_connection 	= new DbConnectionHandler("$mysql_database_host",
-		"$mysql_database_user",
-		"$mysql_database_passwd"
-	);
-	
 	
 	// Check the URL for a "node" parameter and set the $node_name
 	if(isset($_GET["$url_rest_node_param"])){
@@ -30,24 +24,9 @@
 	// Default is the subject area
 	if(!isset($node_name)){
 		/** Set the node name to be used throughout this navigation */
-		//$node_name = "$graph_default_root_node";
 		header('Location: Index.php');
 	}
-	
-	// Verify our database connection link
-	// If it isn't setup, set it up and select 
-	// the desired database to work from, being "metawarehouse"
-	if(!ISSET($db_connection->link)){
-		$db_connection->setupDbLink();
-		/** The select database results */
-		$x = $db_connection->selectDb("$mysql_database_name");
-	}
-	
-	/** Create a QueryRunner to run queries on the database */
-	$query_runner 	= new QueryRunner();
-	/** Create a UtilityObject */
-	$utility 		= new UtilityObject();
-	
+
 	/** Setup the session */
 	commonSessionSetup();
 	
@@ -57,80 +36,12 @@
 	$temp_graph_direction 	= $_SESSION["$url_rest_custom_image_graph_direction"];
 	$temp_arrow_direction 	= $_SESSION["$url_rest_custom_image_arrow_direction"];
 	$temp_graph_levels		= $_SESSION["$url_rest_custom_image_graph_levels"] + 0;
-	$g 	= new GraphObject($query_runner,true,true,$temp_graph_levels,$temp_graph_direction,$temp_arrow_direction);
 	
-	// Walk the graph given the node name as the root of the graph
-	$g->walk($node_name);
-	/** The attributes of the root node to show */
-	
-	$rootCategory 	= $g->getRootCategory();
-	
-	//echo "Root Category: $rootCategory<br />";
-	
-	if($_SESSION[$url_rest_custom_image_font_size] == "L"){
-		/** The graphviz string LARGE */
-		$graph =  $g->getGraphvizSring($fontsize="14");
-	} else if($_SESSION[$url_rest_custom_image_font_size] == "S"){
-		$graph =  $g->getGraphvizSring($fontsize="8");
-	}else {
-		/** The graphviz string */
-		$graph 	=  $g->getGraphvizSring();
-	}
-	
-	/** Generate a MD5 checksum against the graph graphviz string */
-	$checksum 	= md5($graph);
-	//echo $checksum."<br />";
-	/** Escape the checksum value to be used in the shell */
-	$escaped 	= escapeshellarg($checksum);
-	/** Setup the file directories */
-	$result_setup = $utility->setupFileDirectories();
-	
-	if(!$result_setup){
-		echo "Problem creating needed directories to store files, check permissions.";
-		exit(-1);
-	}
-	
-	/** The output file for the dot graph */
-	$dot_file = "$directory_dot_graph" . "$filesystem_path_separator" . "$checksum";
-	/** The output file for the map file */
-	$map_file = "$directory_dot_map" . "$filesystem_path_separator" . "$checksum" . "." . "$graph_default_map_extension";
-	/** The image output file */
-	$img_file = "$directory_dot_img" . "$filesystem_path_separator" . "$checksum" . "." . "$graph_default_image_extension";
-	/** The URL to the image */
-	$img_url = "$directory_dot_img" . "$url_path_separator" . "$checksum" . "." . "$graph_default_image_extension";
-	
-	if(!$utility->checkFile($dot_file,$filesystem_age_time)){
-		/** File Handle */
-		$handle 	= fopen($dot_file,"w+");
-		fwrite($handle,$graph);
-		fclose($handle);
-	} 
-	
-	if(!$utility->checkFile("$map_file",$filesystem_age_time)){
-		if(!$utility->checkFile("$img_file",$filesystem_age_time)){
-			$mapCmd	= "$command_executable_dot -Tcmap -o$map_file -T$graph_default_image_format -o$img_file $dot_file";
-			exec($mapCmd,$output,$ret);			
-		}
-	} 
-
-	/** Read the contents of the map file */
-	$handle 	= fopen("$map_file","rb");
-	$cleanMap 	= '';
-	while (!feof($handle)) {
-	  $cleanMap .= ereg_replace('\\\"','"',fread($handle, 8192));
-	}
-	fclose($handle);
-	
-	//$map_contents 	= file_get_contents("$map_file");
-	/** Clean the map file slashes */
-	//$cleanMap 		= ereg_replace('\\\"','"',$map_contents);
-	
+	$utility 				= new UtilityObject();
 	/** Add the document header */
 	echo commonHtmlPageHead($node_name);
 	/** Add the page header */
 	echo commonHtmlPageHeader($node_name);
-	
-	//echo createNodeColorLegendTable();
 	
 	/** Start the main table */
 	echo "<table class=\"main\">";
@@ -151,18 +62,19 @@
 	echo "<table width=\"99%\">";
 	echo "<tr>";
 	// legend
-	echo "<td width=\"30%\" style=\"vertical-align:top;\">" . createNodeColorLegendTable($rootCategory) . "";
+	$url_legend_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&type=legend".commonUrlCustomizationValues();
+	$legend_export = file_get_contents($url_legend_export);
+	echo "<td width=\"30%\" style=\"vertical-align:top;\">" . $legend_export . "";
 	// attributes
-	$rootAttributes = $g->getRootNodeAttributes();
-	echo "<br /><br />". createAttributeTableHtml($rootAttributes);
+	$url_attributes_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&type=attributes".commonUrlCustomizationValues();
+	$attributes_export = file_get_contents($url_attributes_export);
+	echo "<br /><br />$attributes_export";
 	// extra options
-	echo "<br />". createExtraOptions($node_name,$focus). "</td>";
+	echo "<br />". createExtraOptions($node_name). "</td>";
 	// image
-	echo "<td><center><img src=\"$img_url\" alt=\"Model\" ";
-	echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
-	echo "<map name=\"$img_url\">\n";
-	echo $cleanMap;
-	echo "</map></td>\n";
+	$url_html_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&type=html".commonUrlCustomizationValues();
+	$html_export = file_get_contents($url_html_export);
+	echo "<td>$html_export</td>\n";
 	echo "</tr></table>";
 	
 	echo "</td>";
@@ -174,6 +86,18 @@
 	echo "<br />";
 	/** Show the page footer */
 	echo commonHtmlPageFooter();
+	
+	/** Setup the database connection, provide the host, username and password */
+	$db_connection 	= new DbConnectionHandler("$mysql_database_host",
+		"$mysql_database_user",
+		"$mysql_database_passwd"
+	);
+	
+	if(!ISSET($db_connection->link)){
+		$db_connection->setupDbLink();
+		/** The select database results */
+		$x = $db_connection->selectDb("$mysql_database_name");
+	}
 	
 	/** the usage watcher */
 	$watcher = new UsageObject();

@@ -5,6 +5,8 @@
 	
 	function commonSessionSetup(){
 		global $url_rest_custom_image_arrow_direction;
+		global $_SESSION;
+		
 		session_start();
 		if(!isset($_SESSION["$url_rest_custom_image_arrow_direction"])){
 			$_SESSION["$url_rest_custom_image_arrow_direction"] = "0";
@@ -20,6 +22,56 @@
 		
 		if(!isset($_SESSION["$url_rest_custom_image_graph_levels"])){
 			$_SESSION["$url_rest_custom_image_graph_levels"] = "1";
+		}
+	}
+	
+	function commonValidationCustomizationValues(){
+		global $url_rest_custom_array;
+		global $custom_accepted_array;
+		$should_close_flag = false;
+		
+		foreach($url_rest_custom_array as $index => $parameter){
+			if(isset($_GET["$parameter"])){
+				$accepted_array = $custom_accepted_array[$index];
+				foreach($accepted_array as $inner_index => $value){
+					if(isset($_GET["$parameter"]) == $value){
+						$_SESSION["$parameter"] = $_GET["$parameter"];
+						$should_close_flag = True;
+						break;
+					} else {
+						$_SESSION["$parameter"] = $accepted_array[0];
+					}
+				}
+			
+			}
+		}
+		
+		return $should_close_flag;
+	}
+	
+	function commonUrlCustomizationValues(){
+		global $url_rest_custom_array;
+		global $custom_accepted_array;
+		
+		$url_string = "";
+		
+		foreach($url_rest_custom_array as $index => $parameter){
+			$url_string .= "&$parameter=" . $_SESSION[$parameter];
+		}
+		
+		return $url_string;
+		
+	}
+	
+	function commonGraphvizFontSize(){
+		global $url_rest_custom_image_font_size;
+		
+		if($_SESSION[$url_rest_custom_image_font_size] == "L"){
+			return "14";
+		} else if($_SESSION[$url_rest_custom_image_font_size] == "S"){
+			return "8";
+		}else {
+			return null;
 		}
 	}
 	

@@ -2,25 +2,11 @@
 
 	include_once('Include\\SettingsWebApp.php');
 	include_once('Include\\HtmlCommon.php');
-	
-	$should_close_flag = false;
-	
+
 	echo commonSessionSetup();
 	
-	foreach($url_rest_custom_array as $index => $parameter){
-		if(isset($_GET["$parameter"])){
-			$accepted_array = $custom_accepted_array[$index];
-			foreach($accepted_array as $inner_index => $value){
-				if(isset($_GET["$parameter"]) == $value){
-					$_SESSION["$parameter"] = $_GET["$parameter"];
-					$should_close_flag = True;
-					break;
-				}
-			}
-		
-		}
-	}
-		
+	$should_close_flag = commonValidationCustomizationValues();
+	
 	if($should_close_flag){
 		echo commonCloseWindow();
 	}
@@ -72,10 +58,11 @@ Default graph direction
 ?>
 </td>
 </tr>
+<tr>
 <td class="custom_table_left">
 Default graph size
 </td>
-<td <td class="custom_table_right">
+<td class="custom_table_right">
 <?php 
 	echo "<select class=\"custom_option\" name=\"$url_rest_custom_image_font_size\">\n";
 	foreach($custom_image_font_size_accepted as $value => $display){
@@ -93,7 +80,7 @@ Default graph size
 <td class="custom_table_left">
 Default graph levels
 </td>
-<td <td class="custom_table_right">
+<td class="custom_table_right">
 <?php 
 	echo "<select class=\"custom_option\" name=\"$url_rest_custom_image_graph_levels\">\n";
 	foreach($custom_image_graph_levels_accepted as $value => $display){
