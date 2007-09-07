@@ -23,9 +23,7 @@
 	// Check the URL for a "node" parameter and set the $node_name
 	if(isset($_GET["$url_rest_node_param"])){
 		/** Set the node name to be used throughout this navigation */
-		//$node_name = urldecode($_GET["$url_rest_node_param"]);
 		$node_name = $_GET["$url_rest_node_param"];
-		
 	}
 	
 	// If the $node_name is not set, we didn't catch it in the URL, set the default
@@ -35,17 +33,6 @@
 		//$node_name = "$graph_default_root_node";
 		header('Location: Index.php');
 	}
-	
-	//if(isset($_GET["focus"])){
-		/** Set the focus */
-		//$focus = urldecode($_GET["focus"]);
-	//}
-	
-	//if(!isset($focus) or $focus != "image" and $focus != "attributes"){
-		/** Set the focus */
-		//$focus = "none";
-	//}
-	
 	
 	// Verify our database connection link
 	// If it isn't setup, set it up and select 
@@ -75,7 +62,7 @@
 	// Walk the graph given the node name as the root of the graph
 	$g->walk($node_name);
 	/** The attributes of the root node to show */
-	$rootAttributes = $g->getRootNodeAttributes();
+	
 	$rootCategory 	= $g->getRootCategory();
 	
 	//echo "Root Category: $rootCategory<br />";
@@ -83,7 +70,9 @@
 	if($_SESSION[$url_rest_custom_image_font_size] == "L"){
 		/** The graphviz string LARGE */
 		$graph =  $g->getGraphvizSring($fontsize="14");
-	} else {
+	} else if($_SESSION[$url_rest_custom_image_font_size] == "S"){
+		$graph =  $g->getGraphvizSring($fontsize="8");
+	}else {
 		/** The graphviz string */
 		$graph 	=  $g->getGraphvizSring();
 	}
@@ -120,16 +109,21 @@
 	if(!$utility->checkFile("$map_file",$filesystem_age_time)){
 		if(!$utility->checkFile("$img_file",$filesystem_age_time)){
 			$mapCmd	= "$command_executable_dot -Tcmap -o$map_file -T$graph_default_image_format -o$img_file $dot_file";
-			exec($mapCmd,$output,$ret);
-			//echo $mapCmd;
-			
+			exec($mapCmd,$output,$ret);			
 		}
 	} 
 
 	/** Read the contents of the map file */
-	$map_contents 	= file_get_contents("$map_file");
+	$handle 	= fopen("$map_file","rb");
+	$cleanMap 	= '';
+	while (!feof($handle)) {
+	  $cleanMap .= ereg_replace('\\\"','"',fread($handle, 8192));
+	}
+	fclose($handle);
+	
+	//$map_contents 	= file_get_contents("$map_file");
 	/** Clean the map file slashes */
-	$cleanMap 		= ereg_replace('\\\"','"',$map_contents);
+	//$cleanMap 		= ereg_replace('\\\"','"',$map_contents);
 	
 	/** Add the document header */
 	echo commonHtmlPageHead($node_name);
@@ -146,56 +140,37 @@
 	
 	/** The image heading */
 	echo "<th class=\"image_side_head\">";
-	//if($focus == "image" or $focus == "none"){
 	echo "<div class=\"section_heading\">Relationships of ". $utility->parsePathBaseName($node_name) . "</div>\n";
-	//} else {
-		//echo "<div class=\"section_heading\">Attributes of ". $utility->parsePathBaseName($node_name). "</div>\n";
-	//}
-	echo "</th>";
-	/** The attribute head */
-	//echo "<th class=\"attribute_side_head\">";
-	//echo "<div class=\"section_heading\">Options</div>\n</th>";
+	echo "</th>";	
 	echo "</tr>";
 	/** Done with the main headings */
 	echo "<tr>";
 	
 	/** The left side contains the image */
 	echo "<td class=\"image_side_content\">";
-	//if($focus == "image" or $focus == "none"){	
-		echo "<table width=\"99%\">";
-		echo "<tr>";
-		// legend
-		echo "<td width=\"30%\" style=\"vertical-align:top;\">" . createNodeColorLegendTable($rootCategory) . "";
-		// attributes
-		echo "<br /><br />". createAttributeTableHtml($rootAttributes);
-
-		echo "<br />". createExtraOptions($node_name,$focus). "</td>";
-		//echo "<div id=\"scroll-legend\" style=\"position:absolute;\" >";
-		
-		// image
-		echo "<td><center><img src=\"$img_url\" alt=\"Model\" ";
-		echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
-		echo "<map name=\"$img_url\">\n";
-		echo $cleanMap;
-		echo "</map></td>\n";
-		
-		
-		//echo "</div>";
-		echo "</tr></table>";
-	//} else {
-		//echo createAttributeTableHtml($rootAttributes);
-	//}
+	echo "<table width=\"99%\">";
+	echo "<tr>";
+	// legend
+	echo "<td width=\"30%\" style=\"vertical-align:top;\">" . createNodeColorLegendTable($rootCategory) . "";
+	// attributes
+	$rootAttributes = $g->getRootNodeAttributes();
+	echo "<br /><br />". createAttributeTableHtml($rootAttributes);
+	// extra options
+	echo "<br />". createExtraOptions($node_name,$focus). "</td>";
+	// image
+	echo "<td><center><img src=\"$img_url\" alt=\"Model\" ";
+	echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
+	echo "<map name=\"$img_url\">\n";
+	echo $cleanMap;
+	echo "</map></td>\n";
+	echo "</tr></table>";
+	
 	echo "</td>";
 	/** Done with left side */
-	
-	//echo "<td class=\"attribute_side_content\">";
-	
-	//echo createExtraOptions($node_name,$focus);
 	echo "</td>";//"</tr>";
 	/** Done with the right side */
 	/** Close the table element */
 	echo "</table>\n";
-	
 	echo "<br />";
 	/** Show the page footer */
 	echo commonHtmlPageFooter();

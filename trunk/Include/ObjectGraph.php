@@ -298,7 +298,7 @@
 				$node_name 			= $this->calculateNodeName($node_id);				
 				$unvisitedNodeObj 	= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
 				$this->visitNode($unvisitedNodeObj);
-				if($index > 0) break;
+				//if($index > 0) break;
 			}
 		}
 		
