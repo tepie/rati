@@ -17,6 +17,10 @@
 		if(!isset($_SESSION["$url_rest_custom_image_font_size"])){
 			$_SESSION["$url_rest_custom_image_font_size"] = "N";
 		}
+		
+		if(!isset($_SESSION["$url_rest_custom_image_graph_levels"])){
+			$_SESSION["$url_rest_custom_image_graph_levels"] = "1";
+		}
 	}
 	
 	function commonCloseWindow(){

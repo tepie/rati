@@ -89,7 +89,26 @@ Default graph size
 ?>
 </td>
 </tr>
+<tr>
+<td class="custom_table_left">
+Default graph levels
+</td>
+<td <td class="custom_table_right">
+<?php 
+	echo "<select class=\"custom_option\" name=\"$url_rest_custom_image_graph_levels\">\n";
+	foreach($custom_image_graph_levels_accepted as $value => $display){
+		if($_SESSION["$url_rest_custom_image_graph_levels"] == "$value"){
+			echo '<option value="'.$value.'" selected="selected">'.$display.'</option>';
+		} else {
+			echo '<option value="'.$value.'">'.$display.'</option>';
+		}	
+	}
+	echo "</select>\n";
+?>
+</td>
+</tr>
 </table>
+<br />
 </div>
 <div class="about_section_heading">Save?</div>
 <div class="about_section_content">

@@ -67,9 +67,10 @@
 	/** Create a new graph object using the query runner to execute database calls
 	* set the up and down flags for neighbors, and set the direction of the graph
 	*/
-	$temp_graph_direction = $_SESSION["$url_rest_custom_image_graph_direction"];
-	$temp_arrow_direction = $_SESSION["$url_rest_custom_image_arrow_direction"];
-	$g 	= new GraphObject($query_runner,true,true,1,$temp_graph_direction,$temp_arrow_direction);
+	$temp_graph_direction 	= $_SESSION["$url_rest_custom_image_graph_direction"];
+	$temp_arrow_direction 	= $_SESSION["$url_rest_custom_image_arrow_direction"];
+	$temp_graph_levels		= $_SESSION["$url_rest_custom_image_graph_levels"] + 0;
+	$g 	= new GraphObject($query_runner,true,true,$temp_graph_levels,$temp_graph_direction,$temp_arrow_direction);
 	
 	// Walk the graph given the node name as the root of the graph
 	$g->walk($node_name);
