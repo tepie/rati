@@ -81,7 +81,7 @@
 	if($temp_font_size == null){
 		$graph_string = $g->getGraphvizSring();
 	} else {
-		$graph_string = $g->getGraphvizString($fontsize="$temp_font_size");
+		$graph_string = $g->getGraphvizSring($fontsize="$temp_font_size");
 	}
 	
 	if($export_type == "img" or $export_type == "html"){

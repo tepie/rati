@@ -5,7 +5,10 @@
 	
 	function commonSessionSetup(){
 		global $url_rest_custom_image_arrow_direction;
-		global $_SESSION;
+		global $url_rest_custom_image_graph_direction;
+		global $url_rest_custom_image_font_size;
+		global $url_rest_custom_image_graph_levels;
+		//global $_SESSION;
 		
 		session_start();
 		if(!isset($_SESSION["$url_rest_custom_image_arrow_direction"])){
@@ -33,13 +36,15 @@
 		foreach($url_rest_custom_array as $index => $parameter){
 			if(isset($_GET["$parameter"])){
 				$accepted_array = $custom_accepted_array[$index];
+				$accepted_keys = array_keys($accepted_array);
 				foreach($accepted_array as $inner_index => $value){
 					if(isset($_GET["$parameter"]) == $value){
 						$_SESSION["$parameter"] = $_GET["$parameter"];
 						$should_close_flag = True;
 						break;
 					} else {
-						$_SESSION["$parameter"] = $accepted_array[0];
+						//echo "Accepted". $accepted_keys[0];
+						$_SESSION["$parameter"] = $accepted_keys[0];
 					}
 				}
 			
@@ -65,12 +70,12 @@
 	
 	function commonGraphvizFontSize(){
 		global $url_rest_custom_image_font_size;
-		
+		//echo $_SESSION[$url_rest_custom_image_font_size];
 		if($_SESSION[$url_rest_custom_image_font_size] == "L"){
 			return "14";
 		} else if($_SESSION[$url_rest_custom_image_font_size] == "S"){
 			return "8";
-		}else {
+		} else {
 			return null;
 		}
 	}
