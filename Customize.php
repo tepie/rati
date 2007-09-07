@@ -43,27 +43,17 @@
 <br />
 Setup how the relationship lines are drawn for the images you will see...<br /><br />
 <?php 
+	echo "<select name=\"$url_rest_custom_image_arrow_direction\">\n";
 	if($_SESSION["$url_rest_custom_image_arrow_direction"] == "1"){
-		echo '<input type="radio" name="'.$url_rest_custom_image_arrow_direction.'" value="1" checked />Actual Line Directions<br />';
-		echo '<input type="radio" name="'.$url_rest_custom_image_arrow_direction.'" value="0" />Same Line Directions<br />';
+		echo '<option value="1" selected="selected">Actual Line Directions</option>';
+		echo '<option value="0">Same Line Directions</option>';
 	} else {
-		echo '<input type="radio" name="'.$url_rest_custom_image_arrow_direction.'" value="1" />Actual Line Directions<br />';
-		echo '<input type="radio" name="'.$url_rest_custom_image_arrow_direction.'" value="0" checked />Same Line Directions<br />';
+		echo '<option value="1">Actual Line Directions</option>';
+		echo '<option value="0" selected="selected">Same Line Directions</option>';
 	}
+	echo "</select>\n";
 ?>
 <br />
-<!--
-Setup the default image size for the images that you will see...<br /><br />
-<?php 
-	/*if($_SESSION["image_size"] == "large"){
-		echo '<input type="radio" name="image_size" value="large" checked disabled />Large<br />';
-		echo '<input type="radio" name="image_size" value="normal" disabled />Normal<br />';
-	} else {
-		echo '<input type="radio" name="image_size" value="large" disabled />Large<br />';
-		echo '<input type="radio" name="image_size" value="normal" checked disabled />Normal<br />';
-	}*/
-?>
--->
 <br />
 Setup the default graph direction...<br /><br />
 <?php 
