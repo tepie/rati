@@ -15,7 +15,8 @@
 								"html"		=>	"text/html",
 								"img" 		=> 	"image/png", 
 								"legend" 	=> "text/html",
-								"attributes" => "text/html");
+								"attributes" => "text/html",
+								"options" => "text/html");
 	
 	function acceptable_type($type){
 		global $type_dict;
@@ -128,7 +129,7 @@
 			}
 			fclose($handle);
 			header("Content-type: $header");
-			echo "<img src=\"$img_url\" alt=\"Model\" ";
+			echo "<center><img src=\"$img_url\" alt=\"Model\" ";
 			echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
 			echo "<map name=\"$img_url\">\n";
 			echo $cleanMap;
@@ -141,9 +142,23 @@
 	} else if($export_type == "legend"){
 		header("Content-type: $header");
 		echo createNodeColorLegendTable($g->getRootCategory());
-	} else if($export_type = "attributes"){
+	} else if($export_type == "attributes"){
 		header("Content-type: $header");
 		echo createAttributeTableHtml($g->getRootNodeAttributes());
+	} else if($export_type == "options"){
+		$html = "<table class=\"extra_options\">\n";
+		$html = $html . "<tr><td class=\"extra_option\">&nbsp;</td></tr>\n";
+		$html = $html . "<tr><td class=\"extra_option\">export as</td></tr>\n";
+		
+		$keys = array_keys($type_dict);
+		foreach($keys as $index => $option){
+			$url = $url_html_export = "Export.php?q=".urlencode($node_name)."&type=$option".commonUrlCustomizationValues();
+			$html = $html . "<tr><td class=\"extra_option\">";
+			$html = $html . "<a href=\"$url\">$option</a></td></tr>\n";
+		}
+		$html = $html . "</table>\n";
+		header("Content-type: $header");
+		echo $html;
 	} else {
 		
 	}

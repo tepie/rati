@@ -2,6 +2,7 @@
 	
 	include_once('SettingsWebApp.php');
 	include_once('SettingsPerspectives.php');
+	include_once('HtmlCommon.php');
 	
 	/** 
 	* Generate the extra options table 
@@ -9,43 +10,18 @@
 	* @param $focus something to focus on, image or attributes
 	* return html formatted string
 	*/
-	function createExtraOptions($node_name,$focus){
+	function createExtraOptions($node_name){
 		global $web_app_page_post_back_name;
 		global $url_rest_node_param;
-		global $focus;
 		global $perspective_names;
 		global $perspective_default_root_nodes;
 		
 		$url_node = urlencode($node_name);
 		
-		$html = "<table class=\"extra_options\">\n";
-		//$html = $html . "<tr><th class=\"extra_options\">Extra Options</th></tr>";
+		$url_options_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&type=options".commonUrlCustomizationValues();
+		$options_export = file_get_contents($url_options_export);
+		$html = $options_export;
 		
-		/*if($focus != "attributes"){		
-			$html = $html . "<tr><td class=\"extra_option\">\n";
-			$html = $html . "<a href=\"$web_app_page_post_back_name?$url_rest_node_param=$url_node&amp;focus=attributes\">\n";
-			$html = $html . "View Value Attributes</a></td></tr>\n";
-		} else {
-			
-		}
-		*/
-		
-		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"#\">Cognos Report</a></td></tr>\n";
-		//$html = $html . "<tr><td class=\"extra_option\">";
-		
-		/*if($focus == "none"){
-			$html =  $html . "<a href=\"$web_app_page_post_back_name?$url_rest_node_param=$url_node&amp;focus=image\">View Larger Image</a>\n";
-		} else {
-			$html =  $html . "<a href=\"$web_app_page_post_back_name?$url_rest_node_param=$url_node&amp;focus=none\">View Normal Image</a>\n";
-		}*/
-		//$html = $html . "</td></tr>\n";
-		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"#\">Cognos Report</a></td></tr>\n";
-		$html = $html . "<tr><td class=\"extra_option\">&nbsp;</td></tr>\n";
-		$html = $html . "<tr><td class=\"extra_option\">export as</td></tr>\n";
-		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"Export.php?$url_rest_node_param=$url_node&amp;type=xml\">XML</a></td></tr>\n";
-		$html = $html . "<tr><td class=\"extra_option\"><a href=\"Export.php?$url_rest_node_param=$url_node&amp;type=dot\">DOT</a></td></tr>\n";
-		//$html = $html . "<tr><td class=\"extra_option\"><a href=\"Export.php?$url_rest_node_param=$url_node&amp;type=img\">Image</a></td></tr>\n";
-		$html = $html . "</table>\n";
 		$html = $html . "<br />";
 		
 		$html = $html . createJumpToPerspectiveTable();
