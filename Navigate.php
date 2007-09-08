@@ -68,13 +68,14 @@
 	// attributes
 	$url_attributes_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=attributes".commonUrlCustomizationValues();
 	$attributes_export = file_get_contents($url_attributes_export);
-	echo "<br /><br />$attributes_export";
+	echo "$attributes_export";
 	// extra options
 	echo "<br />". createExtraOptions($node_name). "</td>";
 	// image
 	$url_html_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=html".commonUrlCustomizationValues();
 	$html_export = file_get_contents($url_html_export);
 	echo "<td>$html_export</td>\n";
+	//echo "<td><iframe name=\"html\" src=\"$url_html_export\" width=\"100%\" height=\"500\" frameborder=\"0\"></iframe></td>\n";
 	echo "</tr></table>";
 	
 	echo "</td>";

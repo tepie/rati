@@ -123,8 +123,8 @@
 			$node 		= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
 			$this->node_name = $node_name;
 			// This is the root, get its attributes
-			$this->setRootNodeAttributes($node);
-			$this->setRootCategory($node->getNodeCategory());
+			//$this->setRootNodeAttributes($node);
+			//$this->setRootCategory($node->getNodeCategory());
 			
 			// Determine the node objects neighbors
 			$neighbors 	= $node->getNeighbors();
