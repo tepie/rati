@@ -1,6 +1,7 @@
 <?php
 	include_once('Include\\Database.php');
 	include_once('Include\\ObjectGraph.php');
+	include_once('Include\\ObjectNode.php');
 	include_once('Include\\SettingsWebApp.php');
 	include_once('Include\\SettingsDatabase.php');
 	include_once('Include\\ObjectUsage.php');
@@ -72,16 +73,24 @@
 	$temp_graph_direction 	= $_SESSION["$url_rest_custom_image_graph_direction"];
 	$temp_arrow_direction 	= $_SESSION["$url_rest_custom_image_arrow_direction"];
 	$temp_graph_levels		= $_SESSION["$url_rest_custom_image_graph_levels"] + 0;
-	$g 						= new GraphObject($query_runner,
-								true,true,$temp_graph_levels,
-								$temp_graph_direction,$temp_arrow_direction);
-	$g->walk($node_name);
 	
-	$temp_font_size = commonGraphvizFontSize();
-	if($temp_font_size == null){
-		$graph_string = $g->getGraphvizSring();
-	} else {
-		$graph_string = $g->getGraphvizSring($fontsize="$temp_font_size");
+	
+	if($export_type == "img" or $export_type == "html" or $export_type == "dot"){
+		$g 	= new GraphObject($query_runner,
+				true,true,$temp_graph_levels,
+				$temp_graph_direction,$temp_arrow_direction);
+								
+		$g->walk($node_name);
+		
+		$temp_font_size = commonGraphvizFontSize();
+		if($temp_font_size == null){
+			$graph_string = $g->getGraphvizSring();
+		} else {
+			$graph_string = $g->getGraphvizSring($fontsize="$temp_font_size");
+			//$graph_string = $g->getGraphvizSring();
+		}
+	} else if($export_type == "legend" or $export_type == "attributes"){
+		$node = new NodeObject($query_runner,$node_name,$mysql_database_neighbor_limit);
 	}
 	
 	if($export_type == "img" or $export_type == "html"){
@@ -96,7 +105,7 @@
 		
 		$dot_file 		= "$directory_dot_graph" . "$filesystem_path_separator" . "$checksum";
 		
-		if($utility->checkFile($dot_file,$filesystem_age_time)){
+		if(!file_exists($dot_file) or $utility->checkFile($dot_file,$filesystem_age_time)){
 			/** File Handle */
 			$handle 	= fopen($dot_file,"w+");
 			fwrite($handle,$graph_string);
@@ -114,21 +123,32 @@
 			header("Content-type: $header");
 			passthru($mapCmd,$ret);
 		} else if($export_type == "html"){
+			header("Content-type: $header");
 			if(!$utility->checkFile("$map_file",$filesystem_age_time)){
 				if(!$utility->checkFile("$img_file",$filesystem_age_time)){
 					$mapCmd	= "$command_executable_dot -Tcmap -o$map_file -T$graph_default_image_format -o$img_file $dot_file";
 					exec($mapCmd,$output,$ret);			
 				}
 			} 
-			
+			//echo $ret;
+			//print_r( $output);
+			//echo "<pre>$mapCmd</pre>";
 			/** Read the contents of the map file */
-			$handle 	= fopen("$map_file","rb");
-			$cleanMap 	= "";
-			while (!feof($handle)) {
-			  $cleanMap .= ereg_replace('\\\"','"',fread($handle, 8192));
+			//echo "exists" .file_exists($dot_file) == true;
+			
+			if(file_exists($map_file)){
+				$handle 	= fopen("$map_file","rb");
+				$cleanMap 	= "";
+				while (!feof($handle)) {
+					$cleanMap .= ereg_replace('\\\"','"',fread($handle, 8192));
+				}
+			
+				fclose($handle);
+			} else {
+				die("<br />$map_file not found!<br />");
 			}
-			fclose($handle);
-			header("Content-type: $header");
+			
+			echo "<!-- Setup done -->";
 			echo "<center><img src=\"$img_url\" alt=\"Model\" ";
 			echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
 			echo "<map name=\"$img_url\">\n";
@@ -141,10 +161,10 @@
 		echo $graph_string;
 	} else if($export_type == "legend"){
 		header("Content-type: $header");
-		echo createNodeColorLegendTable($g->getRootCategory());
+		echo createNodeColorLegendTable($node->getNodeCategory());
 	} else if($export_type == "attributes"){
 		header("Content-type: $header");
-		echo createAttributeTableHtml($g->getRootNodeAttributes());
+		echo createAttributeTableHtml($node->getNodeAttributes());
 	} else if($export_type == "options"){
 		$html = "<table class=\"extra_options\">\n";
 		$html = $html . "<tr><td class=\"extra_option\">&nbsp;</td></tr>\n";
