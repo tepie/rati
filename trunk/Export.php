@@ -19,6 +19,21 @@
 								"attributes" => "text/html",
 								"options" => "text/html");
 	
+	$export_is_web_based  	= True;
+	
+	
+
+	function detect_is_web_export(){
+		//global $argc;
+		global $argv;
+		//echo $argc."\n";
+		if($argv[0] == "Export.php"){
+			return False;
+		} else {
+			return True;
+		}
+	}
+	
 	function acceptable_type($type){
 		global $type_dict;
 		foreach($type_dict as $accepted => $header){
@@ -46,16 +61,37 @@
 		$x = $db_connection->selectDb("$mysql_database_name");
 	}
 	
-	if(isset($_GET["$type_param"])){
-		$export_type = $_GET["$type_param"];
+	$export_is_web_based = detect_is_web_export();
+	//print_r($argv);
+	if($export_is_web_based){
+		if(isset($_GET["$type_param"])){
+			$export_type = $_GET["$type_param"];
+		} else {
+			$export_type = "$type_default_export";
+		}
+		
+		if(isset($_GET["$url_rest_node_param"])){
+			$node_name 	= $_GET["$url_rest_node_param"];
+		} else {
+			header('Location: Index.php');
+		} 
 	} else {
-		$export_type = "$type_default_export";
-	}
-	
-	if(isset($_GET["$url_rest_node_param"])){
-		$node_name 	= $_GET["$url_rest_node_param"];
-	} else {
-		header('Location: Index.php');
+		//echo "This is a command line export\n";
+		//echo $argc;
+		if($argc != 6){
+			echo "Wrong number of arguments.\n";
+			echo "usage: " . $argv[0] . " <export type> <node name> <graph direction> <image size> <graph levels>";
+			exit();
+		} else {
+			$export_type 	= $argv[1];
+			$node_name 		= $argv[2];
+			
+			//$_GET["$url_rest_custom_image_arrow_direction"] = $argv[3];
+			$_GET["$url_rest_custom_image_graph_direction"]	= $argv[3];
+			$_GET["$url_rest_custom_image_font_size"]		= $argv[4];
+			$_GET["$url_rest_custom_image_graph_levels"]	= $argv[5];
+			ini_set("memory_limit","512M");
+		}
 	}
 	
 	if(!acceptable_type($export_type)){
@@ -74,6 +110,9 @@
 	$temp_arrow_direction 	= $_SESSION["$url_rest_custom_image_arrow_direction"];
 	$temp_graph_levels		= $_SESSION["$url_rest_custom_image_graph_levels"] + 0;
 	
+	if($temp_graph_direction == "CIRCO"){
+		$command_executable_dot = "circo";
+	}
 	
 	if($export_type == "img" or $export_type == "html" or $export_type == "dot"){
 		$g 	= new GraphObject($query_runner,
@@ -105,6 +144,11 @@
 		
 		$dot_file 		= "$directory_dot_graph" . "$filesystem_path_separator" . "$checksum";
 		
+		/*if($url_rest_custom_image_graph_direction == "CIRCO"){
+			echo "Changing command line...";
+			$command_executable_dot = "circo";
+		}*/
+		
 		if(!file_exists($dot_file) or $utility->checkFile($dot_file,$filesystem_age_time)){
 			/** File Handle */
 			$handle 	= fopen($dot_file,"w+");
@@ -124,6 +168,7 @@
 			passthru($mapCmd,$ret);
 		} else if($export_type == "html"){
 			header("Content-type: $header");
+			//echo $command_executable_dot;
 			if(!$utility->checkFile("$map_file",$filesystem_age_time)){
 				if(!$utility->checkFile("$img_file",$filesystem_age_time)){
 					$mapCmd	= "$command_executable_dot -Tcmap -o$map_file -T$graph_default_image_format -o$img_file $dot_file";
@@ -145,7 +190,7 @@
 				}
 				
 				$map_lines = split("\n",$cleanMap);
-				$new_lines = array();
+				/*$new_lines = array();
 				foreach($map_lines as $index => $line){				
 					if(ereg("href=\".+\"",$line)){
 						$area_parts = explode(" ",$line);
@@ -169,7 +214,7 @@
 				foreach($new_lines as $index => $line){	
 					$newMap = $newMap . "$line\n";
 				}
-				
+				*/
 				//print_r(htmlspecialchars($newMap));
 				
 				fclose($handle);
@@ -181,8 +226,8 @@
 			echo "<center><img src=\"$img_url\" alt=\"Model\" ";
 			echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
 			echo "<map name=\"$img_url\">\n";
-			//echo $cleanMap;
-			echo $newMap;
+			echo $cleanMap;
+			//echo $newMap;
 			echo "</map>";			
 		}
 		
@@ -212,6 +257,6 @@
 	} else {
 		
 	}
-
+	
 	if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 ?>

@@ -5,6 +5,7 @@
 	include_once('SQLQueries.php');
 	include_once('ObjectNode.php');
 	
+	
 	/**
 	* A object representing a graphviz graph
 	*/ 
@@ -180,7 +181,7 @@
 			
 			// Construct the graph with heading,graph attributes, and 
 			$heading = $graphviz_string_heading_line;
-			$heading = $heading . "\t". sprintf($graphviz_string_graph_attributes,$this->direction) . "\n";
+			$heading = $heading . "\t". sprintf($graphviz_string_graph_attributes,$this->direction,$this->node_name) . "\n";
 			$heading = $heading . sprintf($graphviz_string_nodes_attribute,$use_size);
 			
 			// Add the footing to the graphviz string
@@ -219,19 +220,23 @@
 			$node_id 	= $nodeObj->getNodeId();
 			
 			if(array_key_exists($key,$this->getGraph())){
-				if($this->arrows){
+				/*if($this->arrows){
 					$switch = $nodeObj->getNodeNeighborDirectionTo($key);
 				} else {
 					$switch = true;
-				}
+				}*/
+				$switch = $nodeObj->getNodeNeighborDirectionTo($key);
 				//echo $this->arrows . " " . $switch . " ";
-				
+				$left 	= $node_id;
+				$right	= $key;
 				if($switch){
-					$left 	= $node_id;
-					$right	= $key;
+					//$left 	= $node_id;
+					//$right	= $key;
+					$dirType = "forward";
 				} else {
-					$left 	= $key;
-					$right	= $node_id;
+					//$left 	= $key;
+					//$right	= $node_id;
+					$dirType = "back";
 				}
 				
 				$html_value = htmlentities($value, ENT_QUOTES);
@@ -240,7 +245,7 @@
 				$text	= $text . "\t". sprintf($graphviz_string_link_node,$left);
 				$text 	= $text . $graphviz_string_link_lr_arrow;
 				$text	= $text . sprintf($graphviz_string_link_node,$right);
-				$text  	= $text . sprintf($graphviz_string_link_attributes,$html_value,$use_size) . "\n";
+				$text  	= $text . sprintf($graphviz_string_link_attributes,$html_value,$use_size,$dirType) . "\n";
 			}
 			
 			$this->graphviz = $this->graphviz . $text;

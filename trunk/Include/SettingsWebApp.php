@@ -45,25 +45,31 @@
 	$url_rest_search_page		= "page";
 	
 	$url_rest_import_xml_string_param 		= "xml_string";
-	$url_rest_custom_image_arrow_direction 	= "image_arrow_direction";
+	//$url_rest_custom_image_arrow_direction 	= "image_arrow_direction";
 	$url_rest_custom_image_graph_direction 	= "image_graph_direction";
 	$url_rest_custom_image_font_size 		= "image_font_size";
 	$url_rest_custom_image_graph_levels		= "image_graph_levels";
+	$url_rest_custom_image_graph_levels     = "image_neighbor_limit";
 	
-	$url_rest_custom_array = array($url_rest_custom_image_arrow_direction,
+	$url_rest_custom_array = array(
 		$url_rest_custom_image_graph_direction,
 		$url_rest_custom_image_font_size,
+		$url_rest_custom_image_graph_levels,
 		$url_rest_custom_image_graph_levels);
 		
-	$custom_image_arrow_direction_accepted 	= array("0" => "Same Line Directions", "1" => "Actual Line Directions");
-	$custom_image_graph_direction_accepted 	= array("LR" => "Left to Right", "TB" => "Top to Bottom");
+	//$custom_image_arrow_direction_accepted 	= array("0" => "Same Line Directions", "1" => "Actual Line Directions");
+	$custom_image_graph_direction_accepted 	= array("LR" => "Left to Right", "TB" => "Top to Bottom", "CIRCO" => "Circular");
 	$custom_image_font_size_accepted		= array("N" => "Normal", "L" => "Large", "S" => "Small" );
 	$custom_image_graph_levels_accepted		= array("1" => "One", "2" => "Two");
+	$custom_image_neighbor_limit_accepted	= array("5" => "Five", "10" => "Ten", 
+												"30" => "Thirty", "50" => "Fifty", "100" => "One Hundred",
+												"300" => "Three Hundred");
 	
-	$custom_accepted_array = array($custom_image_arrow_direction_accepted,
+	$custom_accepted_array = array(
 		$custom_image_graph_direction_accepted,
 		$custom_image_font_size_accepted,
-		$custom_image_graph_levels_accepted);
+		$custom_image_graph_levels_accepted,
+		$custom_image_neighbor_limit_accepted);
 	
 	$web_app_default_style_sheet	= 	"./$web_app_dir_include_name/style.css";
 	/** The application logo (not used) */

@@ -64,7 +64,7 @@
 	// legend
 	$url_legend_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=legend".commonUrlCustomizationValues();
 	$legend_export = file_get_contents($url_legend_export);
-	echo "<td width=\"30%\" style=\"vertical-align:top;\">" . $legend_export . "<br />";
+	echo "<td width=\"20%\" style=\"vertical-align:top;\">" . $legend_export . "<br />";
 	// attributes
 	$url_attributes_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=attributes".commonUrlCustomizationValues();
 	$attributes_export = file_get_contents($url_attributes_export);
@@ -78,9 +78,9 @@
 	echo "<td><iframe name=\"html\" src=\"$url_html_export\" width=\"100%\" height=\"450\" frameborder=\"0\"></iframe></td>\n";
 	echo "</tr></table>";
 	
-	echo "</td>";
+	//echo "</td>";
 	/** Done with left side */
-	echo "</td>";//"</tr>";
+	//echo "</td>";//"</tr>";
 	/** Done with the right side */
 	/** Close the table element */
 	echo "</table>\n";
