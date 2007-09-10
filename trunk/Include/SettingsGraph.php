@@ -31,15 +31,15 @@
 	
 	//Graphviz string settings
 	/** The graphviz heading line to start the graph */
-	$graphviz_string_heading_line		= "digraph G{\n\tcenter=\"True\";\n";
+	$graphviz_string_heading_line		= "digraph G{\n";
 	/** The graphviz string graph attributes */
-	$graphviz_string_graph_attributes	= 'graph [rankdir = "%s",label="%s",mindist="1"]';
+	$graphviz_string_graph_attributes	= 'graph [rankdir = "%s",label="%s"]';
 	/** The default font size for node text in the graph */
 	$graphviz_string_nodes_fontsize		= "8";
 	/** The default font size for link text in the graph */
 	$graphviz_string_links_fontsize		= "8";
 	/** The graphviz node attributes string, expects a font size when printing */
-	$graphviz_string_nodes_attribute	= "\tnode [shape=ellipse,color=lightblue2,style=filled,fontsize=%s,fontname=\"verdana\"];\n";
+	$graphviz_string_nodes_attribute	= "\tnode [shape=box,color=lightblue2,style=\"filled,rounded\",fontsize=%s,fontname=\"verdana\"];\n";
 	/** The graphviz string footer to end the graph */
 	$graphviz_string_footing_line		= "}\n";
 	/** The graphviz string left to right link arrow */
@@ -48,6 +48,6 @@
 	$graphviz_string_link_attributes	= '[label = "%s",fontname="Verdana",fontsize=%s,dir="%s"];';
 	/** The graphviz string link node text, expects an identifier when printing */
 	$graphviz_string_link_node			= 'node%s'; 
-	$graphviz_string_node_attributes	= '[label = "%s",URL="%s",color="%s",target="_parent"];'
+	$graphviz_string_node_attributes	= '[label="%s",URL="%s",color="%s",target="_parent"];'
 	
 ?>
