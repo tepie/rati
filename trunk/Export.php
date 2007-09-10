@@ -139,20 +139,50 @@
 			if(file_exists($map_file)){
 				$handle 	= fopen("$map_file","rb");
 				$cleanMap 	= "";
+				
 				while (!feof($handle)) {
 					$cleanMap .= ereg_replace('\\\"','"',fread($handle, 8192));
 				}
-			
+				
+				$map_lines = split("\n",$cleanMap);
+				$new_lines = array();
+				foreach($map_lines as $index => $line){				
+					if(ereg("href=\".+\"",$line)){
+						$area_parts = explode(" ",$line);
+						$new_parts = array();
+						foreach($area_parts as $area_index => $part){
+							if(ereg("href=\".+\"",$part)){
+								array_push($new_parts,$part . " target=\"_parent\"");
+							} else{
+								array_push($new_parts,$part);
+							}
+						}
+						$new_lines[$index] = "";
+						foreach($new_parts as $new_index => $part){
+							$new_lines[$index] = $new_lines[$index] . $part . " ";
+						}
+					} else {
+						$new_lines[$index] = $line;
+					}
+				}
+				$newMap		= "";
+				foreach($new_lines as $index => $line){	
+					$newMap = $newMap . "$line\n";
+				}
+				
+				//print_r(htmlspecialchars($newMap));
+				
 				fclose($handle);
 			} else {
 				die("<br />$map_file not found!<br />");
 			}
 			
-			echo "<!-- Setup done -->";
+			//echo "<!-- Setup done -->";
 			echo "<center><img src=\"$img_url\" alt=\"Model\" ";
 			echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
 			echo "<map name=\"$img_url\">\n";
-			echo $cleanMap;
+			//echo $cleanMap;
+			echo $newMap;
 			echo "</map>";			
 		}
 		
