@@ -26,13 +26,14 @@
 	
 	// Command line tools
 	/** The path to the dot executable for graph, map and image generation */
+	//$command_executable_dot		= "circo";
 	$command_executable_dot		= "dot";
 	
 	//Graphviz string settings
 	/** The graphviz heading line to start the graph */
-	$graphviz_string_heading_line		= "digraph G{\n";
+	$graphviz_string_heading_line		= "digraph G{\n\tcenter=\"True\";\n";
 	/** The graphviz string graph attributes */
-	$graphviz_string_graph_attributes	= 'graph [rankdir = "%s"]';
+	$graphviz_string_graph_attributes	= 'graph [rankdir = "%s",label="%s",mindist="1"]';
 	/** The default font size for node text in the graph */
 	$graphviz_string_nodes_fontsize		= "8";
 	/** The default font size for link text in the graph */
@@ -44,9 +45,9 @@
 	/** The graphviz string left to right link arrow */
 	$graphviz_string_link_lr_arrow		= " -> ";
 	/** The graphviz string for link attributes, expects a text label and a font size */
-	$graphviz_string_link_attributes	= '[arrowhead=vee,label = "%s",fontname="Verdana",fontsize=%s];';
+	$graphviz_string_link_attributes	= '[label = "%s",fontname="Verdana",fontsize=%s,dir="%s"];';
 	/** The graphviz string link node text, expects an identifier when printing */
 	$graphviz_string_link_node			= 'node%s'; 
-	$graphviz_string_node_attributes	= '[label = "%s",URL="%s",color="%s"];'
+	$graphviz_string_node_attributes	= '[label = "%s",URL="%s",color="%s",target="_parent"];'
 	
 ?>

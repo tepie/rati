@@ -11,9 +11,9 @@
 		//global $_SESSION;
 		
 		session_start();
-		if(!isset($_SESSION["$url_rest_custom_image_arrow_direction"])){
+		/*if(!isset($_SESSION["$url_rest_custom_image_arrow_direction"])){
 			$_SESSION["$url_rest_custom_image_arrow_direction"] = "0";
-		}
+		}*/
 		
 		if(!isset($_SESSION["$url_rest_custom_image_graph_direction"])){
 			$_SESSION["$url_rest_custom_image_graph_direction"] = "LR";
@@ -25,6 +25,10 @@
 		
 		if(!isset($_SESSION["$url_rest_custom_image_graph_levels"])){
 			$_SESSION["$url_rest_custom_image_graph_levels"] = "1";
+		}
+		
+		if(!isset($_SESSION["$url_rest_custom_image_graph_levels"])){
+			$_SESSION["$url_rest_custom_image_graph_levels"] = "30";
 		}
 	}
 	
@@ -52,6 +56,12 @@
 		}
 		
 		return $should_close_flag;
+	}
+	
+	function commonValidationCustomizationValuesCmd(){
+		global $argv;
+		global $url_rest_custom_array;
+		global $custom_accepted_array;
 	}
 	
 	function commonUrlCustomizationValues(){

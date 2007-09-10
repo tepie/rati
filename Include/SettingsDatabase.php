@@ -14,7 +14,7 @@
 	$mysql_database_name			= 	"rati";
 	
 	/** The database neighbor query limit */
-	$mysql_database_neighbor_limit 	= 300;
+	$mysql_database_neighbor_limit 	= 30;
 	/** The database value query limit */
 	$mysql_database_value_limit		= 30;
 ?>
