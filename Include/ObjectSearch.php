@@ -52,8 +52,8 @@
 			global $perspective_names;
 			
 			$parts = split(":",$search_string);
-			if(count($parts) == 2 and in_array($parts[0],$perspective_names)){
-				return array($parts[0],$parts[1]);
+			if(count($parts) == 2 and in_array(strtolower($parts[0]),$perspective_names)){
+				return array(strtolower($parts[0]),$parts[1]);
 			} else {
 				return False;
 			}
