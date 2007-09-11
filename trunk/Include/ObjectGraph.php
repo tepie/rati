@@ -32,11 +32,16 @@
 		* Walk a node as root to determine is neighboring relationships
 		* @param $node_name the name of the root node
 		*/
-		public function walk($node_name,$fontsize="8"){
+		public function walk($node_name,$fontsize="8",$neighbor_limit=null){
 			global $mysql_database_neighbor_limit;
 			global $directory_dot_graph;
+			
 			// Create a new node object using this query runner and node name
-			$node 							= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
+			if($neighbor_limit != null){
+				$node 	= new NodeObject($this->query_runner,$node_name,$neighbor_limit);
+			} else {
+				$node 	= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
+			}
 			$this->node_name 				= $node_name;
 			$this->graphviz_temp_filename 	= tempnam("$directory_dot_graph","graphviz");
 			$this->graphviz_temp_filehandle = fopen($this->graphviz_temp_filename,"w+");
