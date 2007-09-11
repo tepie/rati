@@ -65,14 +65,18 @@
 		global $custom_accepted_array;
 	}
 	
-	function commonUrlCustomizationValues(){
+	function commonUrlCustomizationValues($for_html=False){
 		global $url_rest_custom_array;
 		global $custom_accepted_array;
 		
 		$url_string = "";
 		
 		foreach($url_rest_custom_array as $index => $parameter){
-			$url_string .= "&$parameter=" . $_SESSION[$parameter];
+			if($for_html){
+				$url_string .= "&amp;$parameter=" . urlencode($_SESSION[$parameter]);
+			} else {
+				$url_string .= "&$parameter=" . $_SESSION[$parameter];
+			}
 		}
 		
 		return $url_string;

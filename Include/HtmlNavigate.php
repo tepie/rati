@@ -25,11 +25,12 @@
 		$html = $html . "<br />";
 		
 		$html = $html . createJumpToPerspectiveTable();
-		$html = $html . "<br />";
+		/*$html = $html . "<br />";
 		$html = $html . "<table class=\"extra_options\">\n";
 		$html = $html . "<tr><td class=\"extra_option\">";
 		$html = $html . "<a href=\"#\" onClick=\"popup('Customize.php');\">Customize</a></td></tr>";
 		$html = $html . "</table>\n";
+		*/
 		return $html;
 	}
 	
