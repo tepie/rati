@@ -5,39 +5,10 @@
 	include_once('SQLQueries.php');
 	include_once('ObjectNode.php');
 	
-	
 	/**
 	* A object representing a graphviz graph
 	*/ 
 	class GraphObject{
-		/** A list of nodes that were visited by this graph */
-		private $nodesVisited  	= null;
-		/** The graph array */
-		private $graph 			= null;
-		/** The graphviz string */
-		private $graphviz 		= null;
-		/** The xml export string */
-		private $xml_export		= null;
-		/** Graphviz label array */
-		private $graphviz_labels = null;
-		/** The QueryRunner of this object */
-		private $query_runner 	= null;
-		/** Flag to determine to vist indirect neighbors */
-		private $flag_up 		= null;
-		/** Flag to determine to visit direct neighbors */
-		private $flag_down 		= null;
-		/** Level at which to display graph */
-		private $limit 			= null;
-		private $limit_track 	= null;
-		/** Directions ? */
-		private $directions		= null;
-		/** The root attribute array */
-		private $root_attributes = null;
-		/** The category of this graphs root node */
-		private $root_category 	= null;
-		private $node_name		= null;
-		/** Arrow truth flag for string */
-		private $arrows;
 		
 		/**
 		* Construct GraphObject
@@ -48,17 +19,50 @@
 		* @param $direction the direction to draw the graph (LR, TB)
 		* @param $arrows the graph string arrow switch, true shows the truth, false shows lies
 		*/
-		public function GraphObject($runner,$up,$down,$li,$direction,$arrows){
+		public function GraphObject($runner,$up,$down,$li,$direction){
 			$res = $this->reset();
 			$this->query_runner 	= $runner;
 			$this->flag_up 			= $up;
 			$this->flag_down 		= $down;
 			$this->limit			= $li;
 			$this->limit_track		= 0;
-			$this->direction		= $direction;
-			$this->arrows 			= $arrows;
-			//echo $this->arrows;
+			$this->graph_direction	= $direction;
 		}
+		/**
+		* Walk a node as root to determine is neighboring relationships
+		* @param $node_name the name of the root node
+		*/
+		public function walk($node_name,$fontsize="8"){
+			global $mysql_database_neighbor_limit;
+			global $directory_dot_graph;
+			// Create a new node object using this query runner and node name
+			$node 							= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
+			$this->node_name 				= $node_name;
+			$this->graphviz_temp_filename 	= tempnam("$directory_dot_graph","graphviz");
+			$this->graphviz_temp_filehandle = fopen($this->graphviz_temp_filename,"w+");
+			
+			$this->putGraphvizText($this->getGraphvizHeading($fontsize));
+			
+			// Determine the node objects neighbors
+			$neighbors 			= $node->getNeighbors();
+			$this->graphviz 	= "";
+			
+			// Add this node to the graph list object
+			$this->addGraphNode($node);
+			
+			// If this node has more then zero neighbors, foo it
+			if(count($neighbors) > 0){
+				$this->track_limit 	= 0;
+				while($this->track_limit < $this->limit){
+					$this->visitUnvisited();
+					$this->track_limit++;
+				}
+			}
+			
+			$this->putGraphvizText($this->getGraphvizFooting());
+			fclose($this->graphviz_temp_filehandle);
+			return $this->graphviz_temp_filename;
+		} 
 		
 		/**
 		* Get the graph object 
@@ -79,7 +83,15 @@
 		* return $this->getGraphvizSring()
 		*/
 		public function __toString(){
-			return $this->getGraphvizSring();
+			if(file_exists($this->graphviz_temp_filename)){
+				$local_handle = fopen($this->graphviz_temp_filename,"rb");
+				while (!feof($local_handle)) {
+					echo fread($local_handle, 4096);
+				}
+				fclose($local_handle);
+			} else {
+				echo "You need to walk this graph to print it.";
+			} 
 		}
 		
 		/** 
@@ -99,101 +111,31 @@
 			return $line[$object_structure_name];
 		}
 		
-		/**
-		* Get the attributes of the root of this graph
-		* return the attributes of the root 
-		*/
-		public function getRootNodeAttributes(){
-			return $this->root_attributes;
-		}
-		
-		/**
-		* Get the root category of this graph 
-		*/
-		public function getRootCategory(){
-			return $this->root_category;
-		}
-		
-		/**
-		* Walk a node as root to determine is neighboring relationships
-		* @param $node_name the name of the root node
-		*/
-		public function walk($node_name){
-			global $mysql_database_neighbor_limit;
-			// Create a new node object using this query runner and node name
-			$node 		= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
-			$this->node_name = $node_name;
-			// This is the root, get its attributes
-			//$this->setRootNodeAttributes($node);
-			//$this->setRootCategory($node->getNodeCategory());
-			
-			// Determine the node objects neighbors
-			$neighbors 	= $node->getNeighbors();
-			$this->graphviz 	= "";
-			// Add this node to the graph list object
-			$this->addGraphNode($node);
-			
-			// If this node has more then zero neighbors, foo it
-			if(count($neighbors) > 0){
-				$this->track_limit 	= 0;
-				
-				while($this->track_limit < $this->limit){
-					$this->visitUnvisited();
-					$this->track_limit++;
-				}
-			}		
-		} 
-		
-		/** Export this graph as an xml string */
-		public function getExportXml(){
-			$xml = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\n";
-			$xml = $xml . "<rati><export>Disabled at this time";
-			return $xml . "</export></rati>\n";
-		
-		}
-		
-		/**
-		* Get the graphviz string version of this object
-		* @param $fontsize the font size to use in the node text of this graph
-		* return the graphviz string to generate a dot graph
-		*/
-		public function getGraphvizSring($fontsize="0"){
-			// If the graph is null, we have no work to do
-			if($this->getGraph() == null){
-				return null;
-			}
-			
-			// Tell this object we are thinking global for variables
-			global $graphviz_string_heading_line;
-			global $graphviz_string_nodes_attribute;
-			global $graphviz_string_graph_attributes;
-			global $graphviz_string_footing_line;
-			global $graphviz_string_nodes_fontsize;
-			
-			if($fontsize == "0"){
-				$use_size = $graphviz_string_nodes_fontsize;
-			} else {
-				$use_size = $fontsize;
-			}
-			
-			// Flag that the root relationships have been drawn
-			$firstFlag = true;
-			
-			// Construct the graph with heading,graph attributes, and 
-			$heading = $graphviz_string_heading_line;
-			$heading = $heading . "\t". sprintf($graphviz_string_graph_attributes,$this->direction,$this->node_name) . "\n";
-			$heading = $heading . sprintf($graphviz_string_nodes_attribute,$use_size);
-			
-			// Add the footing to the graphviz string
-			$footing = $graphviz_string_footing_line;
-			// Return the graphviz string
-			return $heading . $this->graphviz .$footing;
-		}
-		
 		
 		//*********************************************************
 		//** Private Functions
 		//*********************************************************
+		
+		private function getGraphvizHeading($fontsize="8"){
+			global $graphviz_string_heading_line;
+			global $graphviz_string_graph_attributes;
+			global $graphviz_string_nodes_attribute;
+			
+			$heading = $graphviz_string_heading_line;
+			$heading = $heading . "\t". sprintf($graphviz_string_graph_attributes,$this->graph_direction,$this->node_name) . "\n";
+			$heading = $heading . sprintf($graphviz_string_nodes_attribute,$fontsize);
+			
+			return $heading;
+		}
+		
+		private function getGraphvizFooting(){
+			global $graphviz_string_footing_line;
+			return $graphviz_string_footing_line;
+		}
+		
+		private function putGraphvizText($graphviz_text){
+			return fwrite($this->graphviz_temp_filehandle,$graphviz_text);
+		}
 		
 		/**
  		* Graph the links for the graphviz string for a node object
@@ -220,22 +162,13 @@
 			$node_id 	= $nodeObj->getNodeId();
 			
 			if(array_key_exists($key,$this->getGraph())){
-				/*if($this->arrows){
-					$switch = $nodeObj->getNodeNeighborDirectionTo($key);
-				} else {
-					$switch = true;
-				}*/
 				$switch = $nodeObj->getNodeNeighborDirectionTo($key);
-				//echo $this->arrows . " " . $switch . " ";
+				
 				$left 	= $node_id;
 				$right	= $key;
 				if($switch){
-					//$left 	= $node_id;
-					//$right	= $key;
 					$dirType = "forward";
 				} else {
-					//$left 	= $key;
-					//$right	= $node_id;
 					$dirType = "back";
 				}
 				
@@ -248,20 +181,9 @@
 				$text  	= $text . sprintf($graphviz_string_link_attributes,$html_value,$use_size,$dirType) . "\n";
 			}
 			
-			$this->graphviz = $this->graphviz . $text;
+			$this->putGraphvizText($text);
 		}
 		
-		
-		private function setRootCategory($category){
-			$this->root_category = $category;
-		}
-		
-		/** 
-		* Set the root node attributes of this graph
-		*/
-		private function setRootNodeAttributes($rootNodeObj){
-			$this->root_attributes = $rootNodeObj->getNodeAttributes();
-		}
 		
 		/** 
 		*Reset the graph object 
@@ -343,7 +265,8 @@
 			if($result){
 				$id 	= $nodeObj->getNodeId();
 				$this->graph[$id] = $nodeObj;
-				$this->graphviz = $this->graphviz . $nodeObj;
+				//$this->graphviz = $this->graphviz . $nodeObj;
+				$this->putGraphvizText($nodeObj);
 				return true;
 			}
 			return false;
@@ -356,6 +279,43 @@
 				array_push($this->nodesVisited,$id);
 			}
 		}
+		
+		/** The graphviz string */
+		//private $graphviz 		= null;
+		/** The xml export string */
+		//private $xml_export		= null;
+		/** Graphviz label array */
+		//private $graphviz_labels = null;
+		
+		
+		
+		/** The root attribute array */
+		//private $root_attributes = null;
+		/** The category of this graphs root node */
+		//private $root_category 	= null;
+		
+		/** Arrow truth flag for string */
+		//private $arrows;
+		
+		private $graphviz_temp_filename 	= null;
+		private $graphviz_temp_filehandle 	= null;
+		private $node_name					= null;
+		/** the graph direction */
+		private $graph_direction			= null;
+		/** Level at which to display graph */
+		private $limit 			= null;
+		private $limit_track 	= null;
+		/** The QueryRunner of this object */
+		private $query_runner 	= null;
+		/** Flag to determine to vist indirect neighbors */
+		private $flag_up 		= null;
+		/** Flag to determine to visit direct neighbors */
+		private $flag_down 		= null;
+		
+		/** A list of nodes that were visited by this graph */
+		private $nodesVisited  	= null;
+		/** The graph array */
+		private $graph 			= null;
 	}
 
 ?>
