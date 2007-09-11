@@ -22,9 +22,76 @@
 	
 	
 
+	function exportImageType(){
+		global $command_executable_dot;
+		global $graph_default_image_format;
+		global $temp_graphviz_filename;
+		global $header;
+		
+		$mapCmd	= "$command_executable_dot -T$graph_default_image_format $temp_graphviz_filename";
+		header("Content-type: $header");
+		passthru($mapCmd,$ret);
+		
+		return $ret;
+	}
+	
+	function exportDotType(){
+		global $header;
+		global $temp_graphviz_filename;
+		
+		header("Content-type: $header");	
+		if(file_exists($temp_graphviz_filename)){
+			$h = fopen($temp_graphviz_filename,"rb");
+			while (!feof($h)) {
+				echo fread($h, 4096);
+			}
+			
+			fclose($h);
+		} else {
+			echo "IOError: File \"$temp_graphviz_filename\" not found!.";
+		}
+	}
+	
+	function exportLegendType(){
+		global $header;
+		global $local_node;
+		header("Content-type: $header");
+		echo createNodeColorLegendTable($local_node->getNodeCategory());
+	}
+	
+	function exportOptionsType(){
+		global $type_dict;
+		global $header;
+		global $node_name;
+		
+		$html = "<table class=\"extra_options\">\n";
+		$html = $html . "<tr><td class=\"extra_option\">&nbsp;</td></tr>\n";
+		$html = $html . "<tr><td class=\"extra_option\">export as</td></tr>\n";
+		
+		$keys = array_keys($type_dict);
+		foreach($keys as $index => $option){
+			$url 	= "Export.php?q=".urlencode($node_name)."&type=$option".commonUrlCustomizationValues();
+			$html 	= $html . "<tr><td class=\"extra_option\">";
+			$html 	= $html . "<a href=\"$url\">$option</a></td></tr>\n";
+		}
+		
+		$html = $html . "</table>\n";
+		header("Content-type: $header");
+		echo $html;
+	}
+	
+	function exportAttributesType(){
+		global $header;
+		global $local_node;
+		
+		header("Content-type: $header");
+		$attributes = $local_node->getNodeAttributes();
+		echo createAttributeTableHtml($attributes);
+	}
+	
 	function detect_is_web_export(){
 		global $argv;
-		if($argv[0] == "Export.php"){
+		if($argv[0] == $_SERVER['PHP_SELF']){
 			return False;
 		} else {
 			return True;
@@ -119,7 +186,7 @@
 			$temp_graphviz_filename = $g->walk($node_name,$fontsize=$temp_font_size);
 		}
 	} else if($export_type == "legend" or $export_type == "attributes"){
-		$node = new NodeObject($query_runner,$node_name,$mysql_database_neighbor_limit);
+		$local_node = new NodeObject($query_runner,$node_name,$mysql_database_neighbor_limit);
 	}
 	
 	if($export_type == "img" or $export_type == "html"){
@@ -129,7 +196,7 @@
 			exit(-1);
 		}
 		
-		$checksum 		= md5($temp_graphviz_filename);
+		$checksum 		= md5($temp_graphviz_filename . time() . "");
 		
 		if($export_type == "html"){
 			$img_file 	= "$directory_dot_img" . "$filesystem_path_separator" . "$checksum" . "." . "$graph_default_image_extension";
@@ -138,16 +205,13 @@
 		}
 		
 		if($export_type == "img"){
-			$mapCmd	= "$command_executable_dot -T$graph_default_image_format $temp_graphviz_filename";
-			header("Content-type: $header");
-			passthru($mapCmd,$ret);
+			$ret = exportImageType();
 		} else if($export_type == "html"){
 			header("Content-type: $header");
-			
 			if(!$utility->checkFile("$map_file",$filesystem_age_time)){
 				if(!$utility->checkFile("$img_file",$filesystem_age_time)){
 					$mapCmd	= "$command_executable_dot -Tcmap -o$map_file -T$graph_default_image_format -o$img_file $temp_graphviz_filename";
-					//echo $mapCmd."<br />";
+					
 					exec($mapCmd,$output,$ret);			
 				}
 			} 
@@ -174,34 +238,13 @@
 		}
 		
 	} else if($export_type == "dot"){
-		header("Content-type: $header");		
-		$h = fopen($temp_graphviz_filename,"rb");
-		while (!feof($h)) {
-			echo fread($h, 4096);
-		}
-		
-		fclose($h);
-		
+		exportDotType();
 	} else if($export_type == "legend"){
-		header("Content-type: $header");
-		echo createNodeColorLegendTable($node->getNodeCategory());
+		exportLegendType();
 	} else if($export_type == "attributes"){
-		header("Content-type: $header");
-		echo createAttributeTableHtml($node->getNodeAttributes());
+		exportAttributesType();
 	} else if($export_type == "options"){
-		$html = "<table class=\"extra_options\">\n";
-		$html = $html . "<tr><td class=\"extra_option\">&nbsp;</td></tr>\n";
-		$html = $html . "<tr><td class=\"extra_option\">export as</td></tr>\n";
-		
-		$keys = array_keys($type_dict);
-		foreach($keys as $index => $option){
-			$url = $url_html_export = "Export.php?q=".urlencode($node_name)."&type=$option".commonUrlCustomizationValues();
-			$html = $html . "<tr><td class=\"extra_option\">";
-			$html = $html . "<a href=\"$url\">$option</a></td></tr>\n";
-		}
-		$html = $html . "</table>\n";
-		header("Content-type: $header");
-		echo $html;
+		exportOptionsType();
 	} else {
 		
 	}
