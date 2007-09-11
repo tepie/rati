@@ -140,9 +140,9 @@
 			header('Location: Index.php');
 		} 
 	} else {
-		if($argc != 6){
+		if($argc != 7){
 			echo "Wrong number of arguments.\n";
-			echo "usage: " . $argv[0] . " <export type> <node name> <graph direction> <image size> <graph levels>";
+			echo "usage: " . $argv[0] . " <export type> <node name> <graph direction> <image size> <graph levels> <neighbor limit>";
 			exit();
 		} else {
 			$export_type 	= $argv[1];
@@ -151,6 +151,8 @@
 			$_GET["$url_rest_custom_image_graph_direction"]	= $argv[3];
 			$_GET["$url_rest_custom_image_font_size"]		= $argv[4];
 			$_GET["$url_rest_custom_image_graph_levels"]	= $argv[5];
+			$_GET["$custom_image_neighbor_limit_accepted"]	= $argv[6];
+			
 			ini_set("memory_limit","512M");
 		}
 	}
