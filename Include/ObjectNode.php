@@ -4,6 +4,7 @@
 	include_once('SettingsPerspectives.php');
 	include_once('SettingsGraph.php');
 	include_once('SettingsWebApp.php');
+	include_once('SettingsBranding.php');
 	
 	/**
 	* Represents a node of a graphviz dot graph

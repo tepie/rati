@@ -1,6 +1,7 @@
 <?php
 	//include_once("Include\\Settings.php");
 	include_once("Include\\SettingsWebApp.php");
+	include_once('Include\\SettingsBranding.php');
 	include_once("Include\\SettingsDatabase.php");
 	include_once("Include\\HtmlCommon.php");
 	include_once('Include\\ObjectUsage.php');
