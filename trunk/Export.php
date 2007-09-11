@@ -3,6 +3,7 @@
 	include_once('Include\\ObjectGraph.php');
 	include_once('Include\\ObjectNode.php');
 	include_once('Include\\SettingsWebApp.php');
+	include_once('Include\\SettingsBranding.php');
 	include_once('Include\\SettingsDatabase.php');
 	include_once('Include\\ObjectUsage.php');
 	include_once('Include\\ObjectUtility.php');

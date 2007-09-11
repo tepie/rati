@@ -6,6 +6,7 @@
 	include_once('Include\\ObjectUsage.php');
 
 	include_once('Include\\SettingsWebApp.php');
+	include_once('Include\\SettingsBranding.php');
 	include_once('Include\\SettingsDatabase.php');
 	include_once('Include\\SettingsGraph.php');
 	include_once('Include\\SettingsPerspectives.php');

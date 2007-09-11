@@ -1,6 +1,7 @@
 <?php
 	
 	include_once('SettingsWebApp.php');
+	include_once('SettingsBranding.php');
 	include_once('SettingsPerspectives.php');
 	include_once('HtmlCommon.php');
 	

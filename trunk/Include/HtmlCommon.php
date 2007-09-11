@@ -2,6 +2,8 @@
 	
 	//include_once("Settings.php");
 	include_once("SettingsPerspectives.php");
+	include_once('SettingsWebApp.php');
+	include_once('SettingsBranding.php');
 	
 	function commonSessionSetup(){
 		global $url_rest_custom_image_arrow_direction;
@@ -144,19 +146,21 @@
 		$html = "";
 		//$html = "<div style=\"text-align:right; padding-right:0.2cm;\"><a href=\"#\" onClick=\"popup('Customize.php');\"><small>Customize</small></a></div>";
 		$html = $html . "<div class=\"top-bar-full\">\n";
+		$html = $html .  "<form action=\"Search.php\" method=\"get\" style=\"margin: 0px; padding: 0px;\">";
+		
 		$html = $html .  "<a class=\"top-bar-full\" href=\"$web_app_page_index_name\">";
 		$html = $html .  "$web_app_name_full</a><br />";
-		$html = $html .  "<form action=\"Search.php\" method=\"get\" style=\"margin: 0px; padding: 0px;\">\n";
-		$html = $html .  "<input type=\"text\" id=\"$url_rest_search_param\" 
-			name=\"$url_rest_search_param\" size=\"80\" 
-			value=\"$search_box_value\" />\n";
-		$html = $html .  " <input type=\"submit\" name=\"Search\" value=\"Search Rati\" /><br />\n";
+		
+		$html = $html .  "<input type=\"text\" id=\"$url_rest_search_param\" name=\"$url_rest_search_param\" size=\"80\" value=\"$search_box_value\" />";
+		$html = $html .  "&nbsp;<input type=\"submit\" name=\"Search\" value=\"Search\" />";
 		
 		/*foreach($perspective_names	as $index => $name){
 			$html = $html . "<input type=\"checkbox\" name=\"perspective\" value=\"".urlencode($name)."\" checked disabled /><small>$name</small>&nbsp;";
 		}
 		$html = $html . "<input type=\"checkbox\" name=\"perspective\" value=\"all\" checked disabled /><small>all</small>&nbsp;";
 		*/
+		
+		
 		$html = $html .  "</form>\n";
 		$html = $html . "</div>\n";		
 		return $html;
@@ -186,11 +190,12 @@
 		global $web_app_page_doxygen;
 		global $web_app_page_about_name;
 		global $web_app_page_usage_name;
+		global $web_app_name_full;
 		
 		$html = "<div class=\"contact\"><br />developed by ";
 		$html = $html . "<a class=\"contact\"href=\"$web_app_organizational_url\">$web_app_organizational_dept</a>\n";
 		$html = $html . "&nbsp;|&nbsp;contact <a class=\"contact\" href=\"mailto:$web_app_author_email\">$web_app_author_short_name</a> with questions\n";
-		$html = $html . "&nbsp;|&nbsp;more <a class=\"contact\" href=\"$web_app_page_about_name\">about</a> rati\n";
+		$html = $html . "&nbsp;|&nbsp;more <a class=\"contact\" href=\"$web_app_page_about_name\">about</a> $web_app_name_full";
 		$html = $html . "&nbsp;|&nbsp;some <a class=\"contact\" href=\"$web_app_page_usage_name\">usage</a> insight\n";
 		$html = $html . "<br /><br /></div>\n";
 		$html = $html . "</body>\n</html>\n";
