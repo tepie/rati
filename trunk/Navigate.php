@@ -53,7 +53,8 @@
 	/** The image heading */
 	$utility = new UtilityObject();
 	echo "<th class=\"image_side_head\">";
-	echo "<div class=\"section_heading\">Relationships of ". $utility->parsePathBaseName($node_name) . "</div>\n";
+	echo "<div class=\"section_heading\">Relationships of ". $utility->parsePathBaseName($node_name);
+	echo "&nbsp;<a href=\"#\" onClick=\"popup('Customize.php');\"><small>(Customize)</small></a>". "</div>\n";
 	echo "</th>";	
 	echo "</tr>";
 	/** Done with the main headings */
@@ -74,7 +75,7 @@
 	// extra options
 	echo "<br />". createExtraOptions($node_name). "</td>";
 	// image
-	$url_html_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&type=html".commonUrlCustomizationValues();
+	$url_html_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&amp;type=html".commonUrlCustomizationValues($for_html=True);
 	//$html_export = file_get_contents($url_html_export);
 	//echo "<td>$html_export</td>\n";
 	echo "<td><iframe name=\"html\" src=\"$url_html_export\" width=\"100%\" height=\"450\" frameborder=\"0\"></iframe></td>\n";

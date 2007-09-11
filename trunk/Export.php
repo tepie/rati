@@ -70,7 +70,7 @@
 		
 		$keys = array_keys($type_dict);
 		foreach($keys as $index => $option){
-			$url 	= "Export.php?q=".urlencode($node_name)."&type=$option".commonUrlCustomizationValues();
+			$url 	= "Export.php?q=".urlencode($node_name)."&amp;type=$option".commonUrlCustomizationValues($for_html=True);
 			$html 	= $html . "<tr><td class=\"extra_option\">";
 			$html 	= $html . "<a href=\"$url\">$option</a></td></tr>\n";
 		}
