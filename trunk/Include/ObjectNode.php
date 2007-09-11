@@ -72,7 +72,7 @@
 			$color  = $this->calculateNodeColor();
 			
 			$text 	= "\t" . sprintf($graphviz_string_link_node,$this->idDatabase);
-			$text   = $text . " " . sprintf($graphviz_string_node_attributes,$show,$url,$color) . "\n";
+			$text   = $text . " " . sprintf($graphviz_string_node_attributes,$show,$url,$color,$label) . "\n";
 			
 			return $text;
 		}
