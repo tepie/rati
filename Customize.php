@@ -21,16 +21,16 @@
 <div class="about_section_content">
 <br />
 <table class="custom_table">
-<!--
+
 <tr>
 <td class="custom_table_left">
-Relationship line direction
+Default Graph Neighbor Limit
 </td>
 <td class="custom_table_right">
 <?php 
-	/*echo "<select class=\"custom_option\" name=\"$url_rest_custom_image_arrow_direction\">\n";
-	foreach($custom_image_arrow_direction_accepted as $value => $display){
-		if($_SESSION["$url_rest_custom_image_arrow_direction"] == "$value"){
+	echo "<select class=\"custom_option\" name=\"$url_rest_custom_image_graph_neighbors\">\n";
+	foreach($custom_image_neighbor_limit_accepted as $value => $display){
+		if($_SESSION["$url_rest_custom_image_graph_neighbors"] == "$value"){
 			echo '<option value="'.$value.'" selected="selected">'.$display.'</option>';
 		} else {
 			echo '<option value="'.$value.'">'.$display.'</option>';
@@ -38,11 +38,9 @@ Relationship line direction
 		
 	}
 	echo "</select>\n";
-	*/
 ?>
 </td>
 </tr>
--->
 <tr>
 <td class="custom_table_left">
 Default graph direction

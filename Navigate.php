@@ -33,11 +33,12 @@
 	/** Create a new graph object using the query runner to execute database calls
 	* set the up and down flags for neighbors, and set the direction of the graph
 	*/
-	$temp_graph_direction 	= $_SESSION["$url_rest_custom_image_graph_direction"];
+	/*$temp_graph_direction 	= $_SESSION["$url_rest_custom_image_graph_direction"];
 	$temp_arrow_direction 	= $_SESSION["$url_rest_custom_image_arrow_direction"];
 	$temp_graph_levels		= $_SESSION["$url_rest_custom_image_graph_levels"] + 0;
+	$temp_neighbor_limit   	= $_SESSION["$url_rest_custom_image_graph_neighbors"] + 0;
+	*/
 	
-	$utility 				= new UtilityObject();
 	/** Add the document header */
 	echo commonHtmlPageHead($node_name);
 	/** Add the page header */
@@ -50,6 +51,7 @@
 	echo "<tr>";
 	
 	/** The image heading */
+	$utility = new UtilityObject();
 	echo "<th class=\"image_side_head\">";
 	echo "<div class=\"section_heading\">Relationships of ". $utility->parsePathBaseName($node_name) . "</div>\n";
 	echo "</th>";	

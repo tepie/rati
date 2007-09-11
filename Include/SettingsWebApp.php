@@ -49,13 +49,13 @@
 	$url_rest_custom_image_graph_direction 	= "image_graph_direction";
 	$url_rest_custom_image_font_size 		= "image_font_size";
 	$url_rest_custom_image_graph_levels		= "image_graph_levels";
-	$url_rest_custom_image_graph_levels     = "image_neighbor_limit";
+	$url_rest_custom_image_graph_neighbors  = "image_neighbor_limit";
 	
 	$url_rest_custom_array = array(
 		$url_rest_custom_image_graph_direction,
 		$url_rest_custom_image_font_size,
 		$url_rest_custom_image_graph_levels,
-		$url_rest_custom_image_graph_levels);
+		$url_rest_custom_image_graph_neighbors);
 		
 	//$custom_image_arrow_direction_accepted 	= array("0" => "Same Line Directions", "1" => "Actual Line Directions");
 	$custom_image_graph_direction_accepted 	= array("LR" => "Left to Right", "TB" => "Top to Bottom", "CIRCO" => "Circular");

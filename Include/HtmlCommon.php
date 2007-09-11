@@ -8,6 +8,7 @@
 		global $url_rest_custom_image_graph_direction;
 		global $url_rest_custom_image_font_size;
 		global $url_rest_custom_image_graph_levels;
+		global $url_rest_custom_image_graph_neighbors;
 		//global $_SESSION;
 		
 		session_start();
@@ -27,8 +28,8 @@
 			$_SESSION["$url_rest_custom_image_graph_levels"] = "1";
 		}
 		
-		if(!isset($_SESSION["$url_rest_custom_image_graph_levels"])){
-			$_SESSION["$url_rest_custom_image_graph_levels"] = "30";
+		if(!isset($_SESSION["$url_rest_custom_image_graph_neighbors"])){
+			$_SESSION["$url_rest_custom_image_graph_neighbors"] = "30";
 		}
 	}
 	

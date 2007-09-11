@@ -169,7 +169,8 @@
 	$utility 				= new UtilityObject();
 	$temp_graph_direction 	= $_SESSION["$url_rest_custom_image_graph_direction"];
 	$temp_graph_levels		= $_SESSION["$url_rest_custom_image_graph_levels"] + 0;
-	
+	$temp_neighbor_limit   	= $_SESSION["$url_rest_custom_image_graph_neighbors"] + 0;
+	//echo $temp_neighbor_limit;
 	if($temp_graph_direction == "CIRCO"){
 		$command_executable_dot = "circo";
 	}
@@ -181,12 +182,12 @@
 		
 		$temp_font_size = commonGraphvizFontSize();
 		if($temp_font_size == null){
-			$temp_graphviz_filename = $g->walk($node_name);
+			$temp_graphviz_filename = $g->walk($node_name,$fontsize="8",$neighbor_limit=$temp_neighbor_limit);
 		} else {
-			$temp_graphviz_filename = $g->walk($node_name,$fontsize=$temp_font_size);
+			$temp_graphviz_filename = $g->walk($node_name,$fontsize=$temp_font_size,$neighbor_limit=$temp_neighbor_limit);
 		}
 	} else if($export_type == "legend" or $export_type == "attributes"){
-		$local_node = new NodeObject($query_runner,$node_name,$mysql_database_neighbor_limit);
+		$local_node = new NodeObject($query_runner,$node_name,$temp_neighbor_limit);
 	}
 	
 	if($export_type == "img" or $export_type == "html"){
