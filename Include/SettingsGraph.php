@@ -48,6 +48,6 @@
 	$graphviz_string_link_attributes	= '[label = "%s",fontname="Verdana",fontsize=%s,dir="%s"];';
 	/** The graphviz string link node text, expects an identifier when printing */
 	$graphviz_string_link_node			= 'node%s'; 
-	$graphviz_string_node_attributes	= '[label="%s",URL="%s",color="%s",target="_parent"];'
+	$graphviz_string_node_attributes	= '[label="%s",URL="%s",color="%s",target="_parent",tooltip="%s"];'
 	
 ?>
