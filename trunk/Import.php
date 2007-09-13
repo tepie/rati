@@ -327,6 +327,8 @@
 	function initiate_load(){
 		global $query_runner;
 		global $database_start_transaction;
+		global $database_disable_autocommit;
+		$query_runner->runQuery("$database_disable_autocommit");
 		$query_runner->runQuery("$database_start_transaction");
 	}
 	
@@ -458,6 +460,7 @@
 	$object_id				= null;
 	
 	if($argc > 1){
+		initiate_load();
 		/** this is a command line based load, handle it */
 		handle_command_line_load();
 		/** finalize the load process */
@@ -465,6 +468,7 @@
 		if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 		exit();
 	} elseif(isset($_GET["$url_rest_import_xml_string_param"])) {
+		initiate_load();
 		/** this is a http load */
 		header('Content-type: text/xml');
 		$res = handle_http_string_load($_GET["$url_rest_import_xml_string_param"]);
@@ -475,6 +479,7 @@
 		if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 		exit();
 	} else {
+		if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 		/** there seems to be no importing going on, explain the process to import */
 		echo commonHtmlPageHead("Web XML Import API");
 		echo commonHtmlPlainHeader();	
