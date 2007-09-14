@@ -1,4 +1,6 @@
 <?php
+	ignore_user_abort(true);
+	
 	include_once('Include\\Database.php');
 	include_once('Include\\ObjectGraph.php');
 	include_once('Include\\ObjectNode.php');
