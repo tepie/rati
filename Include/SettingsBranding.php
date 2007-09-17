@@ -1,7 +1,7 @@
 <?php
 	$web_app_default_style_sheet	= 	"./$web_app_dir_include_name/style.css";
 	/** The application logo (not used) */
-	$web_app_default_logo_image		= 	"./$web_app_dir_include_name/rati.gif";
+	$web_app_default_logo_image		= 	"./$web_app_dir_include_name/Galileo.gif";
 	/** The application author full name */
 	$web_app_author_full_name		= 	"Terrence A Pietrondi";
 	/** The application author short name */
