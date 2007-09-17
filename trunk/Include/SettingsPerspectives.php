@@ -61,6 +61,8 @@
 	$web_app_mdr_node_color_map["$mdr_category_prefix/Entity"] 				= "orange";
 	$web_app_mdr_node_color_map["$mdr_category_prefix/Element"] 			= "yellowgreen";
 	$web_app_mdr_node_color_map["$mdr_category_prefix/Column"] 				= "violet";
+	$web_app_mdr_node_color_map["$mdr_category_prefix/Source Structure"]	= "gray";
+	$web_app_mdr_node_color_map["$mdr_category_prefix/File Group"]			= "tan";
 	$web_app_mdr_node_color_map["$mdr_category_prefix/category"] 			= $web_app_default_cat_color;
 	
 	//*************************************************************************
