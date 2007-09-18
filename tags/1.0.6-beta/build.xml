@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="rati" default="dist" basedir=".">
+	<description>Packages the rati application</description>
+	<property name="dir.root" 		value="."/>
+	<property name="dir.dist" 		value ="${dir.root}/dist"/>
+	<property name="dir.doc" 		value="${dir.root}/Doc"/>
+	<property name="dir.include" 	value="${dir.root}/Include"/>
+	<property name="dir.sql" 		value="${dir.root}/sql"/>
+	<property name="dir.doxygen" 	value="${dir.root}/Doxygen"/>
+	<property name="exec.doxygen" 	value="doxygen" />
+	<property name="dist.exclude"	value="**/.svn/**,dist/**,dot/**,img/**,map/**,Thumbs.db,build.xml,Doxyfile,build.number" />
+	
+	<property name="version" value="1.0"/>
+   	<property name="project" value="rati"/>
+	<property name="stage" value="beta"/>
+	
+	<target name="doxygen" description="Generate the project documentation.">
+		<echo>Generating project doxygen documentation...</echo>
+		<delete dir	=	"${dir.doxygen}"	/>
+		<mkdir 	dir	=	"${dir.doxygen}" 	/>
+		<exec 	executable	=	"${exec.doxygen}" />
+	</target>
+	
+	<target name="dist" description="Generate project distribution package.">
+		<buildnumber/>
+		<delete dir	=	"${dir.doxygen}"	/>
+		<echo>Generating project distribution archive...</echo>
+		<delete dir		=	"${dir.dist}"/>
+		<mkdir 	dir		=	"${dir.dist}"/>
+		<zip destfile	=	"${dir.dist}/${project}-${version}-${build.number}-${stage}.zip" 
+			basedir		=	"${dir.root}" 
+			update		=	"true"
+			excludes	=	"${dist.exclude}"/>
+	</target>
+</project>

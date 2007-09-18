@@ -1,0 +1,351 @@
+table.main{
+	width: 	99%;
+}
+
+table.usage_table{
+	width: 50%;
+}
+
+table.node_legend_name{
+	width: 99%;
+}
+
+table.node_color_legend{
+	width: 99%;
+}
+
+table.search_forward_back{
+	width: 99%;
+}
+
+table.custom_table{
+	width: 99%;
+}
+
+table.attributes{
+	width:			99%;
+	empty-cells:	show;
+}
+
+table.heading{
+	width: 99%;
+}
+
+table.extra_options{
+	width: 			99%;
+	empty-cells: 	show;
+}
+
+table.search_result_item{
+	width: 					99%;	
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-bottom-color: 	#8B0000;
+}
+
+th.image_side_head{
+	width: 					80%;
+	vertical-align:			bottom;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-right-style: 	solid;
+	border-right-color:    	black;
+	border-right-width: 	thin;
+	border-top-style: 		solid;
+	border-top-width: 		thin;
+	border-top-color:    	black;
+	border-bottom-color:    black;
+}
+
+th.attribute_side_head{
+	width: 					20%;
+	vertical-align:			bottom;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-bottom-color:    	black;
+	border-top-style: 		solid;
+	border-top-width: 		thin;
+	border-top-color:    	black;
+}
+
+th.legend_side_head{
+	width: 					15%;
+	vertical-align:			bottom;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-top-style: 		solid;
+	border-top-width: 		thin;
+	border-right-style: 	solid;
+	border-right-width: 	thin;
+}
+
+th.extra_options{
+	width: 					50%;
+	font-family:			verdana;
+	vertical-align:			bottom;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-top-style: 		solid;
+	border-top-width: 		thin;
+}
+
+th.usage_value_name{
+	width: 80%;
+	text-align:left;
+}
+
+td.custom_table_left{
+	width: 60%;
+}
+
+td.custom_table_right{
+	width: 40%;
+}
+
+td.usage_value_name{
+	width: 80%;
+}
+
+td.usage_value_value{
+	width: 20%;
+}
+
+td.node_legend_name{
+	text-align:     center;
+	font-family:	verdana;
+	font-weight:	bold;
+	font-size:		14px;	
+}
+
+td.node_legend_block{
+	font-family:		verdana;
+	vertical-align:		top;
+	text-align:			center;
+	font-size: 			12px;
+	font-weight: 		bold;
+	color: 				white;
+}
+
+a.node_legend_block:link{color:white;}
+a.node_legend_block:visited{color:black;}
+a.node_legend_block:hover {color: black; background-color:white;}
+
+td.search_back{
+	text-align: left;
+	font-family:	verdana;
+	font-weight:	bold;
+	font-size:		12px;
+}
+
+td.search_forward{
+	text-align: right;
+	font-family:	verdana;
+	font-weight:	bold;
+	font-size:		12px;
+}
+
+td.search_result_item{
+	font-family:	verdana;
+	font-weight:	bold;
+	width:			99%;
+	font-size:		12px;
+}
+
+td.search_result_content{
+	font-family:		verdana;
+	font-size: 			11px;
+	width:				99%;
+}
+
+td.heading-left{
+	width:					90%;
+	text-align:				left;
+	background-color:		#BDB76B;
+}
+
+td.heading-right{
+	text-align:			right;
+	background-color:	#BDB76B;
+}
+
+td.image_side_content{
+	width: 					50%;
+	vertical-align:			top;
+	border-right-style: 	solid;
+	border-right-width: 	thin;
+	border-right-color:    	black;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-bottom-color:	black;
+	
+}
+
+td.image_side_focus{
+	vertical-align:		bottom;
+	font-weight: 		bold;
+	font-family:		verdana;
+	font-size: 			small;
+	height: 			99%;
+}
+
+td.attribute_side_content{
+	width: 					50%;
+	vertical-align:			top;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-bottom-color: 	black;
+}
+
+td.attribute_name{
+	font-weight: 			bold;
+	font-family:			verdana;
+	vertical-align:			top;
+	font-size: 				10px;
+	border-right-style: 	solid;
+	border-right-width: 	thin;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-bottom-color:    black;
+	border-right-color:    black;
+	width:					30%;
+}
+
+td.attribute_value{
+	font-family:			verdana;
+	vertical-align:			top;
+	font-size: 				10px;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	border-bottom-color:    black;
+	border-right-color:    black;
+
+}
+
+td.extra_option{
+	font-weight: 	bold;
+	font-family:	verdana;
+	vertical-align:	top;
+	font-size:		12px;
+	
+}
+
+div.attribute_value{
+	vertical-align:			top;
+	border-bottom-style: 	solid;
+	border-bottom-width: 	thin;
+	font-family:			verdana;
+}
+
+div.section_heading{
+	text-align:			center;
+	vertical-align:		bottom;
+	font-family:		verdana;
+}
+
+div.top-bar-abbrv{
+	letter-spacing: 	50px;
+	font-weight: 		bold;
+	font-size: 			xx-large;
+	text-align: 		center;
+	font-family: 		verdana;
+	width: 				99%;
+	background-color:	#BDB76B;
+}
+
+div.top-bar-full{
+	font-weight: 		bold;
+	font-size: 			19px;
+	text-align: 		left;
+	font-family: 		verdana;
+	width: 				99%;
+	background-color:	black;
+	padding-bottom: 	0.2cm;
+	padding-top: 	0.2cm;
+	padding-left:	0.5cm;
+	padding-right:	0.5cm;
+	color:			white;
+}
+
+a.top-bar-full:link{color:gold;}
+a.top-bar-full:visited{color:gold;}
+
+div.top-bar-full-about{
+	font-weight: 		bold;
+	font-size: 			19px;
+	text-align: 		center;
+	font-family: 		verdana;
+	width: 				99%;
+	background-color:	black;
+}
+
+a.top-bar-full-about:link{color:gold;}
+a.top-bar-full-about:visited{color:gold;}
+
+div.contact{
+	font-weight: 		bold;
+	font-size: 			12px;
+	text-align: 		center;
+	font-family: 		verdana;
+	width: 				99%;
+	background-color:	black;
+	color:	white;
+}
+
+a.contact:link{color:gold;}
+a.contact:visited{color:gold;}
+
+div.search_result_heading{
+	font-family: 		verdana;
+	width: 				99%;
+	border-bottom-style: solid;
+	border-bottom-width: thin;
+	border-bottom-color: #8B0000;
+	font-size: 				small;
+}
+
+div.about_section_heading{
+	font-weight: 		bold;
+	font-family: 		verdana;
+	width: 				99%;
+	background-color:	black;
+	text-align: 		center;
+	color:				gold;
+	padding:			0.1cm;
+}
+
+div.about_section_content{
+	font-family:	verdana;
+	width:			99%;
+	text-align:		left;
+	font-size: 		12px;
+}
+
+div.rati_image{
+	text-align: center;
+}
+
+div.index_container{
+	text-align:center;
+	font-family: verdana;
+	font-size: 12px;
+}
+
+font.search_phrase{
+	font-weight: bold;
+}
+
+hr.index{
+	width:20%;
+	color:black;
+}
+
+a:link{color: #8B0000;}
+a:visited{color:	#8B0000;}
+
+li{
+	font-weight:bold;
+}
+
+select.custom_option{
+	width: 100%;
+}
