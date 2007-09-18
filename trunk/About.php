@@ -88,12 +88,12 @@ questioned by this documentation, feel free to contact the author with
 your answers.<br /><br />
 <ul>
 	<!-- <li><a href="<?php echo $web_app_source_code_url; ?>">Project Source Code</a></li> -->
-	<li><a href="<?php echo $web_app_page_how_name;?>">How Rati Works</a></li>
+	<!-- <li><a href="<?php echo $web_app_page_how_name;?>">How Rati Works</a></li> -->
 	<!-- <li><a href="<?php echo $web_app_page_import_name;?>">Importing Data Into Rati</a></li> -->
-	<li><a href="<?php echo $web_app_page_export_name;?>">Exporting Data From Rati</a></li>
+	<!-- <li><a href="<?php echo $web_app_page_export_name;?>">Exporting Data From Rati</a></li> -->
 	<li><a href="<?php echo $web_app_page_doxygen; ?>">Doxygen Documentation</a></li>
 	<li><a href="./Doc/Object%20Relational%20Data%20Storage%20for%20Metadata.pdf">Overview of Object Database (PDF)</a></li>
-	<li><a href="./Doc/Data%20Visualization%20Navigation.png">Flow Diagram (PNG)</a></li>
+	<!-- <li><a href="./Doc/Data%20Visualization%20Navigation.png">Flow Diagram (PNG)</a></li> -->
 </ul>
 <br /><br />
 </div>
