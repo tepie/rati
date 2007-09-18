@@ -191,11 +191,12 @@
 		global $web_app_page_about_name;
 		global $web_app_page_usage_name;
 		global $web_app_name_full;
+		global $web_app_name_abbrv;
 		
 		$html = "<div class=\"contact\"><br />developed by ";
 		$html = $html . "<a class=\"contact\"href=\"$web_app_organizational_url\">$web_app_organizational_dept</a>\n";
 		$html = $html . "&nbsp;|&nbsp;contact <a class=\"contact\" href=\"mailto:$web_app_author_email\">$web_app_author_short_name</a> with questions\n";
-		$html = $html . "&nbsp;|&nbsp;more <a class=\"contact\" href=\"$web_app_page_about_name\">about</a> $web_app_name_full";
+		$html = $html . "&nbsp;|&nbsp;more <a class=\"contact\" href=\"$web_app_page_about_name\">about</a> $web_app_name_abbrv";
 		$html = $html . "&nbsp;|&nbsp;some <a class=\"contact\" href=\"$web_app_page_usage_name\">usage</a> insight\n";
 		$html = $html . "<br /><br /></div>\n";
 		$html = $html . "</body>\n</html>\n";
