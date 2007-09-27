@@ -60,6 +60,7 @@ concepts and the way they are used. An image helps portray that concept visually
 making it easier to share ideas and reality with people. 
 <br /><br />
 </div>
+<!--
 <div class="about_section_heading"><a name="why_rati">Rati... the Rat?</a></div>
 <div class="about_section_content">
 <br />
@@ -79,6 +80,7 @@ the hope that this tool reflects some of the positive qualities of the rat:
 </ol>
 <br /><br />
 </div>
+-->
 <div class="about_section_heading"><a name="links">Documentation Links</a></div>
 <div class="about_section_content">
 <br />
