@@ -38,10 +38,12 @@
 			
 			// Create a new node object using this query runner and node name
 			if($neighbor_limit != null){
-				$node 	= new NodeObject($this->query_runner,$node_name,$neighbor_limit);
-			} else {
-				$node 	= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
+				//echo $neighbor_limit;
+				$mysql_database_neighbor_limit = $neighbor_limit;
+				//$node 	= new NodeObject($this->query_runner,$node_name,$neighbor_limit);
 			}
+			
+			$node 	= new NodeObject($this->query_runner,$node_name,$mysql_database_neighbor_limit);
 			$this->node_name 				= $node_name;
 			$this->graphviz_temp_filename 	= tempnam("$directory_dot_graph","graphviz");
 			$this->graphviz_temp_filehandle = fopen($this->graphviz_temp_filename,"w+");

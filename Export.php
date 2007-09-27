@@ -129,7 +129,7 @@
 	}
 	
 	$export_is_web_based = detect_is_web_export();
-	
+	//echo $export_is_web_based;
 	if($export_is_web_based){
 		if(isset($_GET["$type_param"])){
 			$export_type = $_GET["$type_param"];
@@ -151,11 +151,16 @@
 			$export_type 	= $argv[1];
 			$node_name 		= $argv[2];
 			
+			// set the $_GET global variable with our command line arguments to reuse 
+			// our session checking functions
 			$_GET["$url_rest_custom_image_graph_direction"]	= $argv[3];
 			$_GET["$url_rest_custom_image_font_size"]		= $argv[4];
 			$_GET["$url_rest_custom_image_graph_levels"]	= $argv[5];
-			$_GET["$custom_image_neighbor_limit_accepted"]	= $argv[6];
+			$_GET["$url_rest_custom_image_graph_neighbors"]	= $argv[6];
 			
+			// expand our memory limit for a command line run
+			// the point is to use the command line for large processing that 
+			// should not take place in a web browser
 			ini_set("memory_limit","512M");
 		}
 	}
@@ -167,15 +172,35 @@
 	
 	$header = select_header($export_type);
 	
+	// initalize a common session setup
 	commonSessionSetup();
-	commonValidationCustomizationValues();	
+	// validation the common session variables, make sure they are acceptable
+	// right now, we will ignore the validation from the web and accept the user input
+	if($export_is_web_based){
+		//echo "This is web based";
+		commonValidationCustomizationValues($ignore=false);
+	} else {
+		//echo "This is not web based\n";
+		commonValidationCustomizationValues($ignore=true);
+	}
 	
 	$query_runner 			= new QueryRunner();
 	$utility 				= new UtilityObject();
+	
+	// store our session values as temps so we don't need to use the $_SESSION reference
 	$temp_graph_direction 	= $_SESSION["$url_rest_custom_image_graph_direction"];
 	$temp_graph_levels		= $_SESSION["$url_rest_custom_image_graph_levels"] + 0;
 	$temp_neighbor_limit   	= $_SESSION["$url_rest_custom_image_graph_neighbors"] + 0;
-	//echo $temp_neighbor_limit;
+	
+	//echo "web:$export_is_web_based\n\n\n";
+	//print_r($_GET);
+	//print_r($_SESSION);
+	
+	//echo "neighbor limit: $temp_neighbor_limit\n";
+	//echo "graph levels: $temp_graph_levels";
+	//
+	//exit();
+	// if we want to be circular, we have to change the executable from dot to circo
 	if($temp_graph_direction == "CIRCO"){
 		$command_executable_dot = "circo";
 	}
@@ -223,7 +248,8 @@
 			} 
 			
 			//echo "Return Code: $ret<br />";
-			//echo "Command Output:" . print_r($output). "<br />";
+			//print_r($output); 
+			//echo "<br />";
 						
 			if(file_exists($map_file)){
 				$handle 	= fopen("$map_file","rb");
@@ -254,6 +280,6 @@
 	} else {
 		
 	}
-	
+	//print_r($_SESSION);
 	if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 ?>
