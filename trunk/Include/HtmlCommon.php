@@ -5,53 +5,77 @@
 	include_once('SettingsWebApp.php');
 	include_once('SettingsBranding.php');
 	
+	
+	/**
+	* Initalize a common session
+	* If the common session variables are not set, give them their defaults
+	* These are assigned to the $_SESSION global variable
+	*/
 	function commonSessionSetup(){
 		global $url_rest_custom_image_arrow_direction;
 		global $url_rest_custom_image_graph_direction;
 		global $url_rest_custom_image_font_size;
 		global $url_rest_custom_image_graph_levels;
 		global $url_rest_custom_image_graph_neighbors;
-		//global $_SESSION;
+		global $_SESSION;
 		
 		session_start();
 		/*if(!isset($_SESSION["$url_rest_custom_image_arrow_direction"])){
 			$_SESSION["$url_rest_custom_image_arrow_direction"] = "0";
 		}*/
 		
+		// set the image direction
 		if(!isset($_SESSION["$url_rest_custom_image_graph_direction"])){
 			$_SESSION["$url_rest_custom_image_graph_direction"] = "LR";
 		}
 		
+		// set the image font size
 		if(!isset($_SESSION["$url_rest_custom_image_font_size"])){
 			$_SESSION["$url_rest_custom_image_font_size"] = "N";
 		}
 		
+		// set the image graph levels
 		if(!isset($_SESSION["$url_rest_custom_image_graph_levels"])){
 			$_SESSION["$url_rest_custom_image_graph_levels"] = "1";
 		}
 		
+		// set the graph neighbor limit
 		if(!isset($_SESSION["$url_rest_custom_image_graph_neighbors"])){
 			$_SESSION["$url_rest_custom_image_graph_neighbors"] = "30";
 		}
 	}
 	
-	function commonValidationCustomizationValues(){
+	/**
+	*  Validation the customization values given through the $_GET and $_SESSION variables
+	* $_GET should be set with the desired values
+	* These are checked and then assigned to the $_SESSION
+	*/
+	function commonValidationCustomizationValues($ignore=false){
 		global $url_rest_custom_array;
 		global $custom_accepted_array;
+		global $_SESSION;
+		global $_GET;
 		$should_close_flag = false;
 		
 		foreach($url_rest_custom_array as $index => $parameter){
 			if(isset($_GET["$parameter"])){
-				$accepted_array = $custom_accepted_array[$index];
-				$accepted_keys = array_keys($accepted_array);
-				foreach($accepted_array as $inner_index => $value){
-					if(isset($_GET["$parameter"]) == $value){
-						$_SESSION["$parameter"] = $_GET["$parameter"];
-						$should_close_flag = True;
-						break;
-					} else {
-						//echo "Accepted". $accepted_keys[0];
-						$_SESSION["$parameter"] = $accepted_keys[0];
+				if($ignore){
+					//echo "session $parameter before:".$_SESSION["$parameter"]."\n";
+					$_SESSION["$parameter"] = $_GET["$parameter"];
+					//echo "session $parameter after:".$_SESSION["$parameter"]."\n";
+				} else {
+					$accepted_array = $custom_accepted_array[$index];
+					$accepted_keys = array_keys($accepted_array);
+					foreach($accepted_array as $inner_index => $value){
+						if(isset($_GET["$parameter"]) == $value){
+							$_SESSION["$parameter"] = $_GET["$parameter"];
+							$should_close_flag = True;
+							break;
+						} else {
+							//echo "Accepted". $accepted_keys[0];
+							/** Assign the first value of the acceptable values as the default */
+							$_SESSION["$parameter"] = $accepted_keys[0];
+						}
 					}
 				}
 			
