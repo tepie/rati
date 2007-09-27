@@ -66,14 +66,34 @@
 	$web_app_mdr_node_color_map["$mdr_category_prefix/category"] 			= $web_app_default_cat_color;
 	
 	//*************************************************************************
+	//*	EDA Org Chart
+	//*	Persepective
+	//*************************************************************************
+
+	$edaorg_category_prefix				= 	"/eda/organization/categories";
+	$edaorg_category_ereg				= 	"\/eda\/organization\/categories";
+	$edaorg_default_root_node			= 	"$edaorg_category_prefix/category";
+	$edaorg_category_reference_rule 	= 	"category";
+	$edaorg_category_unknown			= 	"Unknown";
+	$edaorg_perspective_name			= 	"eda org chart";
+	
+	$web_app_edaorg_node_color_map		=   array();
+	$web_app_edaorg_node_color_map["$edaorg_category_prefix/team"]	= "gray";
+	$web_app_edaorg_node_color_map["$edaorg_category_prefix/manager"] 				= "violet";
+	$web_app_edaorg_node_color_map["$edaorg_category_prefix/employee"] 				= "orange";
+	$web_app_edaorg_node_color_map["$edaorg_category_prefix/contractor"] 			= "yellowgreen";
+	$web_app_edaorg_node_color_map["$edaorg_category_prefix/location"]			= "tan";
+	$web_app_edaorg_node_color_map["$edaorg_category_prefix/category"] 			= $web_app_default_cat_color;
+	
+	//*************************************************************************
 	//*	Combined Application 
 	//*	Persepectives (Ordering matters in arrays)
 	//*************************************************************************
 	
-	$perspective_names				= array($abinitio_perspective_name,$sa_perspective_name,$mdr_perspective_name);
-	$perspective_category_prefixes 	= array($abinitio_category_prefix,$sa_category_prefix,$mdr_category_prefix);
-	$perspective_category_eregs		= array($abinitio_category_ereg,$sa_category_ereg,$mdr_category_ereg);
-	$perspective_default_root_nodes = array($abi_default_root_node,$sa_default_root_node,$mdr_default_root_node);
-	$perspective_category_reference_rules = array($abinitio_category_reference_rule,$sa_category_reference_rule,$mdr_category_reference_rule);
-	$perspective_node_color_maps = array($web_app_abi_node_color_map,$web_app_sa_node_color_map,$web_app_mdr_node_color_map);
+	$perspective_names				= array($abinitio_perspective_name,$sa_perspective_name,$mdr_perspective_name,$edaorg_perspective_name);
+	$perspective_category_prefixes 	= array($abinitio_category_prefix,$sa_category_prefix,$mdr_category_prefix,$edaorg_category_prefix);
+	$perspective_category_eregs		= array($abinitio_category_ereg,$sa_category_ereg,$mdr_category_ereg,$edaorg_category_ereg);
+	$perspective_default_root_nodes = array($abi_default_root_node,$sa_default_root_node,$mdr_default_root_node,$edaorg_default_root_node);
+	$perspective_category_reference_rules = array($abinitio_category_reference_rule,$sa_category_reference_rule,$mdr_category_reference_rule,$edaorg_category_reference_rule);
+	$perspective_node_color_maps = array($web_app_abi_node_color_map,$web_app_sa_node_color_map,$web_app_mdr_node_color_map,$web_app_edaorg_node_color_map);
 ?>
