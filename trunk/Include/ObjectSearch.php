@@ -117,6 +117,7 @@
 			foreach($parts as $index => $ereg){
 				//echo "Reg: $ereg"."<br />";
 				if($ereg != ""){
+					$ereg = preg_quote($ereg);
 					$value = eregi_replace($ereg,"<font style=\"font-weight:bold;\">$ereg</font>",$value);
 				}
 			}
