@@ -1,16 +1,16 @@
 <?php
 	ignore_user_abort(true);
 	
-	include_once('Include\\Database.php');
-	include_once('Include\\ObjectGraph.php');
-	include_once('Include\\ObjectNode.php');
-	include_once('Include\\SettingsWebApp.php');
-	include_once('Include\\SettingsBranding.php');
-	include_once('Include\\SettingsDatabase.php');
-	include_once('Include\\ObjectUsage.php');
-	include_once('Include\\ObjectUtility.php');
-	include_once('Include\\HtmlNavigate.php');
-	include_once('Include\\HtmlCommon.php');
+	include_once('Include/Database.php');
+	include_once('Include/ObjectGraph.php');
+	include_once('Include/ObjectNode.php');
+	include_once('Include/SettingsWebApp.php');
+	include_once('Include/SettingsBranding.php');
+	include_once('Include/SettingsDatabase.php');
+	include_once('Include/ObjectUsage.php');
+	include_once('Include/ObjectUtility.php');
+	include_once('Include/HtmlNavigate.php');
+	include_once('Include/HtmlCommon.php');
 	
 	$type_param 			= "type";
 	$type_default_export 	= "dot";

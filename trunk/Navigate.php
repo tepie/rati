@@ -1,18 +1,18 @@
 <?php
 		
-	include_once('Include\\Database.php');
-	include_once('Include\\ObjectGraph.php');
-	include_once('Include\\ObjectUtility.php');
-	include_once('Include\\ObjectUsage.php');
+	include_once('Include/Database.php');
+	include_once('Include/ObjectGraph.php');
+	include_once('Include/ObjectUtility.php');
+	include_once('Include/ObjectUsage.php');
 
-	include_once('Include\\SettingsWebApp.php');
-	include_once('Include\\SettingsBranding.php');
-	include_once('Include\\SettingsDatabase.php');
-	include_once('Include\\SettingsGraph.php');
-	include_once('Include\\SettingsPerspectives.php');
+	include_once('Include/SettingsWebApp.php');
+	include_once('Include/SettingsBranding.php');
+	include_once('Include/SettingsDatabase.php');
+	include_once('Include/SettingsGraph.php');
+	include_once('Include/SettingsPerspectives.php');
 
-	include_once('Include\\HtmlCommon.php');
-	include_once('Include\\HtmlNavigate.php');
+	include_once('Include/HtmlCommon.php');
+	include_once('Include/HtmlNavigate.php');
 	
 	
 	// Check the URL for a "node" parameter and set the $node_name

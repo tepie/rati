@@ -2,13 +2,13 @@
 	
 	/** Provide user driven search functionality */
 	
-	include_once('Include\\Database.php');
-	include_once('Include\\ObjectUtility.php');
-	include_once('Include\\ObjectSearch.php');
-	include_once('Include\\ObjectUsage.php');
-	include_once('Include\\SettingsWebApp.php');
-	include_once('Include\\SettingsDatabase.php');
-	include_once('Include\\HtmlCommon.php');
+	include_once('Include/Database.php');
+	include_once('Include/ObjectUtility.php');
+	include_once('Include/ObjectSearch.php');
+	include_once('Include/ObjectUsage.php');
+	include_once('Include/SettingsWebApp.php');
+	include_once('Include/SettingsDatabase.php');
+	include_once('Include/HtmlCommon.php');
 	
 	/** Setup the database connection, provide the host, username and password */
 	$db_connection 	= new DbConnectionHandler("$mysql_database_host",
