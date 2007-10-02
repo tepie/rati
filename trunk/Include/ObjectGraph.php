@@ -17,7 +17,6 @@
 		* @param $down boolean flag to determine if we are visiting downward neighbors
 		* @param $li numeric neighbor limit
 		* @param $direction the direction to draw the graph (LR, TB)
-		* @param $arrows the graph string arrow switch, true shows the truth, false shows lies
 		*/
 		public function GraphObject($runner,$up,$down,$li,$direction){
 			$res = $this->reset();
@@ -31,6 +30,8 @@
 		/**
 		* Walk a node as root to determine is neighboring relationships
 		* @param $node_name the name of the root node
+		* @param $fontsize the font size of the node text in the graph
+		* @param $neighbor_limit the number of neighbors per node to generate in the graph
 		*/
 		public function walk($node_name,$fontsize="8",$neighbor_limit=null){
 			global $mysql_database_neighbor_limit;

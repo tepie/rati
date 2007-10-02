@@ -16,14 +16,18 @@
 		global $url_rest_node_param;
 		global $perspective_names;
 		global $perspective_default_root_nodes;
+		global $web_app_show_export_options;
 		
 		$html = "";
 		
 		$url_node = urlencode($node_name);
 		$url_options_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=options".commonUrlCustomizationValues();
-		//$options_export = file_get_contents($url_options_export);
-		//$html = $options_export;
-		//$html = $html . "<br />";
+		
+		if($web_app_show_export_options){
+			$options_export = file_get_contents($url_options_export);
+			$html = $options_export;
+			$html = $html . "<br />";
+		}
 		
 		$html = $html . createJumpToPerspectiveTable();
 		/*$html = $html . "<br />";
@@ -62,6 +66,11 @@
 		return $html;
 	}
 	
+	/** Create the jump to Perspective Table
+	* This table contains links to the root notes of all 
+	* the configured perspectives 
+	* return formatted html
+	*/
 	function createJumpToPerspectiveTable(){
 		global $perspective_names;
 		global $perspective_default_root_nodes;
