@@ -41,7 +41,7 @@
 		
 		// set the graph neighbor limit
 		if(!isset($_SESSION["$url_rest_custom_image_graph_neighbors"])){
-			$_SESSION["$url_rest_custom_image_graph_neighbors"] = "30";
+			$_SESSION["$url_rest_custom_image_graph_neighbors"] = "500";
 		}
 	}
 	
