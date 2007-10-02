@@ -4,7 +4,7 @@
 	/** The native file system path separator. 
 	* Use "\\" for windows and "/" for Unix like systems.
 	*/
-	$filesystem_path_separator  = "\\";
+	$filesystem_path_separator  = "/";
 	/** The native file system age time use to determine if files written to disk need to be refreshed */
 	$filesystem_age_time		= 1000;
 	
