@@ -75,11 +75,17 @@
 	echo "$attributes_export";
 	// extra options
 	echo "<br />". createExtraOptions($node_name). "</td>";
+	//echo "</td>";
+	
 	// image
 	$url_html_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&amp;type=html".commonUrlCustomizationValues($for_html=True);
 	//$html_export = file_get_contents($url_html_export);
 	//echo "<td>$html_export</td>\n";
-	echo "<td><iframe name=\"html\" src=\"$url_html_export\" width=\"100%\" height=\"450\" frameborder=\"0\"></iframe></td>\n";
+	echo "<td>";
+	//echo "<div id=\"image_html_export\" class=\"image_html_export\" onload=\"showHtmlExport($url_html_export);\">";
+	//echo "</div>";
+	echo "<iframe name=\"html\" src=\"$url_html_export\" width=\"100%\" height=\"450\" frameborder=\"0\"></iframe>";
+	echo "</td>\n";
 	echo "</tr></table>";
 	
 	//echo "</td>";

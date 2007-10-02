@@ -253,7 +253,7 @@
 						
 			if(file_exists($map_file)){
 				$handle 	= fopen("$map_file","rb");
-				
+				//echo "<div class=\"image_html_export\">Loading...";
 				echo "<center><img src=\"$img_url\" alt=\"Model\" ";
 				echo "class=\"model\" usemap=\"#$img_url\" border=\"0\"></center>\n";
 				echo "<map name=\"$img_url\">\n";
@@ -262,7 +262,8 @@
 					echo ereg_replace('\\\"','"',fread($handle, 4096));
 				}
 				
-				echo "</map>";		
+				echo "</map>";
+				//echo "</div>";
 				fclose($handle);
 			} else {
 				die("<br />$map_file not found!<br />");

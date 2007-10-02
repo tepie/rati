@@ -17,13 +17,13 @@
 		global $perspective_names;
 		global $perspective_default_root_nodes;
 		
+		$html = "";
+		
 		$url_node = urlencode($node_name);
-		
 		$url_options_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=options".commonUrlCustomizationValues();
-		$options_export = file_get_contents($url_options_export);
-		$html = $options_export;
-		
-		$html = $html . "<br />";
+		//$options_export = file_get_contents($url_options_export);
+		//$html = $options_export;
+		//$html = $html . "<br />";
 		
 		$html = $html . createJumpToPerspectiveTable();
 		/*$html = $html . "<br />";
