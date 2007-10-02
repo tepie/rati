@@ -1,5 +1,7 @@
 <?php
 		
+	/** The image navigation page */
+	
 	include_once('Include/Database.php');
 	include_once('Include/ObjectGraph.php');
 	include_once('Include/ObjectUtility.php');

@@ -1,4 +1,7 @@
 <?php
+
+	/** The graph export page */
+	
 	ignore_user_abort(true);
 	
 	include_once('Include/Database.php');
