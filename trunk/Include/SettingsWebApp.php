@@ -63,7 +63,7 @@
 	$custom_image_graph_levels_accepted		= array("1" => "One", "2" => "Two");
 	$custom_image_neighbor_limit_accepted	= array("5" => "Five", "10" => "Ten", 
 												"30" => "Thirty", "50" => "Fifty", "100" => "One Hundred",
-												"300" => "Three Hundred");
+												"300" => "Three Hundred","500" => "Five Hundred","1000" => "One Thousand");
 	
 	$custom_accepted_array = array(
 		$custom_image_graph_direction_accepted,
