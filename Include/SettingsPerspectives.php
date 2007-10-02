@@ -1,6 +1,6 @@
 <?php
 	
-	//*************************************************************************
+	/*************************************************************************
 	//*	PLEASE READ
 	//*	Persepectives are a selective way to apply color to a group of information.
 	//* 	This group likely shares a domain of interest, such that it is already organized in
@@ -29,7 +29,7 @@
 	//* 	8. Add your perspective to the combined application perspective area at the bottom of this file.
 	//*		The combined perspectives are just arrays joining the parts to collect and present
 	//*		perspectives for use. 
-	//*************************************************************************
+	*************************************************************************/
 	
 	//*************************************************************************
 	//*	Ab Initio Application 
