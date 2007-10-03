@@ -1,11 +1,18 @@
 <?php
-
+	
+	/** Apply the search index weights */
+	
 	include_once('..\\Include\\SettingsDatabase.php');
 	include_once('..\\Include\\SettingsPerspectives.php');
 	include_once('..\\Include\\Database.php');
 	include_once('..\\Include\\SQLQueries.php');
 	include_once('..\\Include\\SQLSearch.php');
-		
+	
+	/** Determine the max number of categories
+	* For each perspective, determine how many categories it has
+	* What ever category has the most, that count is returned.
+	* return the max
+	*/
 	function determine_max_category_index(){
 		global $perspective_names;
 		global $perspective_node_color_maps;
@@ -19,6 +26,8 @@
 		return $max;
 	}
 	
+	/** Apply the category weights to the database 
+	*/
 	function apply_category_weights($max){
 		global $query_runner;
 		global $perspective_names;
