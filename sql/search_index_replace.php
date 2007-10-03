@@ -1,5 +1,7 @@
 <?php
 	
+	/** Replace the search index */
+	
 	include_once('..\\Include\\SettingsDatabase.php');
 	include_once('..\\Include\\Database.php');
 	include_once('..\\Include\\SQLQueries.php');
