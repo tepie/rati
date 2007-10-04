@@ -2,11 +2,11 @@
 	
 	/** Apply the search index weights */
 	
-	include_once('..\\Include\\SettingsDatabase.php');
-	include_once('..\\Include\\SettingsPerspectives.php');
-	include_once('..\\Include\\Database.php');
-	include_once('..\\Include\\SQLQueries.php');
-	include_once('..\\Include\\SQLSearch.php');
+	include_once('../Include/SettingsDatabase.php');
+	include_once('../Include/SettingsPerspectives.php');
+	include_once('../Include/Database.php');
+	include_once('../Include/SQLQueries.php');
+	include_once('../Include/SQLSearch.php');
 	
 	/** Determine the max number of categories
 	* For each perspective, determine how many categories it has
@@ -138,6 +138,7 @@ where obj_rel.reference = object.id and i.object_name = obj_rel.name';*/
 	apply_category_weights($top_index);
 	
 	$query_runner->runQuery("$database_commit_transaction");
+	$query_runner->runQuery("$database_analyze_search_index");
 	
 	if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 ?>

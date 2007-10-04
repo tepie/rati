@@ -2,16 +2,19 @@
 	
 	/** Replace the search index */
 	
-	include_once('..\\Include\\SettingsDatabase.php');
-	include_once('..\\Include\\Database.php');
-	include_once('..\\Include\\SQLQueries.php');
-	include_once('..\\Include\\SQLSearch.php');
+	include_once('../Include/SettingsDatabase.php');
+	include_once('../Include/Database.php');
+	include_once('../Include/SQLQueries.php');
+	include_once('../Include/SQLSearch.php');
 	
 	/** This should outter join to remove old items in the search index that are no longer in the
 	* object table 
 	*/
 	function remove_old_objects(){
 		global $query_runner;
+		global $search_index_delete_search_index;
+		$sql = "$search_index_delete_search_index";
+		$res = $query_runner->runQuery($sql);
 	}
 	
 	/** 
@@ -63,10 +66,14 @@
 	/** Start a transaction */
 	$query_runner->runQuery("$database_disable_autocommit");
 	$query_runner->runQuery("$database_start_transaction");
+	/** Delete the contents of the search table */
+	remove_old_objects();
 	/** Replace the search index */
 	replace_search_index();
 	/** Complete a transaction */
 	$query_runner->runQuery("$database_commit_transaction");
+	$query_runner->runQuery("$database_analyze_search_index");
+	
 	/** Close the link */
 	if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 
