@@ -1,4 +1,7 @@
 <?php
+
+	ini_set( 'memory_limit', "32M" );
+	
 	include_once("Include/SettingsWebApp.php");
 	include_once('Include/SettingsBranding.php');
 	include_once("Include/HtmlCommon.php");
@@ -301,6 +304,25 @@
 	*/
 	function handle_end_tag($parser,$name){
 		// Do nothing on the end tag
+		global $attribute_id;
+		global $object_id;
+		global $object_data;
+		
+		$data = $object_data[$object_id];
+		if($data != ""){
+			if(isset($object_id) and isset($attribute_id) and !relationship_value_exists($object_id,$attribute_id)){
+				/*if($object_id == "268558"){
+					print "final: " .$data ."\n";
+				}*/
+				
+				/** Ignore bad values, not sure why this is happening */
+				if(preg_match("/(^\\n)/",$data) == 0){
+					$relationship_id = relationship_value_add($object_id,$attribute_id,$data);
+				} else{
+					echo "Bad char_data: $value\n";
+				}
+			}
+		}
 	}
 	
 	/** 
@@ -309,19 +331,16 @@
 	* @param $data the data contained in the element tags, not attributes
 	*/
 	function char_data($parser,$data){
-		global $query_runner;
+		//global $query_runner;
 		global $attribute_id;
 		global $object_id;
+		global $object_data;
 		
-		/** If the object and attribute ids are set, then create a relationship if we didn't already */
-		if(isset($object_id) and isset($attribute_id) and !relationship_value_exists($object_id,$attribute_id)){
-			/** Ignore bad values, not sure why this is happening */
-			if(preg_match("/(^\\n)/",$data) == 0){
-				$relationship_id = relationship_value_add($object_id,$attribute_id,$data);
-			} else{
-				echo "Bad char_data: $value\n";
-			}
+		if(!isset($object_data[$object_id])){
+			$object_data[$object_id] = "";
 		}
+		
+		$object_data[$object_id] = $object_data[$object_id] . "$data";		
 	}
 	
 	function initiate_load(){
@@ -392,9 +411,10 @@
 				xml_set_character_data_handler($parser,"char_data");
 				
 				/** Open XML file stream*/
-				$fp = fopen($input_xml,"r") or die("IOError: Failed opening \"$input_xml\"");
+				$fp = fopen($input_xml,"rb") or die("IOError: Failed opening \"$input_xml\"");
 				
 				/** Read data */
+				//						     8388608
 				while ($data = fread($fp,1048576)){
 					/** strip the backslaches from the string */
 					$stripped 		= stripslashes($data);
@@ -458,6 +478,7 @@
 	$FILEENCODING 			= "iso-8859-1";
 	$attribute_id			= null;
 	$object_id				= null;
+	$object_data			= array();
 	
 	if($argc > 1){
 		initiate_load();
