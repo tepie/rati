@@ -98,6 +98,42 @@ Default graph levels
 </tr>
 </table>
 <br />
+<div class="about_section_heading">Page Settings</div>
+<div class="about_section_content">
+<br />
+<table class="custom_table">
+<tr>
+<td class="custom_table_left">
+Show Export Options
+</td>
+<td class="custom_table_right">
+Coming Soon!
+<?php ?>
+</td>
+</tr>
+<tr>
+<td class="custom_table_left">
+Show Graph Legend
+</td>
+<td class="custom_table_right">
+Coming Soon!
+<?php ?>
+</td>
+</tr>
+<tr>
+<td class="custom_table_left">
+Show Jump To Links
+</td>
+<td class="custom_table_right">
+Coming Soon!
+<?php ?>
+</td>
+</tr>
+</table>
+</div>
+
+
+<br />
 </div>
 <div class="about_section_heading">Save?</div>
 <div class="about_section_content">

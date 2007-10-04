@@ -76,12 +76,12 @@ class miniHTMLParser( HTMLParser ):
 		
 if __name__ == '__main__':
 	
-	url 		= "https://www.key.com/"
-	resources 	= 10
+	url 		= "https://www.key.com/html/"
+	resources 	= 5
 	depth 		= 3
 	threads		= 5
 	
-	page = "%s%s" % (url,"index.html")
+	page = "%s%s" % (url,"sitemap.html")
 	
 	'''if len(sys.argv) == 5:
 		url = sys.argv[1]
@@ -108,7 +108,8 @@ if __name__ == '__main__':
 		htmlparse.set_limit(depth)
 		retfile = htmlparse.gethtmlfile( url, thisurl )
 		if re.search("(\.gif$)|(\.ico$)|(\.jpg$)",thisurl) == None:
-			content[thisurl] = retfile
+			#content[thisurl] = retfile
+			content[thisurl] = ""
 		else:
 			content[thisurl] = ""
 		try:
