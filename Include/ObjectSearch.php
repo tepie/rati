@@ -92,7 +92,7 @@
 					$html = $html . "<tr><td class=\"search_result_content\">";
 					//$html = $html . $results[$key]["matched"];
 					//$highlight = $this->highlightHtml($search_string,$value);
-					$highlight = $this->highlightHtml($search_string,$value["rule"]);
+					$highlight = $this->highlightHtml($search_string,htmlspecialchars($value["rule"]));
 					//$html = $html . "$value";
 					$html = $html . "$highlight";
 					$html = $html . "</td></tr>\n";
