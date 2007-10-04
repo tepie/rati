@@ -9,6 +9,9 @@
 	$search_index_structure_weight			= "weight";
 	$search_index_structure_perspective		= "perspective";
 	
+	$database_analyze_search_index			= "ANALYZE TABLE `$search_index_structrue_name`;";
+	
+	$search_index_delete_search_index 		= "delete from $search_index_structrue_name";
 	
 	$search_index_left_union = "select o.$object_structure_name as object,
 a.$attribute_structure_name as attribute,
