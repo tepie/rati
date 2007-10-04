@@ -1,4 +1,5 @@
 <?php
+	/** The about page */
 	
 	include_once("Include/SettingsWebApp.php");
 	include_once('Include/SettingsBranding.php');

@@ -1,5 +1,7 @@
 <?php
 	
+	/** HTML Helper functions for the Navigation page */
+	
 	include_once('SettingsWebApp.php');
 	include_once('SettingsBranding.php');
 	include_once('SettingsPerspectives.php');
@@ -8,7 +10,6 @@
 	/** 
 	* Generate the extra options table 
 	* @param $node_name the name of the node to use for a link
-	* @param $focus something to focus on, image or attributes
 	* return html formatted string
 	*/
 	function createExtraOptions($node_name){

@@ -53,12 +53,18 @@
 	/** The image graph neighbor REST param */
 	$url_rest_custom_image_graph_neighbors  = "image_neighbor_limit";
 	
+	$url_rest_page_show_export_options  = "page_show_export_options";
+	$url_rest_page_show_graph_legend  	= "page_show_graph_legend";
+	$url_rest_page_show_jumpto_links  	= "page_show_jump_to_links";
+	
 	/** A collection of the customization REST parameters */
 	$url_rest_custom_array = array(
 		$url_rest_custom_image_graph_direction,
 		$url_rest_custom_image_font_size,
 		$url_rest_custom_image_graph_levels,
 		$url_rest_custom_image_graph_neighbors);
+		
+	$custom_true_false_accepted = array("True" =>"True", "False" => "False");
 		
 	/** The acceptable graph direction map settings */
 	$custom_image_graph_direction_accepted 	= array("LR" => "Left to Right", "TB" => "Top to Bottom", "CIRCO" => "Circular");
