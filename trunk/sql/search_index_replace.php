@@ -63,6 +63,8 @@
 	
 	/** Create a QueryRunner to run queries on the database */
 	$query_runner 	= new QueryRunner();
+	/** Set the max length for the group concat results */
+	$query_runner->runQuery("$search_index_set_concat_max");
 	/** Start a transaction */
 	$query_runner->runQuery("$database_disable_autocommit");
 	$query_runner->runQuery("$database_start_transaction");

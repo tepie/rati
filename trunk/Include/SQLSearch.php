@@ -13,6 +13,8 @@
 	
 	$search_index_delete_search_index 		= "delete from $search_index_structrue_name";
 	
+	$search_index_set_concat_max			= "SET SESSION group_concat_max_len = 1048576";
+	
 	$search_index_left_union = "select o.$object_structure_name as object,
 a.$attribute_structure_name as attribute,
 r.$relationship_structure_relation_value as result,
