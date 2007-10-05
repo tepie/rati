@@ -93,8 +93,9 @@
 					//$html = $html . $results[$key]["matched"];
 					//$highlight = $this->highlightHtml($search_string,$value);
 					$highlight = $this->highlightHtml($search_string,htmlspecialchars($value["rule"]));
+					$broken_apart = $this->trimHighlightedHtml($highlight);
 					//$html = $html . "$value";
-					$html = $html . "$highlight";
+					$html = $html . "$broken_apart";
 					$html = $html . "</td></tr>\n";
 					$html = $html . "</table>\n<br />";
 					
@@ -117,13 +118,63 @@
 			foreach($parts as $index => $ereg){
 				//echo "Reg: $ereg"."<br />";
 				if($ereg != ""){
-					$ereg = preg_quote($ereg);
-					$value = eregi_replace($ereg,"<font style=\"font-weight:bold;\">$ereg</font>",$value);
+					$quote_ereg = preg_quote($ereg);
+					$value = eregi_replace($quote_ereg,"<font style=\"font-weight:bold;\">$ereg</font>",$value);
 				}
 			}
 			
 			return $value;
 			
+		}
+		
+		private function trimHighlightedHtml($highlighted){
+			$font_open 		= "<font style=\"font-weight:bold;\">";
+			$font_close 	= "</font>";
+			$end			= strlen($highlighted);
+			$pad			= 80;
+			$sections_of_interest = array();
+			
+			$open_position = strpos($highlighted,$font_open);
+			//print "starting fresh....<br />";
+			while(!($open_position === False)){
+				//print "open: $open_position<br />";
+				$close_position = strpos($highlighted,$font_close,$open_position);
+				
+				//print "close: $close_position<br />";
+				if($close_position === false){
+					$close_position = $open_position;
+				}
+				
+				$sub_start_pos 	= 0;
+				$sub_stop_pos 	= 0;
+				
+				if($open_position - $pad >= 0){
+					$sub_start_pos = $open_position - $pad;
+				} else {
+					$sub_start_pos 	= 0;
+				}
+				
+				if($close_position + $pad + strlen($font_close) <= $end){
+					$sub_stop_pos = $close_position + $pad + strlen($font_close) ;
+				} else {
+					$sub_stop_pos = $end;
+				}
+				
+				//print "sub open: $sub_start_pos<br />";
+				//print "sub close: $sub_stop_pos<br />";
+				
+				$sub_length = $sub_stop_pos - $sub_start_pos;
+				$sub_text = substr($highlighted,$sub_start_pos,$sub_length);
+				
+				//print "sub lenght: $sub_length<br />";
+				//print "sub text: ". htmlspecialchars($sub_text)."<br />";
+				
+				array_push($sections_of_interest,$sub_text);
+				
+				$open_position = strpos($highlighted,$font_open,$sub_stop_pos);
+			}
+			//print_r($sections_of_interest);
+			return join("... ",$sections_of_interest);
 		}
 		
 		private function executePerspectiveSearch($search_string,$perspective,$li_lower,$li_upper){
