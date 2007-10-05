@@ -18,19 +18,24 @@
 		global $perspective_names;
 		global $perspective_default_root_nodes;
 		global $web_app_show_export_options;
+		global $url_rest_page_show_jumpto_links;
+		global $url_rest_page_show_export_options;
+		global $_SESSION;
 		
 		$html = "";
 		
 		$url_node = urlencode($node_name);
 		$url_options_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=options".commonUrlCustomizationValues();
 		
-		if($web_app_show_export_options){
+		if($_SESSION["$url_rest_page_show_export_options"] == "True"){
 			$options_export = file_get_contents($url_options_export);
 			$html = $options_export;
 			$html = $html . "<br />";
 		}
 		
-		$html = $html . createJumpToPerspectiveTable();
+		if($_SESSION["$url_rest_page_show_jumpto_links"] == "True"){
+			$html = $html . createJumpToPerspectiveTable();
+		}
 		/*$html = $html . "<br />";
 		$html = $html . "<table class=\"extra_options\">\n";
 		$html = $html . "<tr><td class=\"extra_option\">";
@@ -58,6 +63,8 @@
 				$parts 			= split(' ',$special);
 				if(count($parts) > 1 and strlen($special) > 1024){
 					$special = substr($special,0,1024) . "...";
+				} elseif(count($parts) == 1 and strlen($special) > 30){
+					$special = substr($special,0,30) . "...";
 				}
 				$html 			= $html . "<td class=\"attribute_value\">$special</td></tr>\n";
 			}

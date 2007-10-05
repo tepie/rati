@@ -50,7 +50,7 @@ class miniHTMLParser( HTMLParser ):
 						self.viewedQueue.append( newstr )
 					else:
 						#print u"<!-- Ignoring Limit %s: %s -->" % (str(self.limit),newstr)
-						pass
+						self.close()
 				else:
 					#print u"<!-- Ignoring Mailto %s -->" % newstr
 					pass
@@ -76,12 +76,12 @@ class miniHTMLParser( HTMLParser ):
 		
 if __name__ == '__main__':
 	
-	url 		= "https://www.key.com/html/"
+	url 		= "http://csc06pocdvpa01s.keybank.com/rati/"
 	resources 	= 5
-	depth 		= 3
-	threads		= 5
+	depth 		= 5
+	threads		= None
 	
-	page = "%s%s" % (url,"sitemap.html")
+	page = "%s%s" % (url,"Usage.php")
 	
 	'''if len(sys.argv) == 5:
 		url = sys.argv[1]
@@ -102,7 +102,7 @@ if __name__ == '__main__':
 	pairs = {}
 	content = {}
 	for thisurl in weburls:
-		#print thisurl
+		print u"<!-- Current:",thisurl,"-->"
 		if not pairs.has_key(thisurl): pairs[thisurl] = []
 		htmlparse = miniHTMLParser()
 		htmlparse.set_limit(depth)

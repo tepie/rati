@@ -52,9 +52,11 @@
 	$url_rest_custom_image_graph_levels		= "image_graph_levels";
 	/** The image graph neighbor REST param */
 	$url_rest_custom_image_graph_neighbors  = "image_neighbor_limit";
-	
+	/** the show export options REST param */
 	$url_rest_page_show_export_options  = "page_show_export_options";
+	/** the show graph legend REST param */
 	$url_rest_page_show_graph_legend  	= "page_show_graph_legend";
+	/** the show jump to links param */
 	$url_rest_page_show_jumpto_links  	= "page_show_jump_to_links";
 	
 	/** A collection of the customization REST parameters */
@@ -62,9 +64,13 @@
 		$url_rest_custom_image_graph_direction,
 		$url_rest_custom_image_font_size,
 		$url_rest_custom_image_graph_levels,
-		$url_rest_custom_image_graph_neighbors);
+		$url_rest_custom_image_graph_neighbors,
+		$url_rest_page_show_export_options,
+		$url_rest_page_show_graph_legend,
+		$url_rest_page_show_jumpto_links
+	);
 		
-	$custom_true_false_accepted = array("True" =>"True", "False" => "False");
+	$custom_true_false_accepted = array("True" => "True", "False" => "False");
 		
 	/** The acceptable graph direction map settings */
 	$custom_image_graph_direction_accepted 	= array("LR" => "Left to Right", "TB" => "Top to Bottom", "CIRCO" => "Circular");
@@ -81,9 +87,10 @@
 		$custom_image_graph_direction_accepted,
 		$custom_image_font_size_accepted,
 		$custom_image_graph_levels_accepted,
-		$custom_image_neighbor_limit_accepted);
-	
-	/** Used to determined if the export options are displayed */
-	$web_app_show_export_options = false;
+		$custom_image_neighbor_limit_accepted,
+		$custom_true_false_accepted,
+		$custom_true_false_accepted,
+		$custom_true_false_accepted
+	);
 
 ?>

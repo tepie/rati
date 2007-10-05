@@ -98,7 +98,7 @@ Default graph levels
 </tr>
 </table>
 <br />
-<div class="about_section_heading">Page Settings</div>
+<div class="about_section_heading">Navigation Page Settings</div>
 <div class="about_section_content">
 <br />
 <table class="custom_table">
@@ -107,8 +107,17 @@ Default graph levels
 Show Export Options
 </td>
 <td class="custom_table_right">
-Coming Soon!
-<?php ?>
+<?php 
+	echo "<select class=\"custom_option\" name=\"$url_rest_page_show_export_options\">\n";
+	foreach($custom_true_false_accepted as $value => $display){
+		if($_SESSION["$url_rest_page_show_export_options"] == "$value"){
+			echo '<option value="'.$value.'" selected="selected">'.$display.'</option>';
+		} else {
+			echo '<option value="'.$value.'">'.$display.'</option>';
+		}	
+	}
+	echo "</select>\n";
+?>
 </td>
 </tr>
 <tr>
@@ -116,8 +125,17 @@ Coming Soon!
 Show Graph Legend
 </td>
 <td class="custom_table_right">
-Coming Soon!
-<?php ?>
+<?php 
+	echo "<select class=\"custom_option\" name=\"$url_rest_page_show_graph_legend\">\n";
+	foreach($custom_true_false_accepted as $value => $display){
+		if($_SESSION["$url_rest_page_show_graph_legend"] == "$value"){
+			echo '<option value="'.$value.'" selected="selected">'.$display.'</option>';
+		} else {
+			echo '<option value="'.$value.'">'.$display.'</option>';
+		}	
+	}
+	echo "</select>\n";
+?>
 </td>
 </tr>
 <tr>
@@ -125,8 +143,17 @@ Coming Soon!
 Show Jump To Links
 </td>
 <td class="custom_table_right">
-Coming Soon!
-<?php ?>
+<?php 
+	echo "<select class=\"custom_option\" name=\"$url_rest_page_show_jumpto_links\">\n";
+	foreach($custom_true_false_accepted as $value => $display){
+		if($_SESSION["$url_rest_page_show_jumpto_links"] == "$value"){
+			echo '<option value="'.$value.'" selected="selected">'.$display.'</option>';
+		} else {
+			echo '<option value="'.$value.'">'.$display.'</option>';
+		}	
+	}
+	echo "</select>\n";
+?>
 </td>
 </tr>
 </table>

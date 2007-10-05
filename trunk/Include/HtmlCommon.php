@@ -17,9 +17,13 @@
 		global $url_rest_custom_image_font_size;
 		global $url_rest_custom_image_graph_levels;
 		global $url_rest_custom_image_graph_neighbors;
+		global $url_rest_page_show_jumpto_links;
+		global $url_rest_page_show_graph_legend;
+		global $url_rest_page_show_export_options;
 		global $_SESSION;
 		
 		session_start();
+		//echo  "global test:$url_rest_page_show_jumpto_links<br />";
 		/*if(!isset($_SESSION["$url_rest_custom_image_arrow_direction"])){
 			$_SESSION["$url_rest_custom_image_arrow_direction"] = "0";
 		}*/
@@ -43,6 +47,21 @@
 		if(!isset($_SESSION["$url_rest_custom_image_graph_neighbors"])){
 			$_SESSION["$url_rest_custom_image_graph_neighbors"] = "500";
 		}
+		
+		// set the show export option
+		if(!isset($_SESSION["$url_rest_page_show_export_options"])){
+			$_SESSION["$url_rest_page_show_export_options"] = "True";
+		}
+		
+		// set the show graph legend option
+		if(!isset($_SESSION["$url_rest_page_show_graph_legend"])){
+			$_SESSION["$url_rest_page_show_graph_legend"] = "True";
+		}
+		
+		// set the show graph legend option
+		if(!isset($_SESSION["$url_rest_page_show_jumpto_links"])){
+			$_SESSION["$url_rest_page_show_jumpto_links"] = "True";
+		}
 	}
 	
 	/**
@@ -55,17 +74,20 @@
 		global $custom_accepted_array;
 		global $_SESSION;
 		global $_GET;
+		
 		$should_close_flag = false;
 		
 		foreach($url_rest_custom_array as $index => $parameter){
+			$accepted_array = $custom_accepted_array[$index];
+			$accepted_keys = array_keys($accepted_array);
+			
 			if(isset($_GET["$parameter"])){
 				if($ignore){
 					//echo "session $parameter before:".$_SESSION["$parameter"]."\n";
 					$_SESSION["$parameter"] = $_GET["$parameter"];
 					//echo "session $parameter after:".$_SESSION["$parameter"]."\n";
 				} else {
-					$accepted_array = $custom_accepted_array[$index];
-					$accepted_keys = array_keys($accepted_array);
+					
 					foreach($accepted_array as $inner_index => $value){
 						if(isset($_GET["$parameter"]) == $value){
 							$_SESSION["$parameter"] = $_GET["$parameter"];
@@ -78,8 +100,9 @@
 						}
 					}
 				}
-			
-			}
+			} /*else {
+				$_SESSION["$parameter"] = $accepted_keys[0];
+			}*/
 		}
 		
 		return $should_close_flag;
