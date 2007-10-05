@@ -8,28 +8,51 @@
 	<property name="dir.sql" 		value="${dir.root}/sql"/>
 	<property name="dir.doxygen" 	value="${dir.root}/Doxygen"/>
 	<property name="exec.doxygen" 	value="doxygen" />
-	<property name="dist.exclude"	value="**/.svn/**,dist/**,dot/**,img/**,map/**,Thumbs.db,build.xml,Doxyfile,build.number" />
+	<property name="dist.exclude"	value="**/.svn/**,dist/**,dot/**,spider/**,img/**,map/**,Thumbs.db,build.xml,Doxyfile,build.number" />
 	
-	<property name="version" value="1.0"/>
-   	<property name="project" value="rati"/>
-	<property name="stage" value="beta"/>
+	<property name="version" 	value="1.0"/>
+   	<property name="project" 	value="rati"/>
+	<property name="stage" 		value="beta"/>
+	<property name="brand" 		value="galileo"/>
 	
-	<target name="doxygen" description="Generate the project documentation.">
-		<echo>Generating project doxygen documentation...</echo>
-		<delete dir	=	"${dir.doxygen}"	/>
-		<mkdir 	dir	=	"${dir.doxygen}" 	/>
-		<exec 	executable	=	"${exec.doxygen}" />
+	<!-- Delete directories start -->
+	<target name="rm-doxygen" description="Remove the project documentation.">
+		<echo>Removing the doxygen directory...</echo>
+		<delete dir	= "${dir.doxygen}"/>
 	</target>
 	
-	<target name="dist" description="Generate project distribution package.">
+	<target name="rm-dist" description="Remove the dist directory.">
+		<echo>Removing the distribution directory...</echo>
+		<delete dir	= "${dir.dist}"/>
+	</target>
+	<!-- Delete directories stop -->
+	<!-- Make directories start -->
+	<target name="mk-dist" description="Make the dist directory.">
+		<echo>Making the distribution directory...</echo>
+		<mkdir dir = "${dir.dist}"/>
+	</target>
+	
+	<target name="mk-doxygen" description="Make the doxygen directory.">
+		<echo>Making the doxygen directory...</echo>
+		<mkdir dir = "${dir.doxygen}" />
+	</target>
+	<!-- Make directories stop -->
+	
+	<!-- Generate Ouput Start -->
+	<target name="doxygen" depends="rm-doxygen,mk-doxygen" 
+		description="Generate the project documentation.">
+		<echo>Generating project doxygen documentation...</echo>
+		<exec executable = "${exec.doxygen}" />
+	</target>
+	
+	<target name="dist" depends="rm-doxygen,rm-dist,mk-dist" 
+		description="Generate project distribution package.">
 		<buildnumber/>
-		<delete dir	=	"${dir.doxygen}"	/>
 		<echo>Generating project distribution archive...</echo>
-		<delete dir		=	"${dir.dist}"/>
-		<mkdir 	dir		=	"${dir.dist}"/>
-		<zip destfile	=	"${dir.dist}/${project}-${version}-${build.number}-${stage}.zip" 
+		<zip destfile	=	"${dir.dist}/${project}-${version}-${build.number}-${stage}-${brand}.zip" 
 			basedir		=	"${dir.root}" 
 			update		=	"true"
 			excludes	=	"${dist.exclude}"/>
 	</target>
+	<!-- Generate Ouput Stop -->
 </project>
