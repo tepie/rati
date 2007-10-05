@@ -32,6 +32,7 @@
 
 	/** Setup the session */
 	commonSessionSetup();
+	commonValidationCustomizationValues();
 	
 	/** Create a new graph object using the query runner to execute database calls
 	* set the up and down flags for neighbors, and set the direction of the graph
@@ -41,7 +42,7 @@
 	$temp_graph_levels		= $_SESSION["$url_rest_custom_image_graph_levels"] + 0;
 	$temp_neighbor_limit   	= $_SESSION["$url_rest_custom_image_graph_neighbors"] + 0;
 	*/
-	
+	//print_r($_SESSION);
 	/** Add the document header */
 	echo commonHtmlPageHead($node_name);
 	/** Add the page header */
@@ -65,12 +66,16 @@
 	
 	/** The left side contains the image */
 	echo "<td class=\"image_side_content\">";
-	echo "<table width=\"99%\">";
+	echo "<table width=\"100%\">";
 	echo "<tr>";
+	echo "<td width=\"30%\" style=\"vertical-align:top;\">";
 	// legend
-	$url_legend_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=legend".commonUrlCustomizationValues();
-	$legend_export = file_get_contents($url_legend_export);
-	echo "<td width=\"20%\" style=\"vertical-align:top;\">" . $legend_export . "<br />";
+	if($_SESSION["$url_rest_page_show_graph_legend"] == "True"){
+		$url_legend_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=legend".commonUrlCustomizationValues();
+		$legend_export = file_get_contents($url_legend_export);
+		echo $legend_export . "<br />";
+	}
+	
 	// attributes
 	$url_attributes_export = "http://localhost/rati/Export.php?q=".urlencode($node_name)."&type=attributes".commonUrlCustomizationValues();
 	$attributes_export = file_get_contents($url_attributes_export);
@@ -83,7 +88,7 @@
 	$url_html_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&amp;type=html".commonUrlCustomizationValues($for_html=True);
 	//$html_export = file_get_contents($url_html_export);
 	//echo "<td>$html_export</td>\n";
-	echo "<td>";
+	echo "<td width=\"100%\" style=\"vertical-align:top;\">";
 	//echo "<div id=\"image_html_export\" class=\"image_html_export\" onload=\"showHtmlExport($url_html_export);\">";
 	//echo "</div>";
 	echo "<iframe name=\"html\" src=\"$url_html_export\" width=\"100%\" height=\"450\" frameborder=\"0\"></iframe>";
