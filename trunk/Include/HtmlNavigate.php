@@ -56,8 +56,8 @@
 			else{
 				$special 		= htmlspecialchars($attribute_value);
 				$parts 			= split(' ',$special);
-				if(count($parts) == 1 and strlen($special) > 30){
-					$special = substr($special,0,40) . "...";
+				if(count($parts) > 1 and strlen($special) > 1024){
+					$special = substr($special,0,1024) . "...";
 				}
 				$html 			= $html . "<td class=\"attribute_value\">$special</td></tr>\n";
 			}
