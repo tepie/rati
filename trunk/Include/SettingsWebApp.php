@@ -59,6 +59,9 @@
 	/** the show jump to links param */
 	$url_rest_page_show_jumpto_links  	= "page_show_jump_to_links";
 	
+	$url_rest_user_name_security		= "user";
+	$url_rest_user_passwd_security		= "passwd";
+	
 	/** A collection of the customization REST parameters */
 	$url_rest_custom_array = array(
 		$url_rest_custom_image_graph_direction,
