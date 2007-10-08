@@ -70,9 +70,9 @@
 	$database_disable_autocommit 	= "SET AUTOCOMMIT=0;";
 	$database_start_transaction 	= "START TRANSACTION;";
 	$database_commit_transaction 	= "COMMIT;";
-	$database_analyze_attribute		= "ANALYZE TABLE `$attribute_structure_table_name`;";
-	$database_analyze_object		= "ANALYZE TABLE `$object_structure_table_name`;";
-	$database_analyze_relationship	= "ANALYZE TABLE `$relationship_structure_table_name`;";
+	$database_analyze_attribute		= "OPTIMIZE TABLE `$attribute_structure_table_name`;";
+	$database_analyze_object		= "OPTIMIZE TABLE `$object_structure_table_name`;";
+	$database_analyze_relationship	= "OPTIMIZE TABLE `$relationship_structure_table_name`;";
 	
 	//** Object table queries
 	/** Calculate an object node name, expects an id as input */
