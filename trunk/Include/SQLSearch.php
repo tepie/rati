@@ -9,7 +9,7 @@
 	$search_index_structure_weight			= "weight";
 	$search_index_structure_perspective		= "perspective";
 	
-	$database_analyze_search_index			= "ANALYZE TABLE `$search_index_structrue_name`;";
+	$database_analyze_search_index			= "OPTIMIZE TABLE `$search_index_structrue_name`;";
 	
 	$search_index_delete_search_index 		= "delete from $search_index_structrue_name";
 	

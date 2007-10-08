@@ -50,7 +50,7 @@
 		
 		// set the show export option
 		if(!isset($_SESSION["$url_rest_page_show_export_options"])){
-			$_SESSION["$url_rest_page_show_export_options"] = "True";
+			$_SESSION["$url_rest_page_show_export_options"] = "False";
 		}
 		
 		// set the show graph legend option

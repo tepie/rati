@@ -71,6 +71,7 @@
 	);
 		
 	$custom_true_false_accepted = array("True" => "True", "False" => "False");
+	$custom_false_true_accepted = array("False" => "False", "True" => "True");
 		
 	/** The acceptable graph direction map settings */
 	$custom_image_graph_direction_accepted 	= array("LR" => "Left to Right", "TB" => "Top to Bottom", "CIRCO" => "Circular");
@@ -88,7 +89,7 @@
 		$custom_image_font_size_accepted,
 		$custom_image_graph_levels_accepted,
 		$custom_image_neighbor_limit_accepted,
-		$custom_true_false_accepted,
+		$custom_false_true_accepted,
 		$custom_true_false_accepted,
 		$custom_true_false_accepted
 	);
