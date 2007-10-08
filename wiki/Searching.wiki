@@ -1,0 +1,28 @@
+#labels Featured,Phase-Deploy
+How *Searching* Works in Rati
+
+= Introduction =
+In order to provide ease in the location of desired content from within the visualization, special measures have been put into place to enable fast search of relational content. This search setup includes an additional search index database table, and content indexing scripts to load the relational content into the search index. 
+
+= Goal =
+The *goal* of the search implementation of this tool is to bring together the descriptive annotations of an object to be discoverable in a fast, self explaining manor. The users of the search should understand the results given an input search string and be presented with the most desirable content first. 
+
+= Popularity =
+Each object in the visualization storage has a popularity, this is simply the number of connections it has to other objects. The more connected something is, the more popular it is. 
+
+= Weight =
+Each object in the visualization has a category weight when described via a perspective. A perspective identifies a category type relationship given the metadata of that perspective. The category rankings give the object its weight, where the higher in the object is in a category hierarchy, the more weight it is given. 
+
+= Popularity + Weight =
+When combining popularity and weight, the most popular and more heavily weighted object are returned higher in the search results. Varying weights between perspectives are evened out to provide results within weights in combination of popularity.
+
+= Indexing Scripts = 
+Two scripts exist in the sql/ directory of the distribution to build the search index:
+* search_index_replace.php
+* search_index_weights.php
+
+== search_index_replace.php ==
+This script is ran to replace the entire search index. All content that currently was indexed is removed and replaced with what is currently in the object table. This script should be ran first.
+
+== search_index_weights.php ==
+This script is ran second and is not needed if no perspectives are being used. 
