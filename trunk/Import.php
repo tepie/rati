@@ -309,6 +309,7 @@
 		global $object_data;
 		
 		$data = $object_data[$object_id];
+		$object_data[$object_id] = "";
 		if($data != ""){
 			if(isset($object_id) and isset($attribute_id) and !relationship_value_exists($object_id,$attribute_id)){
 				/*if($object_id == "268558"){
