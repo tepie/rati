@@ -5,6 +5,7 @@
 	include_once("Include/SettingsWebApp.php");
 	include_once('Include/SettingsBranding.php');
 	include_once("Include/HtmlCommon.php");
+	include_once("Include/DatabaseCommon.php");
 	include_once('Include/SettingsDatabase.php');
 	include_once('Include/Database.php');
 	include_once('Include/SQLQueries.php');
@@ -20,16 +21,16 @@
 	* Delete an object's relationships
 	* @param $object_id the object id to based the relationship deletions on
 	*/
-	function delete_object_relationships($object_id){
+	/*function delete_object_relationships($object_id){
 		global $query_runner;
 		global $relationship_delete_on_object_id;
 		/** Escape the input */
-		$escaped 	= mysql_real_escape_string($object_id) + 0;
+		//$escaped 	= mysql_real_escape_string($object_id) + 0;
 		/** Generate the sql */
-		$delete_sql = sprintf($relationship_delete_on_object_id,$escaped);//"delete from `relationship` where object_id = $escaped";
+		//$delete_sql = sprintf($relationship_delete_on_object_id,$escaped);//"delete from `relationship` where object_id = $escaped";
 		/** Execute the delete */
-		$res 		= $query_runner->runQuery($delete_sql);
-	}
+		//$res 		= $query_runner->runQuery($delete_sql);
+	//}
 	
 	/**
 	* Check to see if relationships exist to an object 
@@ -132,7 +133,7 @@
 	* @param $object_name the name of the object you want to check
 	* return the id of the object if it exists, or null if it doesn't
 	*/
-	function object_exists($object_name){
+	/*function object_exists($object_name){
 		global $query_runner;
 		global $object_calculate_node_id;
 		global $object_structure_primary_id ;
@@ -149,7 +150,7 @@
 		} else {
 			return null;
 		}
-	}
+	}*/
 	
 	/**
 	* Add an object to the database
@@ -265,14 +266,14 @@
 			/** Set the current object */
 			$CURRENT_OBJECT = $attrs["oid"];
 			/** Check for this object's existence in the database */
-			$object_id = object_exists($CURRENT_OBJECT);
+			$object_id = object_exists_direct($CURRENT_OBJECT);
 			/** If the object doesn't exist, the create it */
 			if($object_id == null){
 				$object_id = object_add($CURRENT_OBJECT);
 			}
 			/** If relationships exist for this object, remove them */
 			if(relationship_object_exists($object_id)){
-				delete_object_relationships($object_id);
+				delete_object_relationships_direct($object_id);
 			}
 		}
 		
@@ -281,7 +282,7 @@
 			/** Determine the value of the reference */
 			$reference_name = $attrs["oidref"];
 			/** Calculate the existence of this value reference */
-			$reference_id = object_exists($reference_name);
+			$reference_id = object_exists_direct($reference_name);
 			if($reference_id == null){
 				$reference_id = object_add($reference_name);
 			}
@@ -344,15 +345,15 @@
 		$object_data[$object_id] = $object_data[$object_id] . "$data";		
 	}
 	
-	function initiate_load(){
+	/*function initiate_load(){
 		global $query_runner;
 		global $database_start_transaction;
 		global $database_disable_autocommit;
 		$query_runner->runQuery("$database_disable_autocommit");
 		$query_runner->runQuery("$database_start_transaction");
-	}
+	}*/
 	
-	function finalize_load(){
+	/*function finalize_load(){
 		global $query_runner;
 		global $database_commit_transaction;
 		global $database_analyze_attribute;
@@ -360,12 +361,12 @@
 		global $database_analyze_relationship;
 		
 		/** Commit the current transaction */
-		$query_runner->runQuery($database_commit_transaction);
+		//$query_runner->runQuery($database_commit_transaction);
 		/** Analyze the tables */
 		//$query_runner->runQuery($database_analyze_attribute);
 		//$query_runner->runQuery($database_analyze_object);
 		//$query_runner->runQuery($database_analyze_relationship);
-	}
+	//}
 	
 	function handle_http_string_load($xml_string){
 		global $FILEENCODING;
