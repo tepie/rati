@@ -1,5 +1,6 @@
 <?php
-
+	set_time_limit(60);
+	
 	include_once('Include/SettingsWebApp.php');
 	include_once('Include/SettingsDatabase.php');
 	include_once('Include/Database.php');
@@ -7,8 +8,11 @@
 	include_once('Include/SQLQueries.php');
 	
 	$valid_deletion_types = array("direct","prefix");
+	
 	header("Content-type: application/xml");
+	
 	echo "<delete>";
+	
 	if(isset($_GET["$url_rest_node_param"])){
 		$delete_target = $_GET["$url_rest_node_param"];
 		echo "<target>$delete_target</target>";
@@ -27,10 +31,27 @@
 		die("<error>Delete type is not set, set using \"type\" parameter</error></delete>");
 	}
 	
+	if(isset($_GET["$url_rest_user_name_security"])){
+		$user_name = $_GET["$url_rest_user_name_security"];
+	} else {
+		die("<error>User name not give, use \"$url_rest_user_name_security\" parameter</error></delete>");
+	}
+	
+	if(isset($_GET["$url_rest_user_passwd_security"])){
+		$user_passwd = $_GET["$url_rest_user_passwd_security"];
+	} else {
+		die("<error>User name not give, use \"$url_rest_user_passwd_security\" parameter</error></delete>");
+	}
+	
 	/** Setup the database connection, provide the host, username and password */
-	$db_connection 	= new DbConnectionHandler("$mysql_database_host",
+	/*$db_connection 	= new DbConnectionHandler("$mysql_database_host",
 		"$mysql_database_import_user",
 		"$mysql_database_import_passwd"
+	);*/
+	
+	$db_connection 	= new DbConnectionHandler("$mysql_database_host",
+		"$user_name",
+		"$user_passwd"
 	);
 	
 	// Verify our database connection link
@@ -41,6 +62,10 @@
 		/** The select database results */
 		$x = $db_connection->selectDb("$mysql_database_name");
 	} 
+	
+	if($db_connection->getDbLink() == null){
+		die("<error>Not connected! Check user name and password!</error></delete>");
+	}
 	
 	/** Create a QueryRunner to run queries on the database */
 	$query_runner 	= new QueryRunner();
