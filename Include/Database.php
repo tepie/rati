@@ -35,8 +35,8 @@
 		*/
 		public function selectDb($database){
 			$this->database = $database;
-			return mysql_select_db($database) 
-				or die('Could not select database');
+			return @mysql_select_db($database);
+				//or die('Could not select database');
 		}
 		
 		/**
@@ -60,8 +60,7 @@
 		*/ 
 		public function setupDbLink(){
 			if(!isset($this->link)){
-				$this->link = mysql_connect($this->host,$this->user,$this->password)
-					or die('Could not connect: ' . mysql_error());
+				$this->link = @mysql_connect($this->host,$this->user,$this->password);
 			}
 		}
 		
@@ -82,8 +81,8 @@
 		* return the result of the query
 		*/
 		public function runQuery($query){
-			$result = mysql_query($query) 
-				or die("\nQuery failed: " . mysql_error() . " for query, \"$query\"");
+			$result = @mysql_query($query);
+				//or die("\nQuery failed: " . mysql_error() . " for query, \"$query\"");
 			return $result;
 		}
 	}
