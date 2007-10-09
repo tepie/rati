@@ -193,12 +193,12 @@
 		$html = "";
 		//$html = "<div style=\"text-align:right; padding-right:0.2cm;\"><a href=\"#\" onClick=\"popup('Customize.php');\"><small>Customize</small></a></div>";
 		$html = $html . "<div class=\"top-bar-full\">\n";
-		$html = $html .  "<form action=\"Search.php\" method=\"get\" style=\"margin: 0px; padding: 0px;\">";
+		$html = $html . "<form action=\"Search.php\" method=\"get\" style=\"margin: 0px; padding: 0px;\">";
 		
 		$html = $html .  "<a class=\"top-bar-full\" href=\"$web_app_page_index_name\">";
 		$html = $html .  "$web_app_name_full</a><br />";
 		
-		$html = $html .  "<input type=\"text\" id=\"$url_rest_search_param\" name=\"$url_rest_search_param\" size=\"80\" value=\"$search_box_value\" />";
+		$html = $html .  "<input type=\"text\" id=\"$url_rest_search_param\" name=\"$url_rest_search_param\" size=\"60\" value=\"$search_box_value\" />";
 		$html = $html .  "&nbsp;<input type=\"submit\" name=\"Search\" value=\"Search\" />";
 		
 		/*foreach($perspective_names	as $index => $name){
