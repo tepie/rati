@@ -93,9 +93,9 @@
 					//$html = $html . $results[$key]["matched"];
 					//$highlight = $this->highlightHtml($search_string,$value);
 					$highlight = $this->highlightHtml($search_string,htmlspecialchars($value["rule"]));
-					$broken_apart = $this->trimHighlightedHtml($highlight);
+					//$broken_apart = $this->trimHighlightedHtml($highlight);
 					//$html = $html . "$value";
-					$html = $html . "$broken_apart";
+					$html = $html . "$highlight";
 					$html = $html . "</td></tr>\n";
 					$html = $html . "</table>\n<br />";
 					
@@ -181,7 +181,8 @@
 			$return = array();
 			$trimmed = trim($search_string);
 			$string = mysql_real_escape_string($trimmed);
-			$escaped = ereg_replace("[ \t\n\r\f\v]+","%",$string);
+			//$escaped = ereg_replace("[ \t\n\r\f\v]+","%",$string);
+			$escaped = preg_replace('/(\s+)/',"%",$string);
 			$escaped_p = mysql_real_escape_string($perspective);
 			
 			$exact_sql = "SELECT object_name as object,combined_attributes as rule, perspective FROM `search_index` ";
@@ -221,7 +222,10 @@
 			$return = array();
 			$trimmed = trim($search_string);
 			$string = mysql_real_escape_string($trimmed);
-			$escaped = ereg_replace("[ \t\n\r\f\v]+","%",$string);
+			
+			//echo "real escaped string: $string<br />";
+			$escaped = preg_replace('/(\s+)/',"%",$string);
+			//echo "ereg replaced string: $escaped<br />";
 			
 			$exact_sql = "SELECT object_name as object,combined_attributes as rule, perspective FROM `search_index` ";
 			$exact_sql = $exact_sql . "WHERE object_name = \"$string\" limit 1";
@@ -241,6 +245,8 @@
 			$sql = "SELECT object_name as object,combined_attributes as rule, perspective FROM `search_index` ";
 			$sql = $sql . "WHERE combined_attributes like ('%$escaped%') collate latin1_general_ci ";
 			$sql = $sql . "order by weight desc,rank desc limit $li_lower,$li_upper";
+			
+			//echo $sql."<br />";
 			
 			$res 		= $this->query_runner->runQuery($sql);
 			while($line = mysql_fetch_array($res ,MYSQL_ASSOC)){
