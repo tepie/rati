@@ -39,10 +39,10 @@
 	//echo $xmlgraph;
 	
 	$dotnode = new NodeDot($query_runner,10,true,true);
-	$dotgraph = new GraphDot($query_runner,1);
+	$dotgraph = new GraphDot($query_runner,2);
 	
 	$dotnode->setNodeName($node_name);
-	
+	$dotnode->setFontSize("8");
 	$dotgraph->walk($dotnode);
 	
 	echo $dotgraph;

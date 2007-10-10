@@ -17,21 +17,26 @@
 		
 		public function __toString(){
 			$text = "";
-			/*$text = $text . $this->getGraphDotDocumentHead();
 			
-			foreach($this->getGraph() as $key => $value){
-				$text = $text . $value;
+			$text = $text . $this->getGraphDotDocumentHead();
+			
+			$nodes = $this->getGraph();
+			$keys = array_keys($nodes);
+			$root = $nodes[$keys[0]];
+			$text = $text . $root;
+			array_shift($keys);
+			foreach($keys as $index=>$node_id){
+				$text = $text . $nodes[$node_id]; //$value;
+				$text = $text . $root->getLinkedText($node_id);
 			}
 			
 			$text = $text . $this->getGraphDotDocumentEnd();
-			*/
 			
-			//print_r($this->getNodesVisited());
-			//return $text;
-			foreach($this->getGraph() as $key => $value){
-				echo $key."\n";
-			}
-			return "";
+			return $text;
+		}
+		
+		public function getFontSize(){
+			return $this->font_size;
 		}
 		
 		public function setFontSize($size){
@@ -44,10 +49,6 @@
 		
 		public function getGraphDirection(){
 			return $this->graph_direction;
-		}
-		
-		public function getFontSize(){
-			return $this->font_size;
 		}
 		
 		private function getGraphDotDocumentHead(){
