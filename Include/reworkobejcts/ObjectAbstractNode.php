@@ -3,6 +3,8 @@
 	include_once('../SettingsGraph.php');
 	include_once('../SQLQueries.php');
 	
+	ini_set("memory_limit","20M");
+	
 	abstract class AbstractNode{
 		
 		private $query_runner;
@@ -86,19 +88,19 @@
 		* @param $node_id the numeric id of a node in the database
 		* return string name of node in database
 		*/
-		private function calculateNodeName($node_id){
+		public function calculateNodeName($node_id){
 			global $object_calculate_node_name;
 			global $object_structure_name;
 			
 			$escaped 	= mysql_real_escape_string($node_id);
 			$sql		= sprintf($object_calculate_node_name,$escaped);
-			$res 		= $this->query_runner->runQuery($sql);
+			$res 		= $this->getQueryRunner()->runQuery($sql);
 			$line 		= mysql_fetch_array($res,MYSQL_ASSOC);
 			
 			return $line[$object_structure_name];
 		}
 		
-		private function getNodeNeighborDirectionTo($node_id){
+		protected function getNodeNeighborDirectionTo($node_id){
 			global $relationship_reference_count;
 			global $all_structure_as_count;
 			$sql 	= sprintf($relationship_reference_count,$this->getNodeId(),$node_id);

@@ -5,6 +5,7 @@
 	include_once('ObjectNodes.php');
 	include_once('ObjectGraphs.php');
 	include_once('ObjectNodeDot.php');
+	include_once('ObjectGraphDot.php');
 	
 	
 	/** Setup the database connection, provide the host, username and password */
@@ -19,7 +20,7 @@
 		$x = $db_connection->selectDb("$mysql_database_name");
 	}
 	
-	$node_name 		= "/galileo/Metadata/Souce Structures/CLS.P.NR0**00.CLEXT003.MULT.EXT(0)/ABL_NBR_THIS_CYCLE";
+	$node_name 		= "/galileo/Metadata/Elements/PAYMENT_ASSET_BASED_LOAN_PROCESSED_THIS_CYCLE";
 	$query_runner 	= new QueryRunner();
 	//$csvnode 		= new NodeCsv($query_runner,10);
 	//$csvgraph 		= new GraphCsv($query_runner,1);
@@ -38,9 +39,15 @@
 	//echo $xmlgraph;
 	
 	$dotnode = new NodeDot($query_runner,10,true,true);
+	$dotgraph = new GraphDot($query_runner,1);
+	
 	$dotnode->setNodeName($node_name);
 	
-	echo $dotnode;
+	$dotgraph->walk($dotnode);
+	
+	echo $dotgraph;
+	//echo $dotnode;
+	
 	
 	if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 

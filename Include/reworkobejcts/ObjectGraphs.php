@@ -22,7 +22,6 @@
 		
 		public function GraphXml($runner,$node_limit){
 			parent::AbstractGraph($runner,$node_limit);
-			$this->show_headings_flag = true;
 		}
 		
 		public function __toString(){
