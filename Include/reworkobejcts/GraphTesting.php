@@ -4,6 +4,7 @@
 	include_once('../SettingsDatabase.php');
 	include_once('ObjectNodes.php');
 	include_once('ObjectGraphs.php');
+	include_once('ObjectNodeDot.php');
 	
 	
 	/** Setup the database connection, provide the host, username and password */
@@ -27,14 +28,19 @@
 	//$csvgraph->walk($csvnode);
 	
 	//echo $csvgraph;
-	$xmlgraph 	= new GraphXml($query_runner,1);
-	$xmlnode 	= new NodeXml($query_runner,10);
+	//$xmlgraph 	= new GraphXml($query_runner,1);
+	//$xmlnode 	= new NodeXml($query_runner,10);
 	
-	$xmlnode->setNodeName($node_name);
-	$xmlgraph->walk($xmlnode);
+	//$xmlnode->setNodeName($node_name);
+	//$xmlgraph->walk($xmlnode);
 	//echo $xmlnode;
 	
-	echo $xmlgraph;
+	//echo $xmlgraph;
+	
+	$dotnode = new NodeDot($query_runner,10,true,true);
+	$dotnode->setNodeName($node_name);
+	
+	echo $dotnode;
 	
 	if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 
