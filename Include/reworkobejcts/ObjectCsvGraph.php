@@ -10,7 +10,7 @@
 	include_once('../SettingsDatabase.php');
 	
 	
-	class GraphCsv extends AbstractGraph{
+	class GraphBasic extends AbstractGraph{
 	
 		public function GraphCsv($runner,$up,$down,$node_limit,$neighbor_limit){
 			parent::AbstractGraph($runner,$up,$down,$node_limit,$neighbor_limit);
@@ -46,7 +46,7 @@
 	
 	echo "root node: $node\n";
 		
-	$graph 	= new GraphCsv($query_runner,true,true,1,10);
+	$graph 	= new GraphBasic($query_runner,true,true,1,10);
 	
 	$graph->walk($node);
 	
