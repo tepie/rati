@@ -18,6 +18,39 @@
 		}
 	}
 	
+	class GraphXml extends AbstractGraph{
+		
+		public function GraphXml($runner,$node_limit){
+			parent::AbstractGraph($runner,$node_limit);
+			$this->show_headings_flag = true;
+		}
+		
+		public function __toString(){
+			$text = "";
+			$text = $text . $this->getGraphXmlTop();
+			$text = $text . $this->getGraphXmlDocumentHead();
+			
+			foreach($this->getGraph() as $key => $value){
+				$text = $text . $value;
+			}
+			
+			$text = $text . $this->getGraphXmlDocumentEnd();
+			return $text;
+		}
+		
+		private function getGraphXmlTop(){
+			return utf8_encode("<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\n");
+		}
+		
+		private function getGraphXmlDocumentHead(){
+			return utf8_encode("<rati>\n<datastore>\n");
+		}
+		
+		private function getGraphXmlDocumentEnd(){
+			return utf8_encode("</datastore>\n</rati>\n");
+		}
+	}
+	
 	class GraphCsv extends AbstractGraph{
 		
 		private $show_headings_flag;
