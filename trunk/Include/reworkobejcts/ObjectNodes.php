@@ -1,16 +1,5 @@
 <?php
 	
-	/*private function getCsvColumnHeadings(){
-		$text = "";
-		
-		$text = $text . "object name" . $this->getDelimiter();
-		$text = $text . "relationship type" . $this->getDelimiter();
-		$text = $text . "relationship rule" . $this->getDelimiter();
-		$text = $text . "relationship value" . $this->getLineEnder();
-		
-		return $text;
-	}*/
-	
 	include_once('ObjectAbstractNode.php');
 	
 	class NodeBasic extends AbstractNode{

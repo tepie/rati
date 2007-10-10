@@ -8,7 +8,7 @@
 		private $query_runner;
 		private $neighbor_limit;
 		private $node_name;
-		private $node_category;
+		//private $node_category;
 		private $node_id;
 		private $flag_up;
 		private $flag_down;
@@ -53,9 +53,9 @@
 			return $this->node_name;
 		}
 		
-		public function getNodeCategory(){
+		/*public function getNodeCategory(){
 			return $node_category;
-		}
+		}*/
 		
 		public function getNodeId(){
 			return $this->node_id;
@@ -73,12 +73,12 @@
 			return $this->neighbors;
 		}
 		
-		private function setNodeId($id){
-			$this->node_id = $id;
+		protected function getQueryRunner(){
+			return $this->query_runner;
 		}
 		
-		protected function setNodeCategory($category){
-			$this->node_category = $category;
+		private function setNodeId($id){
+			$this->node_id = $id;
 		}
 		
 		/** 
@@ -86,7 +86,7 @@
 		* @param $node_id the numeric id of a node in the database
 		* return string name of node in database
 		*/
-		public function calculateNodeName($node_id){
+		private function calculateNodeName($node_id){
 			global $object_calculate_node_name;
 			global $object_structure_name;
 			
@@ -98,7 +98,7 @@
 			return $line[$object_structure_name];
 		}
 		
-		public function getNodeNeighborDirectionTo($node_id){
+		private function getNodeNeighborDirectionTo($node_id){
 			global $relationship_reference_count;
 			global $all_structure_as_count;
 			$sql 	= sprintf($relationship_reference_count,$this->getNodeId(),$node_id);
@@ -113,7 +113,7 @@
 			}
 		}
 		
-		public function calculateNodeValueRelationships(){
+		private function calculateNodeValueRelationships(){
 			global $relationship_value_attributes;
 			global $attribute_structure_name;
 			global $relationship_structure_relation_value;
@@ -130,7 +130,7 @@
 			
 		}
 		
-		protected function calculateNeighbors(){
+		private function calculateNeighbors(){
 			global $object_structure_primary_id;
 			global $object_structure_name;
 			global $attribute_structure_name;
@@ -182,7 +182,7 @@
 			}
 		}
 				
-		private function structureUpNeighbors(){
+		protected function structureUpNeighbors(){
 			global $attribute_structure_name;
 			global $relationship_structure_reference_fk;
 			$results_up = $this->getUpNeighbors();
