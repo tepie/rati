@@ -1,19 +1,11 @@
 <?php
 	
 	include_once('ObjectAbstractGraph.php');
-	include_once('ObjectCsvNode.php');
-	//include_once('SettingsDatabase.php');
-	//include_once('SettingsGraph.php');
-	//include_once('SQLQueries.php');
-	
-	include_once('../Database.php');
-	include_once('../SettingsDatabase.php');
-	
-	
+
 	class GraphBasic extends AbstractGraph{
 	
-		public function GraphCsv($runner,$up,$down,$node_limit,$neighbor_limit){
-			parent::AbstractGraph($runner,$up,$down,$node_limit,$neighbor_limit);
+		public function GraphBasic($runner,$node_limit){
+			parent::AbstractGraph($runner,$node_limit);
 		}
 		
 		public function __toString(){
@@ -26,33 +18,67 @@
 		}
 	}
 	
-	
-	/** Setup the database connection, provide the host, username and password */
-	$db_connection 	= new DbConnectionHandler("$mysql_database_host",
-		"$mysql_database_user",
-		"$mysql_database_passwd"
-	);
-	
-	if(!ISSET($db_connection->link)){
-		$db_connection->setupDbLink();
-		/** The select database results */
-		$x = $db_connection->selectDb("$mysql_database_name");
+	class GraphCsv extends AbstractGraph{
+		
+		private $show_headings_flag;
+		private $delimiter;
+		private $end_line;
+		
+		public function GraphCsv($runner,$node_limit){
+			parent::AbstractGraph($runner,$node_limit);
+			$this->show_headings_flag = true;
+			$this->setDelimiter("\t");
+			$this->setLineEnder("\n");
+		}
+		
+		public function __toString(){
+			$text = "";
+			
+			if($this->getHeadingsFlag()){
+				$text = $text . $this->getCsvColumnHeadings();
+			}
+			
+			foreach($this->getGraph() as $key => $value){
+				$text = $text . $value;
+			}
+			
+			return $text;
+		}
+		
+		public function getHeadingsFlag(){
+			return $this->show_headings_flag;
+		}
+		
+		public function getDelimiter(){
+			return $this->delimiter;
+		}
+		
+		public function setDelimiter($delimiter){
+			$this->delimiter = $delimiter;
+		}
+		
+		public function getLineEnder(){
+			return $this->end_line;
+		}
+		
+		private function setLineEnder($ender){
+			$this->end_line = $ender;
+		}
+		
+		private function getCsvColumnHeadings(){
+			$text = "";
+			
+			$text = $text . "object name" . $this->getDelimiter();
+			$text = $text . "relationship type" . $this->getDelimiter();
+			$text = $text . "relationship rule" . $this->getDelimiter();
+			$text = $text . "relationship value" . $this->getLineEnder();
+			
+			return $text;
+		}
 	}
 	
-	$node_name 		= "/galileo/Metadata/Categories/category";
-	$query_runner 	= new QueryRunner();
-	$node 			= new NodeBasic($query_runner,10,true,true);
-	$node->setNodeName($node_name);
 	
-	echo "root node: $node\n";
-		
-	$graph 	= new GraphBasic($query_runner,true,true,1,10);
 	
-	$graph->walk($node);
-	
-	echo "graph: $graph\n";
-	
-	if($db_connection->getDbLink() and $x){ $db_connection->closeLink();} 
 	
 	
 	

@@ -5,23 +5,23 @@
 		
 		private $graph;
 		private $query_runner;
-		private $flag_up;
-		private $flag_down;
+		//private $flag_up;
+		//private $flag_down;
 		private $limit;
 		private $limit_track;
 		private $nodesVisited;
 		private $local_node_object;
 		private $current_root_node;
 		
-		public function AbstractGraph($runner,$up,$down,$limit,$neighbor_limit){
+		public function AbstractGraph($runner,$limit){
 			$this->query_runner = $runner;
-			$this->flag_up 		= $up;
-			$this->flag_down	= $down;
+			//$this->flag_up 		= $up;
+			//$this->flag_down	= $down;
 			$this->limit 		= $limit;
 			$this->limit_track	= 0;
 			$this->nodesVisited = array();
 			$this->graph		= array();
-			$this->neighbor_limit = $neighbor_limit;
+			//$this->neighbor_limit = $neighbor_limit;
 		}
 		
 		public function walk(AbstractNode $node){
@@ -55,21 +55,21 @@
 			return $this->local_node_object;
 		}
 		
-		private function getNeighborLimit(){
+		/*private function getNeighborLimit(){
 			return $this->neighbor_limit;
-		}
+		}*/
 		
 		public function getGraph(){
 			return $this->graph;
 		}
 		
-		private function getUpFlag(){
+		/*private function getUpFlag(){
 			return $this->flag_up;
 		}
 		
 		private function getDownFlag(){
 			return $this->flag_down;
-		}
+		}*/
 		
 		private function getLimit(){
 			return $this->limit;
