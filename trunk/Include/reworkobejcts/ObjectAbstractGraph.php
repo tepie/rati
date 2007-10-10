@@ -11,7 +11,7 @@
 		private $limit_track;
 		private $nodesVisited;
 		private $local_node_object;
-		private $current_root_node;
+		private $current_root_node_name;
 		
 		public function AbstractGraph($runner,$limit){
 			$this->query_runner = $runner;
@@ -29,6 +29,8 @@
 				$node_name,
 				$this->getNeighborLimit());
 			*/	
+			
+			$this->setCurrentRoot($node->getNodeName());
 			$this->setLocalNodeObject($node);
 			$this->addGraphNode($this->getLocalNodeObject());
 			
@@ -47,8 +49,16 @@
 		
 		public function __destruct(){}
 		
+		protected function getCurrentRoot(){
+			return $this->current_root_node_name;
+		}
+		
 		private function setLocalNodeObject(AbstractNode $node){
 			$this->local_node_object = $node;
+		}
+		
+		private function setCurrentRoot($name){
+			$this->current_root_node_name = $name;
 		}
 		
 		private function getLocalNodeObject(){
@@ -75,7 +85,7 @@
 			return $this->limit;
 		}
 		
-		private function getNodesVisited(){
+		protected function getNodesVisited(){
 			return $this->nodesVisited;
 		}
 		
@@ -119,6 +129,7 @@
 		
 		private function visitNode(AbstractNode $nodeObj){
 			$this->addVisitedNode($nodeObj);
+			//echo "visiting " . $nodeObj->getNodeName()."\n";
 			foreach($nodeObj->getNeighbors() as $node_id => $value){
 				$node_name 	= $this->getLocalNodeObject()->calculateNodeName($node_id);
 				/*$neighborNodeObj 	= new NodeObject($this->getQueryRunner(),
