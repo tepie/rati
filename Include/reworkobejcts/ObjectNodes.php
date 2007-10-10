@@ -25,6 +25,54 @@
 	
 	}
 	
+	class NodeXml extends AbstractNode{
+	
+		public function NodeXml($runner,$neighbor_limit){
+			parent::AbstractNode($runner,$neighbor_limit,true,false);
+		}
+		
+		public function __toString(){
+			$text = "";
+			$text = $text . $this->getNodeXmlStart();
+			$text = $text . $this->getAnnotationXmlText();
+			$text = $text . $this->getReferenceXmlText();			
+			$text = $text . $this->getNodeXmlStop();
+			
+			return  $text;
+		}
+		
+		private function getNodeXmlStart(){
+			return utf8_encode("<object oid='".$this->getNodeName()."'>\n");
+		}
+		
+		private function getNodeXmlStop(){
+			return utf8_encode("</object>\n");
+		}
+		
+		private function getAnnotationXmlText(){
+			$text 		= "";
+			$values 	= $this->calculateNodeValueRelationships();
+			
+			foreach($values as $rule => $value){
+				$text = $text . "<annotation name='".$rule."'>".$value."</annotation>\n";
+			}
+			
+			return utf8_encode($text);
+		}
+		
+		private function getReferenceXmlText(){
+			$text 		= "";
+			$references = $this->getNeighbors();
+			
+			foreach($references as $node_id => $rule){
+				 $text = $text . "<reference name='".$rule."' oidref='".$this->calculateNodeName($node_id)."'/>\n";
+			}
+			
+			return utf8_encode($text);
+		}
+		
+	}
+	
 	class NodeCsv extends AbstractNode{
 		
 		private $delimiter;
@@ -38,7 +86,7 @@
 		
 		public function __toString(){
 			$text = "";
-			$text = $text . $this->getAnnotationCsvText();			
+			$text = $text . $this->getAnnotationCsvText();
 			$text = $text . $this->getReferenceCsvText();
 			
 			return  $text;
@@ -88,9 +136,7 @@
 			
 			return $text;
 		}
-		
-		
-	
+
 	}
 	
 	
