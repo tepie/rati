@@ -31,6 +31,7 @@
 		}
 		
 		abstract public function __toString();
+		
 		//abstract protected function calculateCategory();
 		
 		public function __destruct(){

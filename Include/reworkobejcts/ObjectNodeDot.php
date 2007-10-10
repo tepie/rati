@@ -10,36 +10,30 @@
 	class NodeDot extends AbstractNode{
 		
 		private $category;
+		private $font_size;
 		
 		public function NodeXml($runner,$neighbor_limit,$up,$down){
 			parent::AbstractNode($runner,$neighbor_limit,$up,$down);
-			$this->calculateCategory();
 		}
 		
 		public function __toString(){
-		
-			/*global $url_rest_node_param;
-			global $graphviz_string_node_attributes;
-			global $graphviz_string_link_node;
-			global $web_app_page_post_back_name;
-			
-			$text = "";
-			$label 	= $this->getNodeName();
-			$url 	= $web_app_page_post_back_name . "?$url_rest_node_param=" . urlencode($label);
-			$parts 	= split("\/",$label);
-			$show 	= $parts[count($parts) - 1];
-			$color  = $this->calculateNodeColor();
-			
-			$text 	= "\t" . sprintf($graphviz_string_link_node,$this->getNodeId());
-			$text   = $text . " " . sprintf($graphviz_string_node_attributes,$show,$url,$color,$label) . "\n";
-			*/
-			//$text	= $text . $this->getDotNodeText($this->getNodeName());
-			$this->getDotNodeText($this->getNodeName());
-			$this->getReferenceDotText();
-			//return $text;
+			return $this->getDotNodeText($this->getNodeName());
 		}
 		
-		private function getReferenceDotText(){
+		public function getFontSize(){
+			return $this->font_size;
+		}
+		
+		public function setFontSize($size){
+			$this->font_size = $size;
+		}
+		
+		public function __clone(){
+			parent::__clone();
+			$this->setFontSize("8");
+		}
+		
+		/*private function getReferenceDotText(){
 			$text 		= "";
 			$references = $this->getNeighbors();
 			
@@ -50,7 +44,7 @@
 			}
 			
 			//return $text;
-		}
+		}*/
 		
 		private function getDotNodeText($node_name){
 			global $url_rest_node_param;
@@ -63,12 +57,13 @@
 			$url 	= $web_app_page_post_back_name . "?$url_rest_node_param=" . urlencode($label);
 			$parts 	= split("\/",$label);
 			$show 	= $parts[count($parts) - 1];
+			
 			$color  = $this->calculateNodeColor($node_name);
 			
-			echo "\t" . sprintf($graphviz_string_link_node,$this->calculateNodeId($node_name));
-			echo " " . sprintf($graphviz_string_node_attributes,$show,$url,$color,$label) . "\n";
-			echo $this->getReferenceDotText();
-			//echo $text;
+			$text = $text . "\t" . sprintf($graphviz_string_link_node,$this->calculateNodeId($node_name));
+			$text = $text . sprintf($graphviz_string_node_attributes,$show,$url,$color,$label) . "\n";
+			//echo $this->getReferenceDotText();
+			return $text;
 		}
 		
 		private function calculateNodeColor($node_name){
@@ -83,13 +78,13 @@
 					return $web_app_default_cat_color;
 				} 
 			}
-			
+			$this->calculateCategory();
 			foreach($perspective_node_color_maps as $index => $map){
 				if(in_array($this->getNodeCategory(),array_keys($map))){
 					return $map[$this->getNodeCategory()];
 				}
 			}
-				
+
 			return $web_app_default_node_color;
 		}
 		
@@ -106,6 +101,8 @@
 			global $object_calculate_node_name;
 			global $object_structure_name;			
 			global $perspective_category_reference_rules;
+			
+			//echo "CATEGORY\n";
 			
 			$found = False;
 			$temp_neighbors = $this->structureUpNeighbors();
@@ -131,47 +128,48 @@
 			if(!$found) $this->category = "Unknown";
 		}
 		
-		private function getDotLinkText($link_to,$rule,$fontsize="0"){
+	
+		public function getLinkedText($link_to){
+			$references = $this->getNeighbors();
+			$rule = $references[$link_to];
+			//echo "$link_to => $rule\n";
+			return $this->getDotLinkText($link_to,$rule);
+		}
+		
+		private function getDotLinkText($link_to,$rule){
 			global $graphviz_string_link_node;
 			global $graphviz_string_link_lr_arrow;
 			global $graphviz_string_link_attributes;
 			global $graphviz_string_links_fontsize;
 			
-			if($fontsize == "0"){
-				$use_size =$graphviz_string_links_fontsize;
-			} else {
-				$use_size = $fontsize;
-			}
-			
+			$use_size = $this->getFontSize();
+			//echo "FONT: $use_size\n";
 			// Return text container
 			$text 		= "";
 			$key 		= $link_to;
 			$value 		= $rule;
 			$node_id 	= $this->getNodeId();
 			
-			//if(array_key_exists($key,$this->getGraph())){
-				$switch = $this->getNodeNeighborDirectionTo($key);
-				
-				$left 	= $node_id;
-				$right	= $key;
-				if($switch){
-					$dirType = "forward";
-				} else {
-					$dirType = "back";
-				}
-				
-				$html_value = htmlentities($value, ENT_QUOTES);
-				
-				// Formulate the link text
-				echo "\t". sprintf($graphviz_string_link_node,$left);
-				echo $graphviz_string_link_lr_arrow;
-				echo sprintf($graphviz_string_link_node,$right);
-				echo sprintf($graphviz_string_link_attributes,$html_value,$use_size,$dirType) . "\n";
-			//}
+			$switch = $this->getNodeNeighborDirectionTo($key);
 			
-			//$this->putGraphvizText($text);
-			//return $text;
-			echo $text;
+			$left 	= $node_id;
+			$right	= $key;
+			
+			if($switch){
+				$dirType = "forward";
+			} else {
+				$dirType = "back";
+			}
+			
+			$html_value = htmlentities($value, ENT_QUOTES);
+			
+			// Formulate the link text
+			$text = $text . "\t". sprintf($graphviz_string_link_node,$left);
+			$text = $text . $graphviz_string_link_lr_arrow;
+			$text = $text . sprintf($graphviz_string_link_node,$right);
+			$text = $text . sprintf($graphviz_string_link_attributes,$html_value,$use_size,$dirType) . "\n";
+
+			return $text;
 		}
 		
 		private function calculateNodeId($node_name){
