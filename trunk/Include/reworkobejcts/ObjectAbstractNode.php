@@ -1,7 +1,7 @@
 <?php
 	
-	include_once('SettingsGraph.php');
-	include_once('SQLQueries.php');
+	include_once('../SettingsGraph.php');
+	include_once('../SQLQueries.php');
 	
 	abstract class AbstractNode{
 		
@@ -14,7 +14,7 @@
 		private $flag_down;
 		private $neighbors;
 		
-		public function AbstractNode($runner,$node_name,$neighbor_limit,$up,$down){
+		public function AbstractNode($runner,$neighbor_limit,$up,$down){
 			$this->query_runner 	= $runner;
 			//echo "node:".$node_name;
 			$this->node_name 		= $node_name;
@@ -23,9 +23,9 @@
 			$this->flag_down		= $down;
 			$this->neighbors		= array();
 			
-			$this->calculateNodeId();
-			$this->calculateNeighbors();
-			$this->calculateCategory();
+			//$this->calculateNodeId();
+			//$this->calculateNeighbors();
+			//$this->calculateCategory();
 		}
 		
 		abstract public function __toString();
@@ -34,8 +34,19 @@
 		public function __destruct(){
 		}
 		
+		public function __clone(){
+			$this->neighbors = array();
+		}
+		
 		public function getNeighorLimit(){
 			return $this->neighbor_limit;
+		}
+		
+		public function setNodeName($name){
+			$this->node_name = $name;
+			$this->neighbors = array();
+			$this->calculateNodeId();
+			$this->calculateNeighbors();
 		}
 		
 		public function getNodeName(){
