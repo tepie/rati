@@ -12,7 +12,7 @@
 	
 	<property name="version" 	value="1.0"/>
    	<property name="project" 	value="rati"/>
-	<property name="stage" 		value="beta"/>
+	<property name="stage" 		value="RC1"/>
 	<property name="brand" 		value="galileo"/>
 	
 	<!-- Delete directories start -->
