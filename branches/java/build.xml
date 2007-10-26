@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="xsdparse" default="compile" basedir=".">
+	<description>Performs build tasks for xsdparse</description>
+	<property name="dir.root" 		value="."/>
+	<property name="dir.src" 		value ="${dir.root}/src"/>
+	<property name="dir.dist" 		value ="${dir.root}/dist"/>
+	<property name="dir.build" 		value ="${dir.root}/build"/>
+	<property name="dir.lib" 		value="${dir.root}/lib"/>
+	<property name="dir.sql" 		value="${dir.root}/sql"/>
+	<property name="dist.exclude"	value="**/.svn/**,dist/**,build.xml,build.number" />
+	
+	<property name="version" 	value="1.0"/>
+   	<property name="project" 	value="xsdparse"/>
+	<property name="stage" 		value="beta"/>
+	<property name="brand" 		value="galileo"/>
+	
+	<property name="name.xsom" 		value="xsom.jar"/>
+	<property name="name.relaxng" 	value="relaxngDatatype.jar"/>
+	<property name="lib.xsom" 		value="${dir.lib}/${name.xsom}"/>
+	<property name="lib.relaxng" 	value="${dir.lib}/${name.relaxng}"/>
+	
+	<!-- Build the project classpath -->
+	<property name="classpath" value="${lib.xsom}:${lib.relaxng}" />
+	 <!-- Creates the output directories -->
+    <target name="prepare">
+        <mkdir dir="${dir.build}"/>
+		<mkdir dir="${dir.dist}/lib"/>
+        <mkdir dir="${dir.dist}"/>
+    </target>
+	
+	<!-- Removes the build and dist directories. -->
+    <target name="clean" description="Remove all generated files.">
+		<delete dir="${dir.build}"/>
+		<delete dir="${dir.dist}"/>
+    </target>
+	
+	<!-- Compile all source code to the build directory. -->
+    <target name="compile" depends="clean,prepare" description="Compile all source code.">
+        <javac srcdir="${dir.src}" destdir="${dir.build}" classpath="${classpath}" >
+        	<!-- <classpath refid="project.class.path"/>-->
+        </javac>
+    </target>
+	
+	<!-- Creates an executable jar file in the dist directory. -->
+	<target name="jar" depends="compile" description="Generates filesink-bin.jar to'dist' directory.">
+		<copy file="${lib.xsom}" todir="${dir.dist}/lib"/>
+		<copy file="${lib.relaxng}" todir="${dir.dist}/lib"/>
+		<jar jarfile="${dir.dist}/${project}.jar" 
+			basedir="${dir.build}" excludes="${dist.exclude}" >
+			
+			<manifest>
+				<attribute name="Main-Class" value="org.keybank.etd.eda.sdai.xml.xsd.base.Main"/>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Sealed" value="false"/>
+				<attribute name="Class-Path" value="lib/${name.xsom} lib/${name.relaxng}"/>
+			</manifest>
+		</jar> 
+	</target>
+	
+</project>
