@@ -54,7 +54,6 @@ public class ObjectModelWriter implements Walker {
 	private void walk(Enumeration<ObjectNode> e){
 		while(e.hasMoreElements()){
 			ObjectNode node = e.nextElement();
-			
 			this.out.println(this.formatNodeText(node));
         	this.walk(node.children());
         }

@@ -37,9 +37,13 @@
 package org.keybank.etd.eda.sdai.xml.xsd.object;
 
 import java.text.MessageFormat;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 import com.sun.xml.xsom.XSAnnotation;
 import com.sun.xml.xsom.XSAttGroupDecl;
@@ -148,13 +152,10 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 
 		this.model.addObjectNode(newNode);
 
-		
-
 		for (XSComplexType complexType : s.getComplexTypes().values()) {
 			complexType(complexType);
 		}
-
-
+		
 		for (XSModelGroupDecl modelGroupDecl : s.getModelGroupDecls().values()) {
 			modelGroupDecl(modelGroupDecl);
 		}
@@ -190,7 +191,8 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 
 		this.currNode.add(newNode);
 		this.currNode = newNode;
-
+		this.annotation(decl.getAnnotation(true));
+		
 		Iterator<? extends XSAttGroupDecl> itrXSAttGroupDecl;
 
 		itrXSAttGroupDecl = decl.iterateAttGroups();
@@ -262,6 +264,10 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 			newNode.putAnno(SchemaComponents.TARGET_NAMESPACE, decl.getTargetNamespace());
 			newNode.putAllAnnos(additionalAttsMap);
 			this.currNode.add(newNode);
+			this.currNode = newNode;
+			this.annotation(decl.getAnnotation(true));
+			this.currNode = (ObjectNode) this.currNode.getParent();
+			
 		}
 	}
 
@@ -310,6 +316,7 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 
 		this.currNode.add(newNode);
 		this.currNode = newNode;
+		this.annotation(type.getAnnotation(true));
 
 		if (type.isLocal()) {
 			simpleType(type);
@@ -332,7 +339,8 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 			//newNode.putRef(SchemaComponents.COMPONENT,SchemaComponents.SIMPLE_TYPE_DEF);
 			this.currNode.add(newNode);
 			this.currNode = newNode;
-		}
+			this.annotation(type.getAnnotation(true));
+		}	
 
 		try {
 			type.visit((XSSimpleTypeVisitor) this);
@@ -408,6 +416,7 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 			//newNode.putRef(SchemaComponents.COMPONENT, SchemaComponents.SIMPLE_UNION_TYPE);
 			this.currNode.add(newNode);
 			this.currNode = newNode;
+			this.annotation(type.getAnnotation(true));
 		}
 
 		for (int i = 0; i < len; i++) {
@@ -518,6 +527,19 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 		newNode.putAnno("System Id", notation.getSystemId());
 		this.currNode.add(newNode);
 	}
+	
+	/*private void createAnnotation(Node element, StringBuffer strBuffer){
+		if (element instanceof Text) {
+		     Text text = (Text) element;
+		     strBuffer.append(text.getData());
+		}
+		
+		NodeList children = element.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node child = children.item(i);
+			createAnnotation(child, strBuffer);
+		}
+	}*/
 
 	/*
 	 * (non-Javadoc)
@@ -525,15 +547,40 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 	 * @see com.sun.xml.xsom.visitor.XSVisitor#complexType(com.sun.xml.xsom.XSComplexType)
 	 */
 	public void complexType(XSComplexType type) {
-
+		
+		/*if (!(annotationObject instanceof org.w3c.dom.Element)){
+			System.err.println("WARNING: Annotation should be org.w3c.dom.Element");
+			//throw new IllegalStateException("Annotation should be org.w3c.dom.Element");
+		}*/
+		
 		if (!type.isLocal()) {
+			/*Object annotationObject 	= type.getAnnotation();
+			StringBuffer buffer 		= new StringBuffer();
+			String rawAnnotation		= null;
+			
+			try{
+				this.createAnnotation((Node) annotationObject, buffer);
+				rawAnnotation 	= buffer.toString();
+				rawAnnotation 	= rawAnnotation.trim();
+			} catch (ClassCastException e){
+				System.err.println("complexType:ClassCastException: " + type.getName());
+				//e.printStackTrace();
+			}
+			*/
+			
+			
 			ObjectNode newNode = new ObjectNode(type.getName(), type
 					.getLocator());
 			
 			newNode.putAnno(SchemaComponents.COMPONENT, SchemaComponents.COMPLEXT_TYPE_DEF);
-			//newNode.putRef(SchemaComponents.COMPONENT, SchemaComponents.COMPLEXT_TYPE_DEF);
+			
+			/*if(rawAnnotation != null){
+				newNode.putAnno(SchemaComponents.ANNOTATION, rawAnnotation);	
+			}*/
+			
 			this.currNode.add(newNode);
 			this.currNode = newNode;
+			this.annotation(type.getAnnotation(true));
 		} else {
 			/*ObjectNode newNode = new ObjectNode("ComplexType", type
 					.getLocator());
@@ -734,12 +781,33 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 		 * type.getTargetNamespace() + "}" + type.getName() + "\"", extraAtts});
 		 */
 		if (!type.isLocal()) {
+			
+			/*Object annotationObject 	= decl.getAnnotation();
+			StringBuffer buffer 		= new StringBuffer();
+			String rawAnnotation		= null;
+			*/
+			/*try{
+				this.createAnnotation((Node) annotationObject, buffer);
+				rawAnnotation 	= buffer.toString();
+				rawAnnotation 	= rawAnnotation.trim();
+			} catch (ClassCastException e){
+				System.err.println("elementDecl:ClassCastException: " + decl.getName());
+				//e.printStackTrace();
+			}*/
+			
+			
+			
 			ObjectNode newNode = new ObjectNode(decl.getName(), decl
 					.getLocator());
 			newNode.putAnno(SchemaComponents.COMPONENT, SchemaComponents.ELEMENT_DECL);
 			//newNode.putRef(SchemaComponents.COMPONENT, SchemaComponents.ELEMENT_DECL);
 			newNode.putAnno(SchemaComponents.TARGET_NAMESPACE, type.getTargetNamespace());
 			newNode.putAnno("Type Name", type.getName());
+			
+			/*if(rawAnnotation != null){
+				newNode.putAnno(SchemaComponents.ANNOTATION, rawAnnotation);	
+			}*/
+			
 			
 			/*ObjectNode elem = this.findNodeByPrimaryAnnotation(type.getName());
 			if(elem != null){
@@ -749,6 +817,7 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 			newNode.putAllAnnos(extraAtts);
 			this.currNode.add(newNode);
 			this.currNode = newNode;
+			this.annotation(type.getAnnotation(true));
 		} else {
 			/*ObjectNode newNode = new ObjectNode(decl.getName(), decl
 					.getLocator());
@@ -792,7 +861,7 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 		//newNode.putRef(SchemaComponents.COMPONENT, SchemaComponents.MODEL_GROUP_DEF);
 		this.currNode.add(newNode);
 		this.currNode = newNode;
-		
+		this.annotation(decl.getAnnotation(true));
 		modelGroup(decl.getModelGroup());
 
 		this.currNode = (ObjectNode) this.currNode.getParent();
@@ -939,6 +1008,26 @@ public class ObjectSchemaTraverser implements XSVisitor, XSSimpleTypeVisitor {
 	 */
 	public void annotation(XSAnnotation ann) {
 		// TODO: it would be nice even if we just put <xs:documentation>
+		Object annotation 		= ann.getAnnotation();
+		StringBuffer buffer 	= new StringBuffer();
+		
+		this.createAnnotation((Element) annotation, buffer);
+		
+		String rawAnnotation 	= buffer.toString();
+		rawAnnotation 			= rawAnnotation.trim();
+		this.currNode.putAnno(SchemaComponents.ANNOTATION, rawAnnotation);
+	}
+	
+	private void createAnnotation(Node element, StringBuffer strBuffer) {
+	    if (element instanceof Text) {
+	        Text text = (Text) element;
+	        strBuffer.append(text.getData());
+	    }
+	    NodeList children = element.getChildNodes();
+	    for (int i = 0; i < children.getLength(); i++) {
+	        Node child = children.item(i);
+	        createAnnotation(child, strBuffer);
+	    }
 	}
 
 	/*
