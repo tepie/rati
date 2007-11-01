@@ -3,12 +3,15 @@
 	<description>Packages the rati application</description>
 	<property name="dir.root" 		value="."/>
 	<property name="dir.dist" 		value ="${dir.root}/dist"/>
+	<property name="dir.map" 		value ="${dir.root}/map"/>
+	<property name="dir.dot" 		value ="${dir.root}/dot"/>
+	<property name="dir.img" 		value ="${dir.root}/img"/>
 	<property name="dir.doc" 		value="${dir.root}/Doc"/>
 	<property name="dir.include" 	value="${dir.root}/Include"/>
 	<property name="dir.sql" 		value="${dir.root}/sql"/>
 	<property name="dir.doxygen" 	value="${dir.root}/Doxygen"/>
 	<property name="exec.doxygen" 	value="doxygen" />
-	<property name="dist.exclude"	value="**/.svn/**,dist/**,dot/**,spider/**,img/**,map/**,Thumbs.db,build.xml,Doxyfile,build.number,WeschInfoRevolutionV3.wmv" />
+	<property name="dist.exclude"	value="**/.svn/**,dist/**,Thumbs.db,build.xml,Doxyfile,build.number,WeschInfoRevolutionV3.wmv" />
 	
 	<property name="version" 	value="1.0"/>
    	<property name="project" 	value="rati"/>
@@ -21,6 +24,13 @@
 		<delete dir	= "${dir.doxygen}"/>
 	</target>
 	
+	<target name="rm-temp" description="Remove the temp file directories.">
+		<echo>Removing the temp directories...</echo>
+		<delete dir	= "${dir.dot}"/>
+		<delete dir	= "${dir.map}"/>
+		<delete dir	= "${dir.img}"/>
+	</target>
+	
 	<target name="rm-dist" description="Remove the dist directory.">
 		<echo>Removing the distribution directory...</echo>
 		<delete dir	= "${dir.dist}"/>
@@ -30,6 +40,13 @@
 	<target name="mk-dist" description="Make the dist directory.">
 		<echo>Making the distribution directory...</echo>
 		<mkdir dir = "${dir.dist}"/>
+	</target>
+	
+	<target name="mk-temp" description="Make the temp file directories.">
+		<echo>Removing the temp directories...</echo>
+		<mkdir dir	= "${dir.dot}"/>
+		<mkdir dir	= "${dir.map}"/>
+		<mkdir dir	= "${dir.img}"/>
 	</target>
 	
 	<target name="mk-doxygen" description="Make the doxygen directory.">
@@ -45,7 +62,7 @@
 		<exec executable = "${exec.doxygen}" />
 	</target>
 	
-	<target name="dist" depends="rm-doxygen,rm-dist,mk-dist" 
+	<target name="dist" depends="doxygen,rm-dist,mk-dist,rm-temp,mk-temp" 
 		description="Generate project distribution package.">
 		<buildnumber/>
 		<echo>Generating project distribution archive...</echo>
