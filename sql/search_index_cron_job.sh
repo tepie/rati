@@ -1,6 +1,6 @@
 #!/bin/bash 
 echo "Galileo Data Visualization Search Index CRON Job"
-set VISUALIZ_INSTALL_DIR=`pwd`
+export VISUALIZ_INSTALL_DIR=
 echo "Installation directory is set as.... $VISUALIZ_INSTALL_DIR" 
 echo "Executing index replacement...."
 php -f $VISUALIZ_INSTALL_DIR/sql/search_index_replace.php
