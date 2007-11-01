@@ -85,7 +85,7 @@
 	//echo "</td>";
 	
 	// image
-	$url_html_export = "http://csc06pocdvpa01s.keybank.com/rati/Export.php?q=".urlencode($node_name)."&amp;type=html".commonUrlCustomizationValues($for_html=True);
+	$url_html_export = "http://". $_SERVER["SERVER_NAME"] ."/rati/Export.php?q=".urlencode($node_name)."&amp;type=html".commonUrlCustomizationValues($for_html=True);
 	//$html_export = file_get_contents($url_html_export);
 	//echo "<td>$html_export</td>\n";
 	echo "<td width=\"100%\" style=\"vertical-align:top;\">";
