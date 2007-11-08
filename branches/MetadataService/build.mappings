@@ -1,1 +1,1 @@
-metadata,src/service/core,schema/metadata/MetadataService_instance/Metadata.wsdl
+metadata,src/service/impl,schema/metadata/MetadataService_instance/Metadata.wsdl
