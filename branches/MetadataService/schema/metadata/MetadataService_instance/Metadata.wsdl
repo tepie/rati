@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://impl.service" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://impl.service" xmlns:intf="http://impl.service" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns2="http://util.java" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.2RC2
+Built on Nov 14, 2006 (10:23:53 EST)-->
+
+   <wsdl:message name="annotateResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="referenceResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="toStringResponse">
+
+      <wsdl:part name="toStringReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="annotateRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="iteratorRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="referenceRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="deReferenceResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="iteratorResponse">
+
+      <wsdl:part name="iteratorReturn" type="xsd:anyType"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="versionsResponse">
+
+      <wsdl:part name="versionsReturn" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addResponse">
+
+      <wsdl:part name="addReturn" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="versionsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="deAnnotateRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="deAnnotateResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="toStringRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="deReferenceRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="MetadataService">
+
+      <wsdl:operation name="toString">
+
+         <wsdl:input message="intf:toStringRequest" name="toStringRequest"/>
+
+         <wsdl:output message="intf:toStringResponse" name="toStringResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="iterator">
+
+         <wsdl:input message="intf:iteratorRequest" name="iteratorRequest"/>
+
+         <wsdl:output message="intf:iteratorResponse" name="iteratorResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="versions" parameterOrder="in0">
+
+         <wsdl:input message="intf:versionsRequest" name="versionsRequest"/>
+
+         <wsdl:output message="intf:versionsResponse" name="versionsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="add" parameterOrder="in0">
+
+         <wsdl:input message="intf:addRequest" name="addRequest"/>
+
+         <wsdl:output message="intf:addResponse" name="addResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="annotate" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="intf:annotateRequest" name="annotateRequest"/>
+
+         <wsdl:output message="intf:annotateResponse" name="annotateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deAnnotate" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="intf:deAnnotateRequest" name="deAnnotateRequest"/>
+
+         <wsdl:output message="intf:deAnnotateResponse" name="deAnnotateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reference" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="intf:referenceRequest" name="referenceRequest"/>
+
+         <wsdl:output message="intf:referenceResponse" name="referenceResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deReference" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="intf:deReferenceRequest" name="deReferenceRequest"/>
+
+         <wsdl:output message="intf:deReferenceResponse" name="deReferenceResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="MetadataServiceSoapBinding" type="intf:MetadataService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="toString">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="toStringRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="toStringResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="iterator">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="iteratorRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="iteratorResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="versions">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="versionsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="versionsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="add">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="annotate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="annotateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="annotateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deAnnotate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deAnnotateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deAnnotateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reference">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="referenceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="referenceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deReference">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deReferenceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deReferenceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="MetadataServiceService">
+
+      <wsdl:port binding="intf:MetadataServiceSoapBinding" name="MetadataService">
+
+         <wsdlsoap:address location="http://localhost:8080/wsrf/services/MetadataService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
