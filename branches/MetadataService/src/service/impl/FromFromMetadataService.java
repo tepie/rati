@@ -1,4 +1,4 @@
-package service.core;
+package service.impl;
 
 public interface FormFromMetadataService {
 	public void form();
