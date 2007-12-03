@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.1-b02-RC1. --><xs:schema xmlns:tns="http://impl.service.metadata.tepietro.csu.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://impl.service.metadata.tepietro.csu.org/">
+
+<xs:element name="add" type="tns:add"></xs:element>
+
+<xs:element name="addResponse" type="tns:addResponse"></xs:element>
+
+<xs:element name="annotate" type="tns:annotate"></xs:element>
+
+<xs:element name="annotateResponse" type="tns:annotateResponse"></xs:element>
+
+<xs:element name="deAnnotate" type="tns:deAnnotate"></xs:element>
+
+<xs:element name="deAnnotateResponse" type="tns:deAnnotateResponse"></xs:element>
+
+<xs:element name="deReference" type="tns:deReference"></xs:element>
+
+<xs:element name="deReferenceResponse" type="tns:deReferenceResponse"></xs:element>
+
+<xs:element name="delete" type="tns:delete"></xs:element>
+
+<xs:element name="deleteResponse" type="tns:deleteResponse"></xs:element>
+
+<xs:element name="getNetwork" type="tns:getNetwork"></xs:element>
+
+<xs:element name="getNetworkResponse" type="tns:getNetworkResponse"></xs:element>
+
+<xs:element name="reference" type="tns:reference"></xs:element>
+
+<xs:element name="referenceResponse" type="tns:referenceResponse"></xs:element>
+
+<xs:element name="reset" type="tns:reset"></xs:element>
+
+<xs:element name="resetResponse" type="tns:resetResponse"></xs:element>
+
+<xs:element name="saveGraphAsJPEG" type="tns:saveGraphAsJPEG"></xs:element>
+
+<xs:element name="saveGraphAsJPEGResponse" type="tns:saveGraphAsJPEGResponse"></xs:element>
+
+<xs:element name="toString" type="tns:toString"></xs:element>
+
+<xs:element name="toStringResponse" type="tns:toStringResponse"></xs:element>
+
+<xs:element name="versions" type="tns:versions"></xs:element>
+
+<xs:element name="versionsResponse" type="tns:versionsResponse"></xs:element>
+
+<xs:complexType name="add">
+<xs:sequence>
+<xs:element name="uri" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deAnnotate">
+<xs:sequence>
+<xs:element name="uri" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="rule" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="value" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deAnnotateResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="delete">
+<xs:sequence>
+<xs:element name="uri" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deReference">
+<xs:sequence>
+<xs:element name="uri" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="rule" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="uriTo" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deReferenceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="reference">
+<xs:sequence>
+<xs:element name="uri" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="rule" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="uriTo" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="referenceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="annotate">
+<xs:sequence>
+<xs:element name="uri" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="rule" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="value" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="annotateResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="saveGraphAsJPEG">
+<xs:sequence></xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="saveGraphAsJPEGResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:base64Binary" nillable="true" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getNetwork">
+<xs:sequence></xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getNetworkResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="versions">
+<xs:sequence>
+<xs:element name="uri" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="versionsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="reset">
+<xs:sequence></xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resetResponse">
+<xs:sequence></xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="toString">
+<xs:sequence>
+<xs:element name="uri" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="toStringResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
