@@ -1,0 +1,20 @@
+Terrence Pietrondi
+t.pietrondi@csuohio.edu
+CIS 698 Grid Computing
+
+Steps
+==================================
+%GLOBUS_LOCATION% and $GLOBUS_LOCATION are "c:\gt4\"
+
+1. globus-build-service.sh metadata 
+	# Build the service
+2. %GLOBUS_LOCATION%\bin\globus-deploy-gar org_globus_examples_services_core_metadata.gar 
+	# Deploy the GAR
+3. %GLOBUS_LOCATION%\etc\globus-devel-env.bat 
+	source $GLOBUS_LOCATION/etc/globus-devel-env.sh
+	# Setup CLASSPATH for client
+4. javac -classpath .\build\stubs\classes\:%CLASSPATH% org\globus\examples\clients\MetadataService\MetadataMainClient.java
+	# Compile client
+5.	%GLOBUS_LOCATION%\bin\globus-start-container -nosec
+	# Start the grid container
+6. java -classpath .\build\stubs\classes\:%CLASSPATH% org.globus.examples.clients.MetadataService.MetadataMainClient  http://192.168.0.107:8080/wsrf/services/examples/core/metadata/MetadataService

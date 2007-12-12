@@ -1,0 +1,74 @@
+<!--
+Terrence Pietrondi
+t.pietrondi@csuohio.edu
+CIS 698 Grid Computing
+-->
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema version="1.0" targetNamespace="http://www.globus.org/namespaces/examples/core/MetadataService" 
+	xmlns:tns="http://www.globus.org/namespaces/examples/core/MetadataService" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="add" type="xsd:string"/>
+  <xsd:element name="addResponse" type="xsd:int"/>
+	<xsd:element name="annotate">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="uri" type="xsd:string" />
+				<xsd:element name="rule" type="xsd:string" />
+				<xsd:element name="value" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+  <xsd:element name="annotateResponse" type="xsd:int"/>
+  <xsd:element name="deAnnotate">
+	  <xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="uri" type="xsd:string" />
+				<xsd:element name="rule" type="xsd:string" />
+				<xsd:element name="value" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="deAnnotateResponse" type="xsd:boolean"/>
+  <xsd:element name="deReference">
+	<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="uri" type="xsd:string" />
+				<xsd:element name="rule" type="xsd:string" />
+				<xsd:element name="uriTo" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="deReferenceResponse" type="xsd:boolean"/>
+  <xsd:element name="delete" type="xsd:string"/>
+  <xsd:element name="deleteResponse" type="xsd:int"/>
+  <xsd:element name="getNetwork">
+	<xsd:complexType/>
+  </xsd:element>
+  <xsd:element name="getNetworkResponse" type="xsd:string"/>
+  <xsd:element name="reference">
+	<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="uri" type="xsd:string" />
+				<xsd:element name="rule" type="xsd:string" />
+				<xsd:element name="uriTo" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="referenceResponse" type="xsd:int"/>
+  <xsd:element name="reset">
+	<xsd:complexType/>
+  </xsd:element>
+  <xsd:element name="resetResponse">
+	<xsd:complexType/>
+  </xsd:element>
+  <xsd:element name="saveGraphAsJPEG">
+	<xsd:complexType/>
+  </xsd:element>
+  <xsd:element name="saveGraphAsJPEGResponse" type="xsd:base64Binary" nillable="true" />
+  <xsd:element name="toString" type="xsd:string"/>
+  <xsd:element name="toStringResponse" type="xsd:string"/>
+  <xsd:element name="versions" type="xsd:string"/>
+  <xsd:element name="versionsResponse" type="xsd:int"/>
+
+</xsd:schema>
+
