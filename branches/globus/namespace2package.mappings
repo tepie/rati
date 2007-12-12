@@ -1,0 +1,3 @@
+http\://www.globus.org/namespaces/examples/core/MetadataService=org.globus.examples.stubs.MetadataService
+http\://www.globus.org/namespaces/examples/core/MetadataService/bindings=org.globus.examples.stubs.MetadataService.bindings
+http\://www.globus.org/namespaces/examples/core/MetadataService/service=org.globus.examples.stubs.MetadataService.service

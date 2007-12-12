@@ -1,0 +1,148 @@
+<!--
+Terrence Pietrondi
+t.pietrondi@csuohio.edu
+CIS 698 Grid Computing
+-->
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions name="MetadataService"
+    targetNamespace="http://www.globus.org/namespaces/examples/core/MetadataService"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.globus.org/namespaces/examples/core/MetadataService"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsrp="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd"
+    xmlns:wsrpw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl"
+    xmlns:wsdlpp="http://www.globus.org/namespaces/2004/10/WSDLPreprocessor"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<wsdl:import 
+    namespace=
+    "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl"
+    location="../../wsrf/properties/WS-ResourceProperties.wsdl" />
+
+
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://www.globus.org/namespaces/examples/core/MetadataService" 
+		schemaLocation="MetadataServiceService.xsd"
+		xmlns:tns="http://www.globus.org/namespaces/examples/core/MetadataService"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>	
+    </xsd:schema>
+  </types>
+  <message name="add">
+    <part name="parameters" element="tns:add"/>
+  </message>
+  <message name="addResponse">
+    <part name="parameters" element="tns:addResponse"/>
+  </message>
+  <message name="toString">
+    <part name="parameters" element="tns:toString"/>
+  </message>
+  <message name="toStringResponse">
+    <part name="parameters" element="tns:toStringResponse"/>
+  </message>
+  <message name="delete">
+    <part name="parameters" element="tns:delete"/>
+  </message>
+  <message name="deleteResponse">
+    <part name="parameters" element="tns:deleteResponse"/>
+  </message>
+  <message name="reset">
+    <part name="parameters" element="tns:reset"/>
+  </message>
+  <message name="resetResponse">
+    <part name="parameters" element="tns:resetResponse"/>
+  </message>
+  <message name="versions">
+    <part name="parameters" element="tns:versions"/>
+  </message>
+  <message name="versionsResponse">
+    <part name="parameters" element="tns:versionsResponse"/>
+  </message>
+  <message name="annotate">
+    <part name="parameters" element="tns:annotate"/>
+  </message>
+  <message name="annotateResponse">
+    <part name="parameters" element="tns:annotateResponse"/>
+  </message>
+  <message name="deAnnotate">
+    <part name="parameters" element="tns:deAnnotate"/>
+  </message>
+  <message name="deAnnotateResponse">
+    <part name="parameters" element="tns:deAnnotateResponse"/>
+  </message>
+  <message name="reference">
+    <part name="parameters" element="tns:reference"/>
+  </message>
+  <message name="referenceResponse">
+    <part name="parameters" element="tns:referenceResponse"/>
+  </message>
+  <message name="deReference">
+    <part name="parameters" element="tns:deReference"/>
+  </message>
+  <message name="deReferenceResponse">
+    <part name="parameters" element="tns:deReferenceResponse"/>
+  </message>
+  <message name="getNetwork">
+    <part name="parameters" element="tns:getNetwork"/>
+  </message>
+  <message name="getNetworkResponse">
+    <part name="parameters" element="tns:getNetworkResponse"/>
+  </message>
+  <message name="saveGraphAsJPEG">
+    <part name="parameters" element="tns:saveGraphAsJPEG"/>
+  </message>
+  <message name="saveGraphAsJPEGResponse">
+    <part name="parameters" element="tns:saveGraphAsJPEGResponse"/>
+  </message>
+  
+  <portType name="MetadataServiceServicePortType" 
+	wsdlpp:extends="wsrpw:GetResourceProperty"
+    wsrp:ResourceProperties="tns:MetadataResourceProperties">
+    <operation name="add">
+      <input message="tns:add"/>
+      <output message="tns:addResponse"/>
+    </operation>
+    <operation name="toString">
+      <input message="tns:toString"/>
+      <output message="tns:toStringResponse"/>
+    </operation>
+    <operation name="delete">
+      <input message="tns:delete"/>
+      <output message="tns:deleteResponse"/>
+    </operation>
+    <operation name="reset">
+      <input message="tns:reset"/>
+      <output message="tns:resetResponse"/>
+    </operation>
+    <operation name="versions">
+      <input message="tns:versions"/>
+      <output message="tns:versionsResponse"/>
+    </operation>
+    <operation name="annotate">
+      <input message="tns:annotate"/>
+      <output message="tns:annotateResponse"/>
+    </operation>
+    <operation name="deAnnotate">
+      <input message="tns:deAnnotate"/>
+      <output message="tns:deAnnotateResponse"/>
+    </operation>
+    <operation name="reference">
+      <input message="tns:reference"/>
+      <output message="tns:referenceResponse"/>
+    </operation>
+    <operation name="deReference">
+      <input message="tns:deReference"/>
+      <output message="tns:deReferenceResponse"/>
+    </operation>
+    <operation name="getNetwork">
+      <input message="tns:getNetwork"/>
+      <output message="tns:getNetworkResponse"/>
+    </operation>
+    <operation name="saveGraphAsJPEG">
+      <input message="tns:saveGraphAsJPEG"/>
+      <output message="tns:saveGraphAsJPEGResponse"/>
+    </operation>
+  </portType>
+ 
+</definitions>
+
