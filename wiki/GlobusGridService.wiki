@@ -12,3 +12,8 @@ You can download the following GAR file and deploy it in your grid container:
 
 Or you can browse the globus branch in the SVN repository:
   * [http://rati.googlecode.com/svn/branches/globus/ Globus SVN Branch]
+
+= Links =
+  * Project summary paper: [http://cis.csuohio.edu/~tepietro/CIS698/final/CIS%20698%20Grid%20Computing%20Project%20Final%20Metadata%20Visualization.pdf CIS 698 Grid Computing Project Final Metadata Visualization.pdf]
+  * Project presentation: [http://cis.csuohio.edu/~tepietro/CIS698/CIS%20698%20Project%20Overview.pdf CIS 698 Project Overview.pdf]
+  
