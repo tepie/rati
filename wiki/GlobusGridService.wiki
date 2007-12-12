@@ -1,0 +1,14 @@
+#labels Featured,Grid,Globus,Example
+Globus Grid Service Example Implementation
+
+= Introduction =
+
+I have attached a Globus Grid Service example that was developed for some graduate course work. This is provided for an example only to reflect how some of the concepts of this project can be implemented in a Grid environment. 
+
+
+= Details =
+You can download the following GAR file and deploy it in your grid container:
+  * [http://rati.googlecode.com/files/org_globus_examples_services_core_metadata.gar Globus GAR Download]
+
+Or you can browse the globus branch in the SVN repository:
+  * [http://rati.googlecode.com/svn/branches/globus/ Globus SVN Branch]
