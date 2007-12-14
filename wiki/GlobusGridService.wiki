@@ -1,4 +1,4 @@
-#labels Featured,Grid,Globus,Example,JUNG
+#labels Featured,Grid,Globus,Example,JUNG,GlobusToolKit
 Globus Grid Service Example Implementation
 
 = Introduction =
