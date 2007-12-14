@@ -13,6 +13,10 @@ You can download the following GAR file and deploy it in your grid container:
 Or you can browse the globus branch in the SVN repository:
   * [http://rati.googlecode.com/svn/branches/globus/ Globus SVN Branch]
 
+= Example Client =
+To see how a client would consume this service, check out the following code:
+  * [http://rati.googlecode.com/svn/branches/globus/org/globus/examples/clients/MetadataService/MetadataMainClient.java MetadataMainClient.java] 
+
 = Example Image =
 Using [http://jung.sourceforge.net/ JUNG] the following is an example image produced by a client of this service. 
 
