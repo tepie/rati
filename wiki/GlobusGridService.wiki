@@ -13,6 +13,11 @@ You can download the following GAR file and deploy it in your grid container:
 Or you can browse the globus branch in the SVN repository:
   * [http://rati.googlecode.com/svn/branches/globus/ Globus SVN Branch]
 
+= The WSDL =
+Check our the service description:
+  * [http://rati.googlecode.com/svn/branches/globus/schema/examples/MetadataService/MetadataServiceService.wsdl MetadataServiceService.wsdl]
+  * [http://rati.googlecode.com/svn/branches/globus/schema/examples/MetadataService/MetadataServiceService.xsd MetadataServiceService.xsd]
+
 = Example Client =
 To see how a client would consume this service, check out the following code:
   * [http://rati.googlecode.com/svn/branches/globus/org/globus/examples/clients/MetadataService/MetadataMainClient.java MetadataMainClient.java] 
