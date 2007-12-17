@@ -46,8 +46,6 @@ Allow from all
 Restart your Apache HTTP service for this to take affect.
 
 = Database Setup =
-In the root directory where you extracted the rati application, there is a *sql* directory. Within, is a SQL script to setup the entire database name `database_schema_myisam.sql`. The root account to the database will have to execute this script. Alsom `database_user_accounts.sql` will setup the user accounts on the database for this application.
+In the root directory where you extracted the rati application, there is a *sql* directory. Within, is a SQL script to setup the entire database name `database_schema_myisam.sql`. The root account to the database will have to execute this script. Also, `database_user_accounts.sql` will setup the user accounts on the database for this application.
 
 This script will setup the default table structures and user accounts. You can review this script for more details.
-
-
