@@ -97,13 +97,28 @@ class DeliciousHandler(xml.sax.handler.ContentHandler):
 		return "%s%s%s%s%s" % (self.__prefix,self.__pathSep,self.__tagDir,self.__pathSep,tag)
 	
 	def getVisualObjects(self):
-		tagSet 		= self.__getTagsSet()
-		categoryUri = self.__createCategoryUri("tag")
+		tagSet 			= self.__getTagsSet()
+		parentCategoryUri 	= self.__createCategoryUri("category")
+		categoryUri 		= self.__createCategoryUri("tag")
 		
 		for tagUri in tagSet:			
 			tagVisObj = VisualObject(tagUri)
-			#tagVisObj.reference("category",categoryUri)
+			tagVisObj.reference("category",categoryUri)
 			self.__visual.append(tagVisObj)
+		
+		parentVisObj = VisualObject(categoryUri)
+		parentVisObj.reference("category",categoryUri)
+		
+		categoryUri = self.__createCategoryUri("post")
+		
+		parentVisObj = VisualObject(categoryUri)
+		parentVisObj.reference("category",categoryUri)
+		
+		parentVisObj = VisualObject(parentCategoryUri)
+		parentVisObj.reference("category",parentCategoryUri)
+		
+		tag
+		self.__visual.append(
 		
 		return self.__visual
 	
@@ -131,8 +146,8 @@ class DeliciousHandler(xml.sax.handler.ContentHandler):
 				visObj.reference("tag",tagUri)
 				self.__tags.append(tagUri)
 
-			#categoryUri = self.__createCategoryUri("post")
-			#visObj.reference("category",categoryUri)
+			categoryUri = self.__createCategoryUri("post")
+			visObj.reference("category",categoryUri)
 			self.__visual.append(visObj)
 		else:
 			pass
@@ -147,8 +162,8 @@ handler = DeliciousHandler()
 parser.setContentHandler(handler)
 parser.parse("delicious_xml_all.xml")
 
-urlHome 	= "http://csc06pocdvpa01s.keybank.com/rati/Import.php?xml_string="
-visual_list = handler.getVisualObjects()
+urlHome 	= "http://localhost/rati/Import.php?xml_string="
+visual_list 	= handler.getVisualObjects()
 tempVisObj 	= VisualObject(None)
 
 print "%s objects will be set..." % (len(visual_list))
@@ -165,12 +180,18 @@ for v in visual_list:
 	
 	urlData 	= urllib.quote(show)
 	urlToOpen 	= "%s%s" % (urlHome,urlData)
-	try:
-		u 			= urllib.urlopen(urlToOpen)
-		data 		= u.read()
-		print "sent: %s" % v.getUri()
-		print "response: %s" % data 
-	except IOError,e:
-		print e
+	data 		= None
 		
+	while not date == None:
+	
+		try:
+			u 	= urllib.urlopen(urlToOpen)
+			data 	= u.read()
+			print "sent: %s" % v.getUri()
+			print "response: %s" % data 
+			if data not == "<Result>Success</Result>": data = None
+		except IOError,e:
+			print e
+	
+	#print urlToOpen	
 	
