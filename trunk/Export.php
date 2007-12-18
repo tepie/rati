@@ -249,7 +249,7 @@
 					exec($mapCmd,$output,$ret);			
 				}
 			} 
-			
+			//echo $mapCmd . "<br />";
 			//echo "Return Code: $ret<br />";
 			//print_r($output); 
 			//echo "<br />";
