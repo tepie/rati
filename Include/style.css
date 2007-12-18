@@ -81,7 +81,7 @@ th.legend_side_head{
 
 th.extra_options{
 	width: 					50%;
-	font-family:			verdana;
+	font-family:			arial;
 	vertical-align:			bottom;
 	border-bottom-style: 	solid;
 	border-bottom-width: 	thin;
@@ -112,13 +112,13 @@ td.usage_value_value{
 
 td.node_legend_name{
 	text-align:     center;
-	font-family:	verdana;
+	font-family:	arial;
 	font-weight:	bold;
 	font-size:		14px;	
 }
 
 td.node_legend_block{
-	font-family:		verdana;
+	font-family:		arial;
 	vertical-align:		top;
 	text-align:			center;
 	font-size: 			12px;
@@ -132,27 +132,27 @@ a.node_legend_block:hover {color: black; background-color:white;}
 
 td.search_back{
 	text-align: left;
-	font-family:	verdana;
+	font-family:	arial;
 	font-weight:	bold;
 	font-size:		12px;
 }
 
 td.search_forward{
 	text-align: right;
-	font-family:	verdana;
+	font-family:	arial;
 	font-weight:	bold;
 	font-size:		12px;
 }
 
 td.search_result_item{
-	font-family:	verdana;
+	font-family:	arial;
 	font-weight:	bold;
 	width:			99%;
 	font-size:		12px;
 }
 
 td.search_result_content{
-	font-family:		verdana;
+	font-family:		arial;
 	font-size: 			11px;
 	width:				99%;
 }
@@ -183,7 +183,7 @@ td.image_side_content{
 td.image_side_focus{
 	vertical-align:		bottom;
 	font-weight: 		bold;
-	font-family:		verdana;
+	font-family:		arial;
 	font-size: 			small;
 	height: 			99%;
 }
@@ -198,7 +198,7 @@ td.attribute_side_content{
 
 td.attribute_name{
 	font-weight: 			bold;
-	font-family:			verdana;
+	font-family:			arial;
 	vertical-align:			top;
 	font-size: 				10px;
 	border-right-style: 	solid;
@@ -211,7 +211,7 @@ td.attribute_name{
 }
 
 td.attribute_value{
-	font-family:			verdana;
+	font-family:			arial;
 	vertical-align:			top;
 	font-size: 				10px;
 	border-bottom-style: 	solid;
@@ -223,7 +223,7 @@ td.attribute_value{
 
 td.extra_option{
 	font-weight: 	bold;
-	font-family:	verdana;
+	font-family:	arial;
 	vertical-align:	top;
 	font-size:		12px;
 	
@@ -233,13 +233,13 @@ div.attribute_value{
 	vertical-align:			top;
 	border-bottom-style: 	solid;
 	border-bottom-width: 	thin;
-	font-family:			verdana;
+	font-family:			arial;
 }
 
 div.section_heading{
 	text-align:			center;
 	vertical-align:		bottom;
-	font-family:		verdana;
+	font-family:		arial;
 }
 
 div.top-bar-abbrv{
@@ -247,7 +247,7 @@ div.top-bar-abbrv{
 	font-weight: 		bold;
 	font-size: 			xx-large;
 	text-align: 		center;
-	font-family: 		verdana;
+	font-family: 		arial;
 	width: 				99%;
 	background-color:	#BDB76B;
 }
@@ -256,7 +256,7 @@ div.top-bar-full{
 	font-weight: 		bold;
 	font-size: 			19px;
 	text-align: 		left;
-	font-family: 		verdana;
+	font-family: 		arial;
 	width: 				99%;
 	background-color:	black;
 	padding-bottom: 	0.2cm;
@@ -273,7 +273,7 @@ div.top-bar-full-about{
 	font-weight: 		bold;
 	font-size: 			19px;
 	text-align: 		center;
-	font-family: 		verdana;
+	font-family: 		arial;
 	width: 				99%;
 	background-color:	black;
 }
@@ -285,7 +285,7 @@ div.contact{
 	font-weight: 		bold;
 	font-size: 			12px;
 	text-align: 		center;
-	font-family: 		verdana;
+	font-family: 		arial;
 	width: 				99%;
 	background-color:	black;
 	color:	white;
@@ -295,7 +295,7 @@ a.contact:link{color:gold;}
 a.contact:visited{color:gold;}
 
 div.search_result_heading{
-	font-family: 		verdana;
+	font-family: 		arial;
 	width: 				99%;
 	border-bottom-style: solid;
 	border-bottom-width: thin;
@@ -305,7 +305,7 @@ div.search_result_heading{
 
 div.about_section_heading{
 	font-weight: 		bold;
-	font-family: 		verdana;
+	font-family: 		arial;
 	width: 				99%;
 	background-color:	black;
 	text-align: 		center;
@@ -314,7 +314,7 @@ div.about_section_heading{
 }
 
 div.about_section_content{
-	font-family:	verdana;
+	font-family:	arial;
 	width:			99%;
 	text-align:		left;
 	font-size: 		12px;
@@ -326,7 +326,7 @@ div.rati_image{
 
 div.index_container{
 	text-align:center;
-	font-family: verdana;
+	font-family: arial;
 	font-size: 12px;
 }
 

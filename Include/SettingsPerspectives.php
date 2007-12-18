@@ -31,10 +31,27 @@
 	* 	perspectives for use. 
 	*/
 	
+
+	/**
+	* Delicious Application Perspective
+	*/
+
+	$del_category_prefix		= 	"/del.icio.us/tepietrondi/categories";
+	$del_category_ereg		= 	"\/del.icio.us\/tepietrondi\/categories";
+	$del_default_root_node		= 	"$del_category_prefix/tag";
+	$del_category_reference_rule 	= 	"category";
+	$del_category_unknown		= 	"Unknown";
+	$del_perspective_name		= 	"del.icio.us";
+	
+	$web_app_del_node_color_map	=   array();
+	$web_app_del_node_color_map["$del_category_prefix/tag"] 	= "LightCoral";
+	$web_app_del_node_color_map["$del_category_prefix/post"] 	= "orange";
+	$web_app_del_node_color_map["$del_category_prefix/category"] = $web_app_default_cat_color;
+
 	/**
 	* Ab Initio Application Persepective
 	*/
-
+	/*
 	$abinitio_category_prefix			= 	"/abinitio/categories";
 	$abinitio_category_ereg				= 	"\/abinitio\/categories\/";
 	$abi_default_root_node				= 	"$abinitio_category_prefix/Subject Area";
@@ -52,13 +69,13 @@
 	//$web_app_abi_node_color_map["$abinitio_category_prefix/File Group"] 		= "aquamarine";
 	//$web_app_abi_node_color_map["$abinitio_category_prefix/Steward Group"] 		= "deeppink";
 	$web_app_abi_node_color_map["$abinitio_category_prefix/category"] 			= $web_app_default_cat_color;
-	
+	*/
 	
 	//*************************************************************************
 	//*	System Architect Application 
 	//*	Persepective
 	//*************************************************************************
-
+	/*
 	$sa_category_prefix					= 	"/system architect/categories";
 	$sa_category_ereg					= 	"\/system\ architect\/categories\/";
 	$sa_default_root_node				= 	"$sa_category_prefix/Encyclopedia";
@@ -76,12 +93,12 @@
 	$web_app_sa_node_color_map["/system architect/categories/Table"] 			= "plum";
 	$web_app_sa_node_color_map["/system architect/categories/Database"] 		= "seagreen";
 	$web_app_sa_node_color_map["/system architect/categories/category"] 		= $web_app_default_cat_color;
-	
+	*/
 	//*************************************************************************
 	//*	MDR Application (galileo)
 	//*	Persepective
 	//*************************************************************************
-
+	/*
 	$mdr_category_prefix			= 	"/galileo/Metadata/Categories";
 	$mdr_category_ereg				= 	"\/galileo\/Metadata\/Categories";
 	$mdr_default_root_node			= 	"$mdr_category_prefix/category";
@@ -97,7 +114,7 @@
 	$web_app_mdr_node_color_map["$mdr_category_prefix/Source Structure"]	= "gray";
 	$web_app_mdr_node_color_map["$mdr_category_prefix/File Group"]			= "tan";
 	$web_app_mdr_node_color_map["$mdr_category_prefix/category"] 			= $web_app_default_cat_color;
-	
+	*/
 	//*************************************************************************
 	//*	EDA Org Chart
 	//*	Persepective
@@ -126,39 +143,46 @@
 	//*************************************************************************
 	
 	/** A collection of all the perspective names */
-	$perspective_names				= array($abinitio_perspective_name,
+	$perspective_names = array($del_perspective_name);
+	/*$perspective_names = array($abinitio_perspective_name,
 		$sa_perspective_name,
 		$mdr_perspective_name,
 		/*$edaorg_perspective_name*/
-	);
+	//);
 	/** A collection of all the perspective category prefixes */
-	$perspective_category_prefixes 	= array($abinitio_category_prefix,
+	/*$perspective_category_prefixes 	= array($abinitio_category_prefix,
 		$sa_category_prefix,
 		$mdr_category_prefix,
 		//$edaorg_category_prefix
-	);
+	);*/
+	$perspective_category_prefixes = array($del_category_prefix);
+
 	/** A collection of all the perspective category prefix regular expressions */
-	$perspective_category_eregs		= array($abinitio_category_ereg,
+	/*$perspective_category_eregs		= array($abinitio_category_ereg,
 		$sa_category_ereg,
 		$mdr_category_ereg,
 		//$edaorg_category_ereg
-	);
+	);*/
+	$perspective_category_eregs = array($del_category_ereg);
 	/** A collection of all the perspective default root nodes */
-	$perspective_default_root_nodes = array($abi_default_root_node,
+	/*$perspective_default_root_nodes = array($abi_default_root_node,
 		$sa_default_root_node,
 		$mdr_default_root_node,
 		//$edaorg_default_root_node
-	);
+	);*/
+	$perspective_default_root_nodes = array($del_default_root_node);
 	/** A collection of all the perspective category reference rules */
-	$perspective_category_reference_rules = array($abinitio_category_reference_rule,
+	/*$perspective_category_reference_rules = array($abinitio_category_reference_rule,
 		$sa_category_reference_rule,
 		$mdr_category_reference_rule,
 		//$edaorg_category_reference_rule
-	);
+	);*/
+	$perspective_category_reference_rules = array($del_category_reference_rule);
 	/** A collection of all the perspective node color maps */
-	$perspective_node_color_maps = array($web_app_abi_node_color_map,
+	/*$perspective_node_color_maps = array($web_app_abi_node_color_map,
 		$web_app_sa_node_color_map,
 		$web_app_mdr_node_color_map,
 		//$web_app_edaorg_node_color_map
-	);
+	);*/
+	$perspective_node_color_maps = array($web_app_del_node_color_map);
 ?>
