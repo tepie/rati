@@ -1,0 +1,15 @@
+#labels Featured,Exampe,Delicious
+#The following is an example using Del.icio.us metadata
+
+= The Source Data =
+The following are my tags extracted from the public delicious API. 
+  * [http://rati.googlecode.com/svn/branches/delicious/delicious_xml_all.xml delicious_xml_all.xml]
+
+The following is a quick parser I wrote to parse the above file and send it to Rati.
+  * [http://rati.googlecode.com/svn/branches/delicious/delicious_xml_all.py delicious_xml_all.py]
+
+
+= Screenshot =
+The following is the result of the load via the Python script.
+
+  * [http://rati.googlecode.com/svn/wiki/rat_delicious_post.png rat_delicious_post.png]
