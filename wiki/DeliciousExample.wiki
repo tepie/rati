@@ -1,4 +1,4 @@
-#labels Featured,Exampe,Delicious
+#labels Featured,Exampe,Delicious,Phase-QA,Phase-Deploy,Phase-Support
 The following is an example using Del.icio.us metadata
 
 = The Source Data =
@@ -8,6 +8,39 @@ The following are my tags extracted from the public delicious API.
 The following is a quick parser I wrote to parse the above file and send it to Rati.
   * [http://rati.googlecode.com/svn/branches/delicious/delicious_xml_all.py delicious_xml_all.py]
 
+= Perspective Settings ==
+
+{{{
+/**
+* Delicious Application Perspective
+*/
+$del_category_prefix		= 	"/del.icio.us/tepietrondi/categories";
+$del_category_ereg		= 	"\/del.icio.us\/tepietrondi\/categories";
+$del_default_root_node		= 	"$del_category_prefix/tag";
+$del_category_reference_rule 	= 	"category";
+$del_category_unknown		= 	"Unknown";
+$del_perspective_name		= 	"del.icio.us";
+
+$web_app_del_node_color_map	=   array();
+$web_app_del_node_color_map["$del_category_prefix/tag"] 	= "LightCoral";
+$web_app_del_node_color_map["$del_category_prefix/post"] 	= "orange";
+$web_app_del_node_color_map["$del_category_prefix/category"] = $web_app_default_cat_color;
+}}}
+
+{{{
+/** A collection of all the perspective names */
+$perspective_names = array($del_perspective_name);
+/** A collection of all the perspective category prefixes */
+perspective_category_prefixes = array($del_category_prefix);
+/** A collection of all the perspective category prefix regular expressions */
+$perspective_category_eregs = array($del_category_ereg);
+/** A collection of all the perspective default root nodes */
+$perspective_default_root_nodes = array($del_default_root_node);
+/** A collection of all the perspective category reference rules */
+$perspective_category_reference_rules = array($del_category_reference_rule);
+/** A collection of all the perspective node color maps */
+$perspective_node_color_maps = array($web_app_del_node_color_map);
+}}}
 
 = Screenshot =
 The following is the result of the load via the Python script.
