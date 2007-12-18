@@ -1,5 +1,5 @@
 #labels Featured,Exampe,Delicious
-#The following is an example using Del.icio.us metadata
+The following is an example using Del.icio.us metadata
 
 = The Source Data =
 The following are my tags extracted from the public delicious API. 
