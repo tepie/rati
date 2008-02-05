@@ -45,6 +45,17 @@ public class ObjectXmlWriter {
                     String attributeXml = ObjectXmlWriter.createAttribute(next, attributeRelation.getAttributeRelationship());
                     buffer.append(attributeXml);
                 }
+                
+            }
+            
+            List relationships = graph.relationshipDirectLinkGet(next);
+            if(relationships != null && relationships.size() > 0){
+                Iterator relWalker = relationships.iterator();
+                while(relWalker.hasNext()){
+                    Relationship rel = (Relationship) relWalker.next();
+                    String relXml = ObjectXmlWriter.createReference(rel.getObjectReference(), rel.getAttributeRelationship());
+                    buffer.append(relXml);
+                }
             }
             buffer.append(ObjectXmlWriter.closeObject());
             

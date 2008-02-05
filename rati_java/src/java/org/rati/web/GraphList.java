@@ -24,7 +24,7 @@ import org.rati.graph.RatiGraph;
  */
 public class GraphList extends HttpServlet {
     
-    public static String WEB_PARM_PATH = "path";
+    public static String WEB_PARM_PATH = GraphSetup.WEB_PARM_QUERY;
    
     /** 
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -46,7 +46,7 @@ public class GraphList extends HttpServlet {
             RatiGraph graph = new RatiGraph();
             List results = graph.objectsStartingWith(startingAt);
             
-            if(results != null && results.size() > 0){
+            if(results == null || results.size() <= 0){
                 results = new TreeList();
             }
             

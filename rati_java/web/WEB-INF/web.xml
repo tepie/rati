@@ -8,9 +8,17 @@
             <param-value/>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>GraphDraw</servlet-name>
+        <servlet-class>org.rati.web.GraphDraw</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GraphList</servlet-name>
         <url-pattern>/GraphList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GraphDraw</servlet-name>
+        <url-pattern>/GraphDraw</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
