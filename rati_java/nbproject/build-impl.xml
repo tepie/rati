@@ -494,9 +494,17 @@
         <copy-ear-war file="${file.reference.mysql-connector-java-3.1.14-bin.jar}" propname="included.lib.file.reference.mysql-connector-java-3.1.14-bin.jar.X"/>
         <basename file="${libs.restapi.classpath}" property="included.lib.libs.restapi.classpath"/>
         <copy-ear-war file="${libs.restapi.classpath}" propname="included.lib.libs.restapi.classpath.X"/>
+        <basename file="${file.reference.delicious-1.14.jar}" property="included.lib.file.reference.delicious-1.14.jar"/>
+        <copy-ear-war file="${file.reference.delicious-1.14.jar}" propname="included.lib.file.reference.delicious-1.14.jar.X"/>
+        <basename file="${file.reference.commons-httpclient-3.1.jar}" property="included.lib.file.reference.commons-httpclient-3.1.jar"/>
+        <copy-ear-war file="${file.reference.commons-httpclient-3.1.jar}" propname="included.lib.file.reference.commons-httpclient-3.1.jar.X"/>
+        <basename file="${file.reference.commons-codec-1.3.jar}" property="included.lib.file.reference.commons-codec-1.3.jar"/>
+        <copy-ear-war file="${file.reference.commons-codec-1.3.jar}" propname="included.lib.file.reference.commons-codec-1.3.jar.X"/>
+        <basename file="${file.reference.commons-lang-2.3.jar}" property="included.lib.file.reference.commons-lang-2.3.jar"/>
+        <copy-ear-war file="${file.reference.commons-lang-2.3.jar}" propname="included.lib.file.reference.commons-lang-2.3.jar.X"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${included.lib.libs.jaxws21.classpath.1.X} ${included.lib.libs.jaxws21.classpath.2.X} ${included.lib.libs.jaxws21.classpath.3.X} ${included.lib.libs.jaxws21.classpath.4.X} ${included.lib.libs.jaxws21.classpath.5.X} ${included.lib.libs.jaxws21.classpath.6.X} ${included.lib.libs.jaxws21.classpath.7.X} ${included.lib.libs.jaxws21.classpath.8.X} ${included.lib.libs.jaxws21.classpath.9.X} ${included.lib.libs.jaxws21.classpath.10.X} ${included.lib.libs.jaxws21.classpath.11.X} ${included.lib.libs.jaxws21.classpath.12.X} ${included.lib.libs.jaxws21.classpath.13.X} ${included.lib.libs.jaxws21.classpath.14.X} ${included.lib.libs.jaxws21.classpath.15.X} ${included.lib.libs.jaxws21.classpath.16.X} ${included.lib.libs.jaxws21.classpath.17.X} ${included.lib.file.reference.cayenne.jar} ${included.lib.file.reference.mysql-connector-java-3.1.14-bin.jar} ${included.lib.libs.restapi.classpath} "/>
+            <attribute name="Class-Path" value="${included.lib.libs.jaxws21.classpath.1.X} ${included.lib.libs.jaxws21.classpath.2.X} ${included.lib.libs.jaxws21.classpath.3.X} ${included.lib.libs.jaxws21.classpath.4.X} ${included.lib.libs.jaxws21.classpath.5.X} ${included.lib.libs.jaxws21.classpath.6.X} ${included.lib.libs.jaxws21.classpath.7.X} ${included.lib.libs.jaxws21.classpath.8.X} ${included.lib.libs.jaxws21.classpath.9.X} ${included.lib.libs.jaxws21.classpath.10.X} ${included.lib.libs.jaxws21.classpath.11.X} ${included.lib.libs.jaxws21.classpath.12.X} ${included.lib.libs.jaxws21.classpath.13.X} ${included.lib.libs.jaxws21.classpath.14.X} ${included.lib.libs.jaxws21.classpath.15.X} ${included.lib.libs.jaxws21.classpath.16.X} ${included.lib.libs.jaxws21.classpath.17.X} ${included.lib.file.reference.cayenne.jar} ${included.lib.file.reference.mysql-connector-java-3.1.14-bin.jar} ${included.lib.libs.restapi.classpath} ${included.lib.file.reference.delicious-1.14.jar} ${included.lib.file.reference.commons-httpclient-3.1.jar} ${included.lib.file.reference.commons-codec-1.3.jar} ${included.lib.file.reference.commons-lang-2.3.jar} "/>
         </manifest>
         <delete dir="${dist.ear.dir}/temp"/>
     </target>
@@ -521,6 +529,10 @@
         <copy file="${file.reference.cayenne.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${file.reference.mysql-connector-java-3.1.14-bin.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${libs.restapi.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copy file="${file.reference.delicious-1.14.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copy file="${file.reference.commons-httpclient-3.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copy file="${file.reference.commons-codec-1.3.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copy file="${file.reference.commons-lang-2.3.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest" name="do-ear-dist">
         <dirname file="${dist.ear.war}" property="dist.jar.dir"/>
