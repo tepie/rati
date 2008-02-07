@@ -68,8 +68,14 @@ public class ObjectGraphvizWriter {
         List direct = graph.relationshipDirectLinkGet(from);
         List inDirect = graph.relationshipInDirectLinkGet(from);
 
-        whole.addAll(direct);
-        whole.addAll(inDirect);
+        if(direct != null){
+            whole.addAll(direct);
+        }
+        
+        if(inDirect != null){
+            whole.addAll(inDirect);
+        }
+        
 
         //Set wholeSet = new TreeSet(whole);
 
