@@ -6,6 +6,7 @@ package org.rati.graph;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
 import org.apache.cayenne.auto.rati.Attribute;
 import org.apache.cayenne.auto.rati.Object;
 import org.apache.cayenne.auto.rati.Relationship;
@@ -268,7 +269,28 @@ public class RatiGraph implements Iterable {
     }
     
     public List searchGraph(String query){
-        return null;
+        try {
+            SearchGraph searcher = new SearchGraph(query);
+            searcher.start();
+            searcher.join();
+
+            return searcher.getResults();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(RatiGraph.class).fatal(ex.getMessage());
+            return null;
+        }
+    }
+    
+    public Iterator searchResultsIterator(String query){
+        try {
+            SearchGraph searcher = new SearchGraph(query);
+            searcher.start();
+            searcher.join();
+            return searcher.iterator();
+        } catch (InterruptedException ex) {
+             Logger.getLogger(RatiGraph.class).fatal(ex.getMessage());
+             return null;
+        }
     }
 
     public Iterator iterator() {
