@@ -38,10 +38,10 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() == 1) {
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return (Object) objectResults.get(0);
         } else {
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return null;
         }
     }
@@ -55,10 +55,10 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() > 0) {
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return objectResults;
         } else {
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return null;
         }
         
@@ -73,10 +73,10 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() == 1) {
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return (Attribute) objectResults.get(0);
         } else {
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return null;
         }
     }
@@ -86,10 +86,10 @@ public class RatiGraph implements Iterable {
         if (exists == null) {
             Object newMake = (Object) Context.getContext().newObject(Object.class);
             newMake.setName(name);
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return newMake;
         } else {
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return exists;
         }
 
@@ -100,11 +100,11 @@ public class RatiGraph implements Iterable {
         if (exists == null) {
             Attribute newMake = (Attribute) Context.getContext().newObject(Attribute.class);
             newMake.setName(name);
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return newMake;
         } else {
 
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return exists;
         }
     }
@@ -120,7 +120,7 @@ public class RatiGraph implements Iterable {
                 newMake.setObjectRelationship(object);
                 newMake.setValue(value);
 
-                Context.getContext().commitChanges();
+                //Context.getContext().commitChanges();
                 return newMake;
             } else {
                 return link;
@@ -143,10 +143,10 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() == 1) {
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return (Relationship) objectResults.get(0);
         } else {
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return null;
         }
 
@@ -166,11 +166,11 @@ public class RatiGraph implements Iterable {
 
         if (objectResults.size() > 0) {
             //System.err.println("objectResults Size: " + objectResults.size());
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return (Relationship) objectResults.get(0);
         } else {
             //System.err.println("relationshipSetExists: No relationship found!");
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return null;
         }
 
@@ -185,7 +185,7 @@ public class RatiGraph implements Iterable {
                 newMake.setObjectRelationship(source);
                 newMake.setObjectReference(target);
                 newMake.setAttributeRelationship(attribute);
-                Context.getContext().commitChanges();
+                //Context.getContext().commitChanges();
                 return newMake;
             } else {
                 //System.err.println("Using existing link");
@@ -208,11 +208,11 @@ public class RatiGraph implements Iterable {
 
         if (objectResults.size() > 0) {
             //System.err.println("objectResults Size: " + objectResults.size());
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return objectResults;
         } else {
             //System.err.println("relationshipSetExists: No relationship found!");
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return null;
         }
     }
@@ -227,11 +227,11 @@ public class RatiGraph implements Iterable {
 
         if (objectResults.size() > 0) {
             //System.err.println("objectResults Size: " + objectResults.size());
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return objectResults;
         } else {
             //System.err.println("relationshipSetExists: No relationship found!");
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return null;
         }
     }
@@ -246,13 +246,29 @@ public class RatiGraph implements Iterable {
 
         if (objectResults.size() > 0) {
             //System.err.println("objectResults Size: " + objectResults.size());
-            Context.getContext().commitChanges();
+            //Context.getContext().commitChanges();
             return objectResults;
         } else {
             //System.err.println("relationshipSetExists: No relationship found!");
-            Context.getContext().rollbackChanges();
+            //Context.getContext().rollbackChanges();
             return null;
         }
+    }
+    
+    public int countDirectRelations(Object object){
+        return object.getRelationships().size();
+    }
+    
+    public int countReferences(Object object){
+        return object.getReference().size();
+    }
+    
+    public int countTotalRelationships(Object object){
+        return this.countDirectRelations(object) + this.countReferences(object);
+    }
+    
+    public List searchGraph(String query){
+        return null;
     }
 
     public Iterator iterator() {

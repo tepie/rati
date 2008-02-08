@@ -23,5 +23,13 @@ public final class Context {
         }
         return context;
     }
+    
+    public static void commit(){
+        Context.getContext().commitChanges();
+    }
+    
+    public static void rollback(){
+        Context.getContext().rollbackChanges();
+    }
 
 }

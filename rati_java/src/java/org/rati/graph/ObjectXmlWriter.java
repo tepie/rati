@@ -26,7 +26,6 @@ public class ObjectXmlWriter {
     public static String URI = "uri";
     public static String VALUE = "value";
     
-    
     public static String createObjectXmlFromList(List objects){
         RatiGraph graph = new RatiGraph();
         Iterator walker = objects.iterator();

@@ -41,8 +41,6 @@ public class GraphDraw extends HttpServlet {
                 query = GraphSetup.RATI_URI_ROOT;
             }
 
-            //out.println("Query:" + query);
-
             if (request.getParameterMap().keySet().contains(GraphSetup.WEB_PARM_TYPE)) {
                 outType = request.getParameter(GraphSetup.WEB_PARM_TYPE).toLowerCase();
             } else {

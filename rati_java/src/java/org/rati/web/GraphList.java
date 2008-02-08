@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.list.TreeList;
+import org.rati.global.Context;
 import org.rati.graph.GraphSetup;
 import org.rati.graph.ObjectXmlWriter;
 import org.rati.graph.RatiGraph;
@@ -54,6 +55,7 @@ public class GraphList extends HttpServlet {
             
         } finally { 
             out.close();
+            Context.commit();
         }
     } 
 

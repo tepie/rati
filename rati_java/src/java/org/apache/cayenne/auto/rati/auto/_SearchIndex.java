@@ -12,6 +12,7 @@ public class _SearchIndex extends org.apache.cayenne.CayenneDataObject {
     public static final String PERSPECTIVE_PROPERTY = "perspective";
     public static final String RANK_PROPERTY = "rank";
     public static final String WEIGHT_PROPERTY = "weight";
+    public static final String OBJECT_NAME_RELATIONSHIP_PROPERTY = "objectNameRelationship";
 
     public static final String ID_PK_COLUMN = "ID";
 
@@ -53,6 +54,15 @@ public class _SearchIndex extends org.apache.cayenne.CayenneDataObject {
     public Long getWeight() {
         return (Long)readProperty("weight");
     }
+    
+    
+    public void setObjectNameRelationship(org.apache.cayenne.auto.rati.Object objectNameRelationship) {
+        setToOneTarget("objectNameRelationship", objectNameRelationship, true);
+    }
+
+    public org.apache.cayenne.auto.rati.Object getObjectNameRelationship() {
+        return (org.apache.cayenne.auto.rati.Object)readProperty("objectNameRelationship");
+    } 
     
     
 }

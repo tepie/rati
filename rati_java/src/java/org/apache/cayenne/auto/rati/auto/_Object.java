@@ -12,6 +12,7 @@ public class _Object extends org.apache.cayenne.CayenneDataObject {
     public static final String NAME_PROPERTY = "name";
     public static final String REFERENCE_PROPERTY = "reference";
     public static final String RELATIONSHIPS_PROPERTY = "relationships";
+    public static final String SEARCH_INDEX_PROPERTY = "searchIndex";
 
     public static final String ID_PK_COLUMN = "ID";
 
@@ -43,6 +44,15 @@ public class _Object extends org.apache.cayenne.CayenneDataObject {
     public List getRelationships() {
         return (List)readProperty("relationships");
     }
+    
+    
+    public void setSearchIndex(org.apache.cayenne.auto.rati.SearchIndex searchIndex) {
+        setToOneTarget("searchIndex", searchIndex, true);
+    }
+
+    public org.apache.cayenne.auto.rati.SearchIndex getSearchIndex() {
+        return (org.apache.cayenne.auto.rati.SearchIndex)readProperty("searchIndex");
+    } 
     
     
 }
