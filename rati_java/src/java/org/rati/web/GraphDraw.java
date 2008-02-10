@@ -48,12 +48,15 @@ public class GraphDraw extends HttpServlet {
             }
 
             RatiGraph graph = new RatiGraph();
+            ObjectGraphvizWriter writer = null;
             Object queryObject = graph.objectExists(query);
             if (queryObject != null) {
-                out.print(ObjectGraphvizWriter.createObjectGraphviz(queryObject));
+                writer = new ObjectGraphvizWriter(queryObject);
+                out.print(writer.createOneObjectGraphviz());
             } else {
                List results = graph.objectsStartingWith(query);
-               out.print(ObjectGraphvizWriter.createObjectGraphviz(results));
+               writer = new ObjectGraphvizWriter(results);
+               out.print(writer.createObjectGraphviz());
             }
         } finally {
             out.close();

@@ -13,7 +13,6 @@ import org.apache.cayenne.auto.rati.Relationship;
 import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
 import org.apache.cayenne.query.SelectQuery;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.rati.global.Context;
 
@@ -24,10 +23,7 @@ import org.rati.global.Context;
 public class RatiGraph implements Iterable {
 
     public RatiGraph() {
-        /*Logger log = Logger.getLogger(RatiGraph.class);
-        if(!log.getAllAppenders().hasMoreElements()){
-            BasicConfigurator.configure();
-        }*/
+        //GraphSetup.setupGraph();
     }
 
     public Object objectExists(String name) {
@@ -217,6 +213,29 @@ public class RatiGraph implements Iterable {
             return null;
         }
     }
+    
+    public List relationshipValuesGet(Object source, Attribute attribute) {
+        if(source == null || attribute == null){
+            return null;
+        }
+        Expression qual = ExpressionFactory.matchExp(Relationship.OBJECT_RELATIONSHIP_PROPERTY, source);
+        qual = qual.andExp(ExpressionFactory.matchExp(Relationship.ATTRIBUTE_RELATIONSHIP_PROPERTY, attribute));
+        qual = qual.andExp(ExpressionFactory.matchExp(Relationship.OBJECT_REFERENCE_PROPERTY, null));
+        SelectQuery query = new SelectQuery(Relationship.class, qual);
+
+        List objectResults = Context.getContext().performQuery(query);
+
+        if (objectResults.size() > 0) {
+            //System.err.println("objectResults Size: " + objectResults.size());
+            //Context.getContext().commitChanges();
+            return objectResults;
+        } else {
+            //System.err.println("relationshipSetExists: No relationship found!");
+            //Context.getContext().rollbackChanges();
+            return null;
+        }
+    }
+
 
     public List relationshipDirectLinkGet(Object source) {
         Expression qual = ExpressionFactory.matchExp(Relationship.OBJECT_RELATIONSHIP_PROPERTY, source);

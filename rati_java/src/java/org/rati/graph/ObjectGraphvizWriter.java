@@ -4,12 +4,15 @@
  */
 package org.rati.graph;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Map;
 import org.apache.cayenne.auto.rati.Attribute;
 import org.apache.cayenne.auto.rati.Object;
+import org.apache.cayenne.auto.rati.Relationship;
+import org.apache.cayenne.auto.rati.Relationship;
 import org.apache.cayenne.auto.rati.Relationship;
 import org.apache.commons.collections.list.TreeList;
 
@@ -32,57 +35,73 @@ public class ObjectGraphvizWriter {
     public static final String RATIO = "ratio=auto" + LINE_TERM;
     public static final String RANK_DIR = "rankdir=" + DIR_LR + LINE_TERM;
     public static final String LINK_LABEL = "label";
+    private List<Map<Object, Object>> drawn = null;
+    private List<Object> labeled = null;
+    private Object object = null;
+    private List objects = null;
+    //private Map<Object,Object> drawn = null;
+    public ObjectGraphvizWriter(List objects) {
+        this.objects = objects;
+        this.drawn = new LinkedList<Map<Object, Object>>();
+        this.labeled = new LinkedList<Object>();
+    }
 
-    public static String createObjectGraphviz(List objects){
+    public ObjectGraphvizWriter(Object object) {
+        this.object = object;
+        this.drawn = new LinkedList<Map<Object, Object>>();
+        this.labeled = new LinkedList<Object>();
+    }
+
+    public synchronized String createObjectGraphviz() {
+
         StringBuffer buffer = new StringBuffer();
         buffer.append(DOCUMENT_OPEN + NEW_LINE);
         buffer.append(RANK_SEP + NEW_LINE);
         buffer.append(RATIO + NEW_LINE);
         buffer.append(RANK_DIR + NEW_LINE);
-        Iterator mover = objects.iterator();
-        while(mover.hasNext()){
+        Iterator mover = this.objects.iterator();
+        while (mover.hasNext()) {
             Object next = (Object) mover.next();
-            buffer.append(bufferRelationships(next).toString());
+            buffer.append(bufferRelationships(next).toString() + NEW_LINE);
         }
         buffer.append(DOCUMENT_CLOSE + NEW_LINE);
         return buffer.toString();
     }
-    
-    public static String createObjectGraphviz(Object from) {
+
+    public synchronized String createOneObjectGraphviz() {
+        return this.privateCreateObjectGraphviz(this.object);
+    }
+
+    private synchronized String privateCreateObjectGraphviz(Object object) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(DOCUMENT_OPEN + NEW_LINE);
         buffer.append(RANK_SEP + NEW_LINE);
         buffer.append(RATIO + NEW_LINE);
         buffer.append(RANK_DIR + NEW_LINE);
-
-        buffer.append(bufferRelationships(from).toString());
-        
+        buffer.append(bufferRelationships(object).toString() + NEW_LINE);
         buffer.append(DOCUMENT_CLOSE + NEW_LINE);
         return buffer.toString();
     }
 
-    private static List getCombinedRelationshipSet(Object from) {
+    private List getCombinedRelationshipSet(Object from) {
         RatiGraph graph = new RatiGraph();
         List whole = new TreeList();
 
         List direct = graph.relationshipDirectLinkGet(from);
         List inDirect = graph.relationshipInDirectLinkGet(from);
 
-        if(direct != null){
+        if (direct != null) {
             whole.addAll(direct);
         }
-        
-        if(inDirect != null){
+
+        if (inDirect != null) {
             whole.addAll(inDirect);
         }
-        
-
-        //Set wholeSet = new TreeSet(whole);
 
         return whole;
     }
-    
-    private static StringBuffer bufferRelationships(Object from){
+
+    private StringBuffer bufferRelationships(Object from) {
         StringBuffer buffer = new StringBuffer();
         try {
             List rels = getCombinedRelationshipSet(from);
@@ -90,7 +109,7 @@ public class ObjectGraphvizWriter {
 
             while (relWalker.hasNext()) {
                 Relationship next = (Relationship) relWalker.next();
-                String linkLine = createReference(next);
+                String linkLine = this.createReference(next);
                 buffer.append(linkLine + NEW_LINE);
             }
         //buffer.append((rels.size()));
@@ -100,13 +119,55 @@ public class ObjectGraphvizWriter {
         return buffer;
     }
 
-    public static String createReference(Relationship fromMe) {
+    private synchronized String createReference(Relationship fromMe) {
+        StringBuffer buffer = new StringBuffer();
         Object leftSide = fromMe.getObjectRelationship();
         Object rightSide = fromMe.getObjectReference();
-        Attribute connection = fromMe.getAttributeRelationship();
-        return leftSide.hashCode() + DIRECTION_ARROW +
-                rightSide.hashCode() + LF_BRACKET + LINK_LABEL + "=\"" +
-                connection.getName() + "\"" + RG_BRACKET +
-                LINE_TERM;
+
+        Map<Object, Object> local = new HashMap<Object, Object>();
+        local.put(leftSide, rightSide);
+        
+        if (!this.drawn.contains(local)) {
+            this.drawn.add(local);
+
+            Attribute connection = fromMe.getAttributeRelationship();
+            buffer.append(leftSide.hashCode() + DIRECTION_ARROW +
+                    rightSide.hashCode() + LF_BRACKET + LINK_LABEL + "=\"" +
+                    connection.getName() + "\"" + RG_BRACKET +
+                    LINE_TERM);
+        }
+
+        if (!this.labeled.contains(leftSide)) {
+            this.labeled.add(leftSide);
+            buffer.append(createObjectLabel(leftSide) + NEW_LINE);
+        }
+
+        if (!this.labeled.contains(rightSide)) {
+            this.labeled.add(rightSide);
+            buffer.append(createObjectLabel(rightSide) + NEW_LINE);
+        }
+        return buffer.toString();
+    }
+
+    private String createObjectLabel(Object fromMe) {
+        if (fromMe == null) {
+            return null;
+        }
+
+        RatiGraph graph = new RatiGraph();
+        Attribute label = graph.attributeExists(GraphSetup.RATI_ATTRIBUTE_LABEL);
+        if (label != null && fromMe != null) {
+            List rels = graph.relationshipValuesGet(fromMe, label);
+            if (rels != null) {
+                Relationship firstRel = (Relationship) rels.get(0);
+                return fromMe.hashCode() + " " + LF_BRACKET + "label=\"" +
+                        firstRel.getValue() + "\"" + RG_BRACKET + LINE_TERM;
+
+            }
+        }
+
+        return fromMe.hashCode() + " " + LF_BRACKET + "label=\"" +
+                fromMe.hashCode() + "\"" + RG_BRACKET + LINE_TERM;
+
     }
 }
