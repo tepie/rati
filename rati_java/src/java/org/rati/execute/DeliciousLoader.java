@@ -68,7 +68,7 @@ public class DeliciousLoader extends Thread {
         RatiGraph graph = new RatiGraph();
 
         //Attribute name = graph.attributeMake("name");
-        Attribute description = graph.attributeMake("description");
+        //Attribute description = graph.attributeMake("description");
         Attribute time = graph.attributeMake("time");
         Attribute href = graph.attributeMake("href");
         Attribute tagAttr = graph.attributeMake("tag");

@@ -24,6 +24,7 @@ public class GraphSetup {
     public static final String WEB_PARM_QUERY = "q";
     public static final String WEB_PARM_TYPE = "type";
     public static final String WEB_PARM_GRAPHVIZ = "graphviz";
+    public static final String WEB_PARM_IMAGE = "image";
 
     public static Attribute uri() {
         RatiGraph graph = new RatiGraph();

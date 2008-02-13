@@ -39,7 +39,7 @@ public class ObjectGraphvizWriter {
     private List<Object> labeled = null;
     private Object object = null;
     private List objects = null;
-    //private Map<Object,Object> drawn = null;
+    
     public ObjectGraphvizWriter(List objects) {
         this.objects = objects;
         this.drawn = new LinkedList<Map<Object, Object>>();
@@ -59,11 +59,13 @@ public class ObjectGraphvizWriter {
         buffer.append(RANK_SEP + NEW_LINE);
         buffer.append(RATIO + NEW_LINE);
         buffer.append(RANK_DIR + NEW_LINE);
+        
         Iterator mover = this.objects.iterator();
         while (mover.hasNext()) {
             Object next = (Object) mover.next();
             buffer.append(bufferRelationships(next).toString() + NEW_LINE);
         }
+        
         buffer.append(DOCUMENT_CLOSE + NEW_LINE);
         return buffer.toString();
     }
