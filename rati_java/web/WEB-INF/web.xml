@@ -12,6 +12,10 @@
         <servlet-name>GraphDraw</servlet-name>
         <servlet-class>org.rati.web.GraphDraw</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Log4jInit</servlet-name>
+        <servlet-class>org.rati.web.Log4jInit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GraphList</servlet-name>
         <url-pattern>/GraphList</url-pattern>
@@ -19,6 +23,10 @@
     <servlet-mapping>
         <servlet-name>GraphDraw</servlet-name>
         <url-pattern>/GraphDraw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Log4jInit</servlet-name>
+        <url-pattern>/Log4jInit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

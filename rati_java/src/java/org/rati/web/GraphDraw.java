@@ -23,8 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.rati.global.FileNameMaker;
+import org.rati.global.RatiLogger;
 import org.rati.graph.GraphSetup;
 import org.rati.graph.ObjectGraphvizWriter;
+import org.rati.graph.PerformGraphImageDraw;
 import org.rati.graph.RatiGraph;
 
 /**
@@ -41,11 +43,8 @@ public class GraphDraw extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-
-
         String query = null;
         String outType = null;
-        //try {
 
         if (request.getParameterMap().keySet().contains(GraphSetup.WEB_PARM_QUERY)) {
             query = request.getParameter(GraphSetup.WEB_PARM_QUERY).toLowerCase();
@@ -59,8 +58,8 @@ public class GraphDraw extends HttpServlet {
             outType = GraphSetup.WEB_PARM_GRAPHVIZ;
         }
 
-        Logger.getLogger(GraphDraw.class).debug(query);
-        Logger.getLogger(GraphDraw.class).debug(outType);
+        RatiLogger.getLogger(GraphDraw.class).debug("Query: " + query);
+        RatiLogger.getLogger(GraphDraw.class).debug("Type: " + outType);
 
         RatiGraph graph = new RatiGraph();
         ObjectGraphvizWriter writer = null;
@@ -85,45 +84,27 @@ public class GraphDraw extends HttpServlet {
                 out.close();
             }
         } else if (outType.equalsIgnoreCase(GraphSetup.WEB_PARM_IMAGE)) {
-            //image/png
-            response.setContentType("image/png;charset=UTF-8");
+            
+            response.setContentType(PerformGraphImageDraw.CONTENT_TYPE_PNG);
             ServletOutputStream binary = response.getOutputStream();
-            File tempFile = FileNameMaker.makeAName();
-            FileWriter tempWriter = new FileWriter(tempFile);
-            tempWriter.write(graphvizText);
-            tempWriter.close();
-            String command = "circo -Tpng " + tempFile.getAbsolutePath();
-            Logger.getLogger(GraphDraw.class).debug(command);
-            Runtime runtime = Runtime.getRuntime();
-            Process process = runtime.exec(command);
-            //int exitValue = process.waitFor();
-            //if(exitValue == 0){
-            DataInputStream processInput = new DataInputStream(process.getInputStream());
-            //byte buf[] = new byte[1024];
-
+           
+            PerformGraphImageDraw drawer = new PerformGraphImageDraw();
+            DataInputStream processInput = drawer.perform(graphvizText);
             try {
                 byte next = processInput.readByte();
                 while (true) {
-                    //out.print(next);
                     binary.write(next);
                     next = processInput.readByte();
                 }
             } catch (EOFException ex) {
-
+                RatiLogger.getLogger(GraphDraw.class).error("EOFException: " + ex.getMessage());
             }
-
-            //out.write(buf.toString(), 0, buf.length);
-            //out.write(buf, 0, buf.length);
-
-            //
 
             processInput.close();
 
+        } else {
+            //TODO: handle this case
         }
-    /*} finally {
-    out.close();
-    binary.close();
-    }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

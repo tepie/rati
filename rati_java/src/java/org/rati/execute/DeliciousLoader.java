@@ -12,8 +12,8 @@ import org.apache.cayenne.auto.rati.Attribute;
 import org.rati.graph.GraphSetup;
 import org.rati.graph.RatiGraph;
 import org.apache.cayenne.auto.rati.Object;
-import org.apache.log4j.Logger;
 import org.rati.global.Context;
+import org.rati.global.RatiLogger;
 import org.rati.graph.IndexSearch;
 
 /**
@@ -31,6 +31,7 @@ public class DeliciousLoader extends Thread {
     public static String TAG_PREFIX = PREFIX + GraphSetup.RATI_URI_SEP + "tags";
 
     public DeliciousLoader() {
+    
     }
 
     public static void main(String args[]) {
@@ -43,8 +44,9 @@ public class DeliciousLoader extends Thread {
             indexer.run();
             indexer.join();
         } catch (InterruptedException ex) {
-            Logger.getLogger(DeliciousLoader.class).fatal(ex.getMessage());
+            RatiLogger.getLogger(DeliciousLoader.class).fatal(ex.getMessage());
         }
+
     }
 
     @Override
@@ -60,6 +62,7 @@ public class DeliciousLoader extends Thread {
             try {
                 posts = delicious.getRecentPosts();
             } catch (Exception ex) {
+                RatiLogger.getLogger(DeliciousLoader.class).error(ex.getMessage());
 
             }
         }
@@ -79,7 +82,7 @@ public class DeliciousLoader extends Thread {
         while (mover.hasNext() && count < limit) {
             Post post = (Post) mover.next();
             String uri = POST_PREFIX + GraphSetup.RATI_URI_SEP + post.getHash();
-            Logger.getLogger(DeliciousLoader.class).debug("Post URI: " + uri);
+            RatiLogger.getLogger(DeliciousLoader.class).debug("Post URI: " + uri);
             Object added = graph.objectMake(uri);
             Context.commit();
 
@@ -93,7 +96,7 @@ public class DeliciousLoader extends Thread {
             for (String tagg : tagList) {
                 String tUri = TAG_PREFIX + GraphSetup.RATI_URI_SEP + tagg;
 
-                Logger.getLogger(DeliciousLoader.class).debug("Tag URI: " + tUri);
+                RatiLogger.getLogger(DeliciousLoader.class).debug("Tag URI: " + tUri);
 
                 Object addedTag = graph.objectMake(tUri);
 
@@ -106,6 +109,7 @@ public class DeliciousLoader extends Thread {
                 Context.commit();
 
             }
+
             Context.commit();
             count++;
         }

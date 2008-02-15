@@ -6,7 +6,6 @@ package org.rati.graph;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
 import org.apache.cayenne.auto.rati.Attribute;
 import org.apache.cayenne.auto.rati.Object;
 import org.apache.cayenne.auto.rati.Relationship;
@@ -48,7 +47,7 @@ public class RatiGraph implements Iterable {
                 prefix + GraphSetup.RATI_URI_WILDCARD );
         
         SelectQuery query = new SelectQuery(Object.class, qual);
-        query.setFetchLimit(10);
+        query.setFetchLimit(100);
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() > 0) {
@@ -162,12 +161,10 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() > 0) {
-            //System.err.println("objectResults Size: " + objectResults.size());
-            //Context.getContext().commitChanges();
+           
             return (Relationship) objectResults.get(0);
         } else {
-            //System.err.println("relationshipSetExists: No relationship found!");
-            //Context.getContext().rollbackChanges();
+            
             return null;
         }
 
@@ -177,20 +174,19 @@ public class RatiGraph implements Iterable {
         if (source != null && attribute != null && target != null) {
             Relationship link = this.relationshipSetExists(source, attribute, target);
             if (link == null) {
-                //System.err.println("Creating new link");
+               
                 Relationship newMake = (Relationship) Context.getContext().newObject(Relationship.class);
                 newMake.setObjectRelationship(source);
                 newMake.setObjectReference(target);
                 newMake.setAttributeRelationship(attribute);
-                //Context.getContext().commitChanges();
+                
                 return newMake;
             } else {
-                //System.err.println("Using existing link");
+               
                 return link;
             }
         } else {
-            //System.err.println("Something is not right, " +
-              //      "provide a valid object attribute and object reference.");
+           
             return null;
         }
     }
@@ -204,12 +200,10 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() > 0) {
-            //System.err.println("objectResults Size: " + objectResults.size());
-            //Context.getContext().commitChanges();
+         
             return objectResults;
         } else {
-            //System.err.println("relationshipSetExists: No relationship found!");
-            //Context.getContext().rollbackChanges();
+            
             return null;
         }
     }
@@ -226,12 +220,8 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() > 0) {
-            //System.err.println("objectResults Size: " + objectResults.size());
-            //Context.getContext().commitChanges();
             return objectResults;
         } else {
-            //System.err.println("relationshipSetExists: No relationship found!");
-            //Context.getContext().rollbackChanges();
             return null;
         }
     }
@@ -246,12 +236,8 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() > 0) {
-            //System.err.println("objectResults Size: " + objectResults.size());
-            //Context.getContext().commitChanges();
             return objectResults;
         } else {
-            //System.err.println("relationshipSetExists: No relationship found!");
-            //Context.getContext().rollbackChanges();
             return null;
         }
     }
@@ -265,12 +251,8 @@ public class RatiGraph implements Iterable {
         List objectResults = Context.getContext().performQuery(query);
 
         if (objectResults.size() > 0) {
-            //System.err.println("objectResults Size: " + objectResults.size());
-            //Context.getContext().commitChanges();
             return objectResults;
         } else {
-            //System.err.println("relationshipSetExists: No relationship found!");
-            //Context.getContext().rollbackChanges();
             return null;
         }
     }
