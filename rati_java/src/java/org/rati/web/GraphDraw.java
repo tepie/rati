@@ -4,30 +4,15 @@
  */
 package org.rati.web;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import org.apache.cayenne.auto.rati.Object;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.rati.global.FileNameMaker;
+import org.rati.execute.DrawGraph;
 import org.rati.global.RatiLogger;
 import org.rati.graph.GraphSetup;
-import org.rati.graph.ObjectGraphvizWriter;
 import org.rati.graph.PerformGraphImageDraw;
-import org.rati.graph.RatiGraph;
 
 /**
  *
@@ -60,51 +45,19 @@ public class GraphDraw extends HttpServlet {
 
         RatiLogger.getLogger(GraphDraw.class).debug("Query: " + query);
         RatiLogger.getLogger(GraphDraw.class).debug("Type: " + outType);
-
-        RatiGraph graph = new RatiGraph();
-        ObjectGraphvizWriter writer = null;
-        Object queryObject = graph.objectExists(query);
-        String graphvizText = null;
-        if (queryObject != null) {
-            writer = new ObjectGraphvizWriter(queryObject);
-            graphvizText = writer.createOneObjectGraphviz();
-        } else {
-            List results = graph.objectsStartingWith(query);
-            writer = new ObjectGraphvizWriter(results);
-            graphvizText = writer.createObjectGraphviz();
-        }
-
-        if (outType.equalsIgnoreCase(GraphSetup.WEB_PARM_GRAPHVIZ)) {
-            PrintWriter out = null;
-            try {
-                response.setContentType("text/plain;charset=UTF-8");
-                out = response.getWriter();
-                out.println(graphvizText);
-            } finally {
-                out.close();
-            }
+        
+        DrawGraph drawer = new DrawGraph(query,outType);
+        
+         if (outType.equalsIgnoreCase(GraphSetup.WEB_PARM_GRAPHVIZ)) {
+             response.setContentType(PerformGraphImageDraw.CONTENT_TYPE_TEXT);
+             drawer.draw(response.getWriter(), true);
         } else if (outType.equalsIgnoreCase(GraphSetup.WEB_PARM_IMAGE)) {
-            
             response.setContentType(PerformGraphImageDraw.CONTENT_TYPE_PNG);
-            ServletOutputStream binary = response.getOutputStream();
-           
-            PerformGraphImageDraw drawer = new PerformGraphImageDraw();
-            DataInputStream processInput = drawer.perform(graphvizText);
-            try {
-                byte next = processInput.readByte();
-                while (true) {
-                    binary.write(next);
-                    next = processInput.readByte();
-                }
-            } catch (EOFException ex) {
-                RatiLogger.getLogger(GraphDraw.class).error("EOFException: " + ex.getMessage());
-            }
-
-            processInput.close();
-
+            drawer.draw(response.getOutputStream(), true);
         } else {
-            //TODO: handle this case
+            
         }
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

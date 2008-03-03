@@ -18,7 +18,8 @@ import org.rati.global.RatiLogger;
 public class PerformGraphImageDraw {
     
     public static String CONTENT_TYPE_PNG = "image/png;charset=UTF-8";
-    public static String COMMAND_PREFIX = "circo -Tpng ";
+    public static String CONTENT_TYPE_TEXT = "text/plain;charset=UTF-8";
+    public static String COMMAND_PREFIX = "dot -Tpng ";
 
     public PerformGraphImageDraw() {
         
