@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<driver project-version="2.0" class="com.mysql.jdbc.Driver">
-	<url value="jdbc:mysql://localhost/rati"/>
-	<connectionPool min="1" max="10" />
-	<login userName="root"/>
-</driver>
