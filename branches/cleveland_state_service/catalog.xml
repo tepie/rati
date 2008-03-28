@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="http://localhost:8084/MetadataApplication/MetadataService?wsdl" uri="conf/xml-resources/web-service-references/MetadataService/wsdl/localhost_8084/MetadataApplication/MetadataService.wsdl"/>
-    <system systemId="http://localhost:8084/MetadataApplication/MetadataService?xsd=1" uri="conf/xml-resources/web-service-references/MetadataService/wsdl/localhost_8084/MetadataApplication/MetadataService.xsd_1.xsd"/>
-</catalog>
