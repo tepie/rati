@@ -1,75 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="rati" default="dist" basedir=".">
-	<description>Packages the rati application</description>
-	<property name="dir.root" 		value="."/>
-	<property name="dir.dist" 		value ="${dir.root}/dist"/>
-	<property name="dir.map" 		value ="${dir.root}/map"/>
-	<property name="dir.dot" 		value ="${dir.root}/dot"/>
-	<property name="dir.img" 		value ="${dir.root}/img"/>
-	<property name="dir.doc" 		value="${dir.root}/Doc"/>
-	<property name="dir.include" 	value="${dir.root}/Include"/>
-	<property name="dir.sql" 		value="${dir.root}/sql"/>
-	<property name="dir.doxygen" 	value="${dir.root}/Doxygen"/>
-	<property name="exec.doxygen" 	value="doxygen" />
-	<property name="dist.exclude"	value="**/.svn/**,dist/**,Thumbs.db,build.xml,Doxyfile,build.number,WeschInfoRevolutionV3.wmv" />
-	
-	<property name="version" 	value="1.0"/>
-   	<property name="project" 	value="rati"/>
-	<property name="stage" 		value="RC1"/>
-	<property name="brand" 		value="galileo"/>
-	
-	<!-- Delete directories start -->
-	<target name="rm-doxygen" description="Remove the project documentation.">
-		<echo>Removing the doxygen directory...</echo>
-		<delete dir	= "${dir.doxygen}"/>
-	</target>
-	
-	<target name="rm-temp" description="Remove the temp file directories.">
-		<echo>Removing the temp directories...</echo>
-		<delete dir	= "${dir.dot}"/>
-		<delete dir	= "${dir.map}"/>
-		<delete dir	= "${dir.img}"/>
-	</target>
-	
-	<target name="rm-dist" description="Remove the dist directory.">
-		<echo>Removing the distribution directory...</echo>
-		<delete dir	= "${dir.dist}"/>
-	</target>
-	<!-- Delete directories stop -->
-	<!-- Make directories start -->
-	<target name="mk-dist" description="Make the dist directory.">
-		<echo>Making the distribution directory...</echo>
-		<mkdir dir = "${dir.dist}"/>
-	</target>
-	
-	<target name="mk-temp" description="Make the temp file directories.">
-		<echo>Removing the temp directories...</echo>
-		<mkdir dir	= "${dir.dot}"/>
-		<mkdir dir	= "${dir.map}"/>
-		<mkdir dir	= "${dir.img}"/>
-	</target>
-	
-	<target name="mk-doxygen" description="Make the doxygen directory.">
-		<echo>Making the doxygen directory...</echo>
-		<mkdir dir = "${dir.doxygen}" />
-	</target>
-	<!-- Make directories stop -->
-	
-	<!-- Generate Ouput Start -->
-	<target name="doxygen" depends="rm-doxygen,mk-doxygen" 
-		description="Generate the project documentation.">
-		<echo>Generating project doxygen documentation...</echo>
-		<exec executable = "${exec.doxygen}" />
-	</target>
-	
-	<target name="dist" depends="doxygen,rm-dist,mk-dist,rm-temp,mk-temp" 
-		description="Generate project distribution package.">
-		<buildnumber/>
-		<echo>Generating project distribution archive...</echo>
-		<zip destfile	=	"${dir.dist}/${project}-${version}-${build.number}-${stage}-${brand}.zip" 
-			basedir		=	"${dir.root}" 
-			update		=	"true"
-			excludes	=	"${dist.exclude}"/>
-	</target>
-	<!-- Generate Ouput Stop -->
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<project name="rati" default="default" basedir=".">
+    <description>Builds, tests, and runs the project rati.</description>
+    <import file="nbproject/build-impl.xml"/>
+    <!--
+
+    There exist several targets which are by default empty and which can be 
+    used for execution of your tasks. These targets are usually executed 
+    before and after some main targets. They are: 
+
+      -pre-init:                 called before initialization of project properties 
+      -post-init:                called after initialization of project properties 
+      -pre-compile:              called before javac compilation 
+      -post-compile:             called after javac compilation 
+      -pre-compile-single:       called before javac compilation of single file
+      -post-compile-single:      called after javac compilation of single file
+      -pre-compile-test:         called before javac compilation of JUnit tests
+      -post-compile-test:        called after javac compilation of JUnit tests
+      -pre-compile-test-single:  called before javac compilation of single JUnit test
+      -post-compile-test-single: called after javac compilation of single JUunit test
+      -pre-dist:                 called before archive building 
+      -post-dist:                called after archive building 
+      -post-clean:               called after cleaning build products 
+      -pre-run-deploy:           called before deploying
+      -post-run-deploy:          called after deploying
+
+    Example of pluging an obfuscator after the compilation could look like 
+
+        <target name="-post-compile">
+            <obfuscate>
+                <fileset dir="${build.classes.dir}"/>
+            </obfuscate>
+        </target>
+
+    For list of available properties check the imported 
+    nbproject/build-impl.xml file. 
+
+
+    Other way how to customize the build is by overriding existing main targets.
+    The target of interest are: 
+
+      init-macrodef-javac:    defines macro for javac compilation
+      init-macrodef-junit:   defines macro for junit execution
+      init-macrodef-debug:    defines macro for class debugging
+      do-dist:                archive building
+      run:                    execution of project 
+      javadoc-build:          javadoc generation 
+
+    Example of overriding the target for project execution could look like 
+
+        <target name="run" depends="<PROJNAME>-impl.jar">
+            <exec dir="bin" executable="launcher.exe">
+                <arg file="${dist.jar}"/>
+            </exec>
+        </target>
+
+    Notice that overridden target depends on jar target and not only on 
+    compile target as regular run target does. Again, for list of available 
+    properties which you can use check the target you are overriding in 
+    nbproject/build-impl.xml file. 
+
+    -->
 </project>
