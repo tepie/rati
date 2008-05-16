@@ -1,5 +1,0 @@
-#labels Featured,Phase-Deploy
-This page outlines what a *perspective* is and how to set one up. 
-
-= Introduction =
-A perspective in visualization is a way to see content. In terms of this tool, it means how to setup categories and color code them to show the differences. When setup, the demonstration of stored content is more easily portrayed to multiple audiences with varying backgrounds. 
