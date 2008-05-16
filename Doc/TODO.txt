@@ -1,0 +1,23 @@
+Rati TODO Log
+===============================================================================
+
+Open
+===============================
+* Search item title changes, improve meaning
+* Search index table building not effective for large data
+* Expand view on usage screen, more then 10
+* Use machine name on usage, not IP
+* HTTP Auth for Delete and Import
+* Suggestion implementation
+* Global grouping script
+
+Closed
+===============================
+* Hide category lines (in 1.3)
+	- Is now an option, default not shown unless
+		on a category.
+* Missing nodes not drawn in multi-level graph (1.3)
+	- Implementation of BFS drawing of graph
+	- Need to double check, looks good
+
+
