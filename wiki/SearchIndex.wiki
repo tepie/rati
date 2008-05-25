@@ -1,4 +1,4 @@
-#labels Phase-Design
+#labels Phase-Design,Search,Cron,Schedule,Ranking,Weight
 The following describes the search index design.
 
 = Introduction = 
@@ -9,3 +9,6 @@ Content ranking follows the simple concepts of popularity. The more relationship
 
 = Category Weights = 
 Within a category organization, each object is assigned its weight within its organization via categories. The weight of the category assignment depends on the ordering in the perspective setup.
+
+= Refreshing Search Index = 
+Search index is not built in real time, but through a batch process. This process can run depending on your import or update schedule. Nightly should do. Reference [http://code.google.com/p/rati/source/browse/trunk/bin/search_index_cron_job.sh search_index_cron_job.sh].
