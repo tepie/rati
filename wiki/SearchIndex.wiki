@@ -1,4 +1,4 @@
-#labels Phase-Design,Search,Cron,Schedule,Ranking,Weight
+#labels Phase-Design,Search,Cron,Schedule,Ranking,Weight,Featured
 The following describes the search index design.
 
 = Introduction = 
