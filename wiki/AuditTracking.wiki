@@ -1,4 +1,4 @@
-#labels Phase-Design
+#labels Phase-Design,Audit,Usage
 Application auditing details.
 
 The following points of interaction are tracked:
