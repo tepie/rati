@@ -2,6 +2,10 @@
 <rosetta>
 	<datastore>
 		<!-- Category Setup Start -->
+		<object category='category' oid='/ibmjcs/categories/category'>
+			<reference name='category' oidref='/ibmjcs/categories/category'/>
+			<annotation name='name'>category</annotation>
+		</object>
 		<object category='Resource' oid='/ibmjcs/categories/Resource'>
 			<reference name='category' oidref='/ibmjcs/categories/category'/>
 			<annotation name='name'>Resource</annotation>
