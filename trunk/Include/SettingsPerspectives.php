@@ -31,6 +31,7 @@
 	* 	perspectives for use. 
 	*/
 	
+	$web_app_default_cat_color = "red"
 
 	/**
 	* Rosetta IBM Commerce & Java Solution Center Persepective
@@ -38,7 +39,7 @@
 
 	$ibmjcs_category_prefix				= 	"/ibmjcs/categories";
 	$ibmjcs_category_ereg				= 	"\/ibmjcs\/categories\/";
-	$ibmjcs_default_root_node			= 	"$ibmjcs_category_prefix/Aspect";
+	$ibmjcs_default_root_node			= 	"$ibmjcs_category_prefix/category";
 	$ibmjcs_category_reference_rule 		= 	"category";
 	$ibmjcs_category_unknown			= 	"Unknown";
 	$ibmjcs_perspective_name			= 	"IBM Commerce & Java Solution Center";
