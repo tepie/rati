@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<rosetta>
+	<datastore>
+		<!-- Category Setup Start -->
+		<object category='Resource' oid='/ibmjcs/categories/Resource'>
+			<reference name='category' oidref='/ibmjcs/categories/category'/>
+			<annotation name='name'>Resource</annotation>
+		</object>
+		<object category='Team' oid='/ibmjcs/categories/Team'>
+			<reference name='category' oidref='/ibmjcs/categories/category'/>
+			<annotation name='name'>Team</annotation>
+		</object>
+		<object category='Project' oid='/ibmjcs/categories/Project'>
+			<reference name='category' oidref='/ibmjcs/categories/category'/>
+			<annotation name='name'>Project</annotation>
+		</object>
+		<object category='Title' oid='/ibmjcs/categories/Title'>
+			<reference name='category' oidref='/ibmjcs/categories/category'/>
+			<annotation name='name'>Title</annotation>
+		</object>
+		<!-- Category Setup Stop -->
+
+		<!-- Team Setup Start -->
+		<object category='Red' oid='/ibmjcs/categories/Team/Red'>
+			<reference name='category' oidref='/ibmjcs/categories/Team'/>
+			<annotation name='name'>Red</annotation>
+		</object>
+		<object category='Blue' oid='/ibmjcs/categories/Team/Blue'>
+			<reference name='category' oidref='/ibmjcs/categories/Team'/>
+			<annotation name='name'>Blue</annotation>
+		</object>
+		<object category='Green' oid='/ibmjcs/categories/Team/Green'>
+			<reference name='category' oidref='/ibmjcs/categories/Team'/>
+			<annotation name='name'>Green</annotation>
+		</object>
+		<object category='Green' oid='/ibmjcs/categories/Team/Green'>
+			<reference name='category' oidref='/ibmjcs/categories/Team'/>
+			<annotation name='name'>Green</annotation>
+		</object>
+		<!-- Team Setup Stop -->
+
+		<!-- Project Setup Start -->
+		<object category='Coach' oid='/ibmjcs/categories/Project/Coach'>
+			<reference name='category' oidref='/ibmjcs/categories/Project'/>
+			<annotation name='name'>Coach</annotation>
+		</object>
+		<object category='Rosetta Store' oid='/ibmjcs/categories/Project/Rosetta Store'>
+			<reference name='category' oidref='/ibmjcs/categories/Project'/>
+			<annotation name='name'>Rosetta Store</annotation>
+		</object>
+		<object category='Audiovox' oid='/ibmjcs/categories/Project/Audiovox'>
+			<reference name='category' oidref='/ibmjcs/categories/Project'/>
+			<annotation name='name'>Audiovox</annotation>
+		</object>
+		<object category='Cornerstone' oid='/ibmjcs/categories/Project/Conerstone'>
+			<reference name='category' oidref='/ibmjcs/categories/Project'/>
+			<annotation name='name'>Conerstone</annotation>
+		</object>
+		<object category='Fossil' oid='/ibmjcs/categories/Project/Fossil'>
+			<reference name='category' oidref='/ibmjcs/categories/Project'/>
+			<annotation name='name'>Fossil</annotation>
+		</object>
+		<object category='US Mint' oid='/ibmjcs/categories/Project/US Mint'>
+			<reference name='category' oidref='/ibmjcs/categories/Project'/>
+			<annotation name='name'>US Mint</annotation>
+		</object>
+		<!-- Project Setup Stop -->
+	</datastore>
+</eda_department>
