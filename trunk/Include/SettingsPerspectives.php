@@ -31,7 +31,7 @@
 	* 	perspectives for use. 
 	*/
 	
-	$web_app_default_cat_color = "red"
+	$web_app_default_cat_color = "red";
 
 	/**
 	* Rosetta IBM Commerce & Java Solution Center Persepective
