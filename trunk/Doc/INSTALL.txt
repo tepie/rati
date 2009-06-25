@@ -1,0 +1,51 @@
+Rati INSTALL Log
+===============================================================================
+
+- Create user: visualiz
+- Install Sofware
+	- yum install httpd
+	- yum install mysql mysql-server
+	- yum install php php-mysql
+	- yum install mod_python MySQL-python
+	- yum install phpmyadmin (optional)
+	- yum install doxygen
+
+- Setup LAMP
+	- /sbin/service mysqld restart
+	- /sbin/service httpd restart
+	- /usr/bin/mysqladmin -u root password 'root'
+	- /usr/bin/mysqladmin -u root -h localhost password 'root'
+
+- Setup Database
+	- Run sql/database_schema_myisam.sql
+	- Run sql/database_user_accounts.sql
+
+- Build / Download Dist
+	- If building, run ant dist
+
+- Deploy
+	- Create installation directory: /opt/visual/application/rati/
+	- chmod -R 755 /opt/visual
+	- chmod -R 755 /opt/visual
+	- chown -R visualiz /opt/visual
+	- chgrp -R visualiz /opt/visual
+	- mkdir /opt/visual/application/rati-1.3-41-galileo-RC2
+	- cd /opt/visual/application/rati-1.3-41-galileo-RC2
+	- tar xvzf ../dist/rati-1.3-41-galileo-RC2.tar.gz
+	- ln -s rati-1.3-41-galileo-RC2 rati
+	- cp conf/visualiz.conf /etc/httpd/conf.d/
+	- Add DirectoryIndex for Index.php in http.conf
+
+- Loading Data
+
+
+
+	
+
+
+	
+
+
+
+
+
